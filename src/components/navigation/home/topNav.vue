@@ -47,31 +47,28 @@
                             <a href="javascript:void(0)" to="#contact" class="nav-link">Contact</a>
                         </li>
                     </ul>
-                    <button class="btn btn-sm navbar-btn btn-round">Account</button>
+                    <button class="btn btn-sm navbar-btn btn-round" data-toggle="modal" data-target="#authModal">Account</button>
 
                 </div>
             </div>
         </nav>
         <!-- Navbar End -->
-        
+
+        <auth-modal/>
     </div>
 </template>
 
 <script>
-    // import "../../assets/css/bootstrap.min.css"
-    // import "../../assets/css/materialdesignicons.min.css"
-    // import "../../assets/css/owl.carousel.css"
-    // import "../../assets/css/owl.theme.css"
-    // import "../../assets/css/owl.transitions.css"
-    // import "../../assets/css/pe-icon-7.css"
-    // import "../../assets/css/magnific-popup.css"
     import "../../../assets/css/style.css"
-
+    import authModal from "../../auth/authModal";
 
     export default {
         name: "homeNav",
         methods: {
 
+        },
+        components: {
+            authModal
         },
         mounted() {
             $('#status').fadeOut();
