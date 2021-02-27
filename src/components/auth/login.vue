@@ -36,7 +36,9 @@
                 if(!this.validateEmail(this.email)){
                     return this.$toast.warning('The email format is not a valid one', 'Caution')
                 }
-                return this.$toast.success('Nice. Sit back and relax while we work on more components to come', 'Hurray!')
+                const route = this.$router.resolve({name: 'Dashboard'}).resolved.fullPath.split('/')
+                route.pop();
+                window.location.href = route.join('/');
             }
         }
     }
