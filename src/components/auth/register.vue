@@ -78,7 +78,10 @@
                 if(this.validateFields()){
                     this.user = new UserModel();
                     this.password = this.c_password = '';
-                    return this.$toast.success('Nice. Sit back and relax while we work on more components to come', 'Hurray!')
+
+                    const route = this.$router.resolve({name: 'Dashboard'}).resolved.fullPath.split('/')
+                    route.pop();
+                    window.location.href = route.join('/');
                 }
             }
         }

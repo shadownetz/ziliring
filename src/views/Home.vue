@@ -16,7 +16,7 @@
                     So hop on the moving train today by subscribing to any of our plans
                   </p>
                   <div class="watch-video mt-5">
-                    <a href="javascript:void(0)" class="btn btn-custom mr-4 btn-round">Register</a>
+                    <a href="javascript:void(0)" data-toggle="modal" data-target="#authModal" class="btn btn-custom mr-4 btn-round">Register</a>
                     <a href="http://vimeo.com/99025203" class="video-play-icon text-white">
                       <i class="mdi mdi-play play-icon-circle mr-2"></i></a>
                   </div>
