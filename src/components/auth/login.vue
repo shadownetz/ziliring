@@ -2,7 +2,7 @@
     <div>
         <form @submit.prevent="login">
             <div class="form-group">
-                <input type="email" v-model="email" class="form-control" placeholder="Email">
+                <input type="tel" v-model="phone" class="form-control" placeholder="Phone Number">
             </div>
             <div class="form-group">
                 <input type="password" v-model="password" class="form-control" placeholder="Password">
@@ -20,21 +20,19 @@
 </template>
 
 <script>
-    import basicValidationMixin from "../../utils/mixins/basicValidationMixin";
 
     export default {
         name: "login",
         data(){
             return {
-                email: '',
+                phone: '',
                 password: ''
             }
         },
-        mixins: [basicValidationMixin],
         methods: {
             login(){
-                if(!this.validateEmail(this.email)){
-                    return this.$toast.warning('The email format is not a valid one', 'Caution')
+                if(!this.phone){
+                    return this.$toast.warning('Please enter a correct phone number', 'Caution')
                 }
                 const route = this.$router.resolve({name: 'Dashboard'}).resolved.fullPath.split('/')
                 route.pop();

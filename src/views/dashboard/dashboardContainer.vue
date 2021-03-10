@@ -26,9 +26,13 @@
             sideNav
         },
         created() {
-            this.$toast.success('Ziliring welcomes you back to the ring!', 'Hurray!')
+            this.$toast.success('Welcome back', 'Invite')
         },
         mounted() {
+            $('#main-wrapper').css('opacity', 1);
+            setTimeout(()=>{
+                $('#preloader').fadeOut('slow');
+            }, 1000)
             $('head').append(
                 "<link class='dash_custom_imports' rel='stylesheet' href='assets/dashboard/css/style.css'/>"
             );
@@ -44,6 +48,14 @@
                     "<script class='dash_custom_imports' src='assets/dashboard/js/dashboard/dashboard-1.js'/>",
                 ]
             )
+        },
+        beforeRouteEnter(to, from, next){
+            if(window.location.href[window.location.href.length-1] === '/'){
+                let curr_location = window.location.href.split('/');
+                curr_location.pop();
+                window.location.href = curr_location.join('/');
+            }
+            next()
         },
         beforeRouteLeave(to, from, next){
             $('.dash_custom_imports').remove();

@@ -13,7 +13,8 @@ module.exports = {
   globals: {
     $: true,
     jQuery: true,
-    particlesJS: true
+    particlesJS: true,
+    CryptoJS: true
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
