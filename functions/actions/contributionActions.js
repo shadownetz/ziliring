@@ -1,7 +1,7 @@
 const functions = require('firebase-functions');
 const firebaseRefModule = require("../firebaseRef");
 const Contribution = require("../models/contribution").Contribution;
-const PaymentModel = require("../../src/models/payment").PaymentModel;
+const PaymentModel = require("../models/payment").PaymentModel;
 
 
 

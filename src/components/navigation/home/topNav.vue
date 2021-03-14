@@ -47,8 +47,10 @@
                             <a href="javascript:void(0)" to="#contact" class="nav-link">Contact</a>
                         </li>
                     </ul>
-                    <button class="btn btn-sm navbar-btn btn-round" data-toggle="modal" data-target="#authModal">Account</button>
-
+                    <button v-if="!isSignedIn" class="btn btn-sm navbar-btn btn-round" data-toggle="modal" data-target="#authModal">Account</button>
+                    <a v-else href="/dashboard" class="btn btn-sm navbar-btn btn-round">
+                        Dashboard
+                    </a>
                 </div>
             </div>
         </nav>
@@ -61,9 +63,15 @@
 <script>
     import "../../../assets/css/style.css"
     import authModal from "../../auth/authModal";
+    import {mapGetters} from 'vuex'
 
     export default {
         name: "homeNav",
+        computed: {
+            ...mapGetters('auth', [
+                'isSignedIn'
+            ])
+        },
         methods: {
 
         },

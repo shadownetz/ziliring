@@ -98,7 +98,14 @@
             return {
                 packageBG
             }
-        }
+        },
+        // mounted() {
+        //     if(this.$store.getters['auth/isSignedIn']){
+        //         console.log('Signed In::', this.$store.getters['auth/isSignedIn'])
+        //     }else{
+        //         console.log('Not signed in')
+        //     }
+        // }
     }
 </script>
 

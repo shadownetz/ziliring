@@ -14,7 +14,7 @@ class User{
             const user = await userRef.doc(this.id).get();
             if(user.exists){
                 this.id = user.id;
-                this.data = user.data()
+                this.data = Object.assign(new Model(), user.data())
             }else{
                 return new Error("This Account does not exist!")
             }
@@ -33,7 +33,18 @@ class User{
     }
 
     verify_password(raw_password){
-        return (new Crypt(raw_password).decrypt(this.data.phone))
+        console.log('Raw Pass::', (new Crypt(this.data.password).decrypt(this.data.phone)))
+        console.log('User Data::', this.data)
+        return new Crypt(this.data.password).decrypt(this.data.phone) === raw_password
+    }
+    static async verify_phone(phone){
+        const _user = await userRef
+            .where('phone', '==', phone)
+            .limit(1)
+            .get();
+        if(!_user.empty)
+            return _user.docs[0]
+        return null
     }
 }
 

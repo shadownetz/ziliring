@@ -18,7 +18,7 @@ const confirmPayment = functions.firestore
                         type: 'upliner',
                         profitReceived: downlinerContribInstance.get_profit_received()
                     });
-                    await firebaseRefModule.userRef.doc(paymentData.userId).update({
+                    await firebaseRefModule.profileRef.doc(paymentData.userId).update({
                         balance: (downlinerDoc.data().balance + paymentData.amount)
                     })
                 }

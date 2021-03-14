@@ -64,6 +64,7 @@
 
 <script>
     import basicValidationMixin from "../../utils/mixins/basicValidationMixin";
+    import basicMethodMixins from "../../utils/mixins/basicMethodMixins";
     import {UserModel} from "../../models/user";
 
     export default {
@@ -77,7 +78,7 @@
                 phoneVerificationCode: '',
             }
         },
-        mixins: [basicValidationMixin],
+        mixins: [basicValidationMixin, basicMethodMixins],
         watch: {
             confirmPhoneModal(newVal){
                 if(!newVal){
@@ -121,15 +122,8 @@
             async register(){
                 if(this.validateFields()){
                     const loader = this.$loading.show({container: this.$refs.zili_auth_modal})
-                    if(this.user.phone[0] !== '+'){
-                        if(this.user.phone[0] === '0'){
-                            let _phone = this.user.phone.split("").reverse();
-                            _phone.pop();
-                            this.user.phone = _phone.reverse().join("")
-                        }
-                        this.user.phone = `+${this.phone_dial_code}${this.user.phone}`
-                    }
-                    const response = await this.$store.dispatch('auth/loginWithPhone', this.user.phone);
+                    this.user.phone = this.getCountryTel(this.phone_dial_code, this.user.phone)
+                    const response = await this.$store.dispatch('auth/registerWithPhone', this.user.phone);
                     loader.hide()
                     if(response.status){
                         // code sent, await code confirmation
