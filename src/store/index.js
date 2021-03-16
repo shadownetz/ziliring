@@ -6,6 +6,10 @@ const ls = new SecureLS({ isCompression: false });
 
 import auth from "./modules/auth";
 import user from "./modules/user";
+import packageModule from "./modules/package";
+import contribution from "./modules/contribution";
+import payment from "./modules/payment";
+import profile from "./modules/profile";
 
 Vue.use(Vuex)
 
@@ -26,6 +30,10 @@ export default new Vuex.Store({
   },
   modules: {
     auth,
-    user
+    user,
+    package: packageModule,
+    contribution,
+    payment,
+    profile
   }
 })

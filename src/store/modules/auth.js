@@ -1,7 +1,7 @@
 import firebase from "../../firebase/firebase";
 import iziToast from "izitoast";
 
-import {ResponseObject} from "../../utils/mixins/globalObjects";
+import {ResponseObject} from "../../utils/globalObjects";
 import User from "../../models/user";
 import router from "../../router";
 
@@ -37,12 +37,17 @@ export default {
             }
             return Promise.resolve(response)
         },
-        async proceedToLogin(context, {code, userData}){
+        async proceedToLogin({commit}, {code, userData}){
             let response = new ResponseObject();
             try{
                 const result = await window.confirmationResult.confirm(code);
                 const user = new User(result.user.uid, userData);
                 await user.add();
+                await user.fetch();
+                commit('user/setUser', {
+                    id: user.id,
+                    data: user.data
+                }, {root: true})
             }catch (e) {
                 console.log(e)
                 response.status = false;

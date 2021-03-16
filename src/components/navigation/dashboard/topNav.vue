@@ -187,7 +187,7 @@
                             <li class="nav-item dropdown header-profile">
                                 <a class="nav-link" href="javascript:void(0)" role="button" data-toggle="dropdown">
                                     <div class="header-info">
-                                        <span class="text-black">Hello, <strong>User</strong></span>
+                                        <span class="text-black">Hello <strong>{{getUser.data.lastName}}</strong></span>
                                         <p class="fs-12 mb-0">Contributor</p>
                                     </div>
                                     <img src="../../../assets/dashboard/images/profile/user.png" width="20" alt=""/>
@@ -212,10 +212,15 @@
 </template>
 
 <script>
-    import {mapActions} from "vuex"
+    import {mapActions, mapGetters} from "vuex"
 
     export default {
         name: "topNav",
+        computed: {
+          ...mapGetters('user', [
+              'getUser'
+          ])
+        },
         methods: {
             ...mapActions('auth', [
                 'logout'

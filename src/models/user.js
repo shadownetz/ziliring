@@ -33,8 +33,8 @@ class User{
     }
 
     verify_password(raw_password){
-        console.log('Raw Pass::', (new Crypt(this.data.password).decrypt(this.data.phone)))
-        console.log('User Data::', this.data)
+        // console.log('Raw Pass::', (new Crypt(this.data.password).decrypt(this.data.phone)))
+        // console.log('User Data::', this.data)
         return new Crypt(this.data.password).decrypt(this.data.phone) === raw_password
     }
     static async verify_phone(phone){

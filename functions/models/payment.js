@@ -11,6 +11,7 @@ function Model() {
     this.confirmed = false;
     this.reported = false;
     this.userId = '';
+    this.receiverId = '';
     this.payContext = 'plan';   // plan || profit
     this.createdAt = new Date();
     this.updatedAt = new Date()

@@ -1,42 +1,16 @@
-const PaymentDecision = require("../utils/paymentDecision").PaymentDecision;
-const firebaseRef = require('../firebaseRef');
-
+import {userRef} from "../firebase/firebase";
 
 class Contribution{
 
-    constructor({id, data}) {
+    constructor({id='', data={}}) {
         this.id = id;
         this.data = Object.assign(new Model(), data);
-        this.paymentDecision = new PaymentDecision({id, data})
     }
 
     async getUser(){
         return Promise.resolve(
-            await firebaseRef.userRef.doc(this.data.userId).get()
+            await userRef.doc(this.data.userId).get()
         )
-    }
-
-    async decide_upliner(uplinersContrib){
-        this.paymentDecision.set_upliners_contrib(uplinersContrib)
-        return Promise.resolve(
-            await this.paymentDecision.select_upliner()
-        )
-    }
-
-    async createAdminContrib(adminID){
-        const admin_contrib = new Model();
-        admin_contrib.userId = adminID;
-        admin_contrib.type = 'upliner';
-        admin_contrib.adminInitiated = true;
-        admin_contrib.amountToBePaid = 90E10;
-        admin_contrib.createdAt = admin_contrib.updatedAt = firebaseRef.firestoreRef.FieldValue.serverTimestamp();
-        return firebaseRef.contributionRef.add(Object.assign({}, admin_contrib))
-    }
-
-    static get_expiration_timestamp(){
-        let date = new Date((new Date().valueOf()));
-        date.setDate(date.getDate() + 7);
-        return date;
     }
 
     get_expected_profit(){
@@ -67,9 +41,7 @@ class Contribution{
         return total
     }
 
-    get_payment_progressions(){
-        return PaymentDecision.getPaymentProgression(this.data.amountToBePaid)
-    }
+
 
 }
 
@@ -92,7 +64,5 @@ function Model(){
     this.downliners = [];
 }
 
-module.exports = {
-    ContributionModel: Model,
-    Contribution
-}
+export const ContributionModel = Model
+export default Contribution
