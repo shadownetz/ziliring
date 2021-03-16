@@ -91,7 +91,9 @@
                 loader.hide();
                 if(response.status){
                     this.$toast.success('Contribution Initiated', '', {position: 'topRight'})
-                    return this.$router.push({name: 'Dashboard'})
+                    setTimeout(()=>{
+                        this.$router.push({name: 'Dashboard'})
+                    }, 2000)
                     // TODO: redirect to contributions to list payment details
                 }else{
                     this.$toast.error(response.message, 'Error', {position: 'topRight'})

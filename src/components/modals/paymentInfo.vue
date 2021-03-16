@@ -26,7 +26,7 @@
                             </div>
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                 <h4 class="font-weight-bolder">Amount</h4>
-                                <h5>{{payment.data.amount}}</h5>
+                                <h5>₦{{payment.data.amount}}</h5>
                             </div>
                             <div class="col-12">
                                 <h4 class="font-weight-bolder">Date</h4>
