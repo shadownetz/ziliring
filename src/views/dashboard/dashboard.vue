@@ -162,15 +162,22 @@
                                                 <span class="mr-1">
                                                     <i class="flaticon-381-gift"></i>
                                                 </span>
-                                                    <span v-if="payments_contribs[index]!== undefined">
-                                                    {{payments_contribs[index].data.packageId}}
+                                                    <span v-if="payment_packages[index]!== undefined">
+                                                    {{payment_packages[index].data.name}}
                                                 </span>
                                                 </div>
                                             </td>
                                             <td class="font-w500">{{getReadableDatetime(payment.data.createdAt)}}</td>
                                             <td class="font-w600 text-center">₦{{payment.data.amount}}</td>
                                             <td>
-                                                <a href="javascript:void(0)"><i class="flaticon-381-file"></i> (details)</a>
+                                                <a
+                                                        href="javascript:void(0)"
+                                                        data-toggle="modal"
+                                                        data-target="#paymentInfo"
+                                                        @click.prevent="togglePaymentInfo(payment, payment_packages[index])"
+                                                >
+                                                    <i class="flaticon-381-file"></i> (details)
+                                                </a>
                                                 <a v-if="payment.data.reported" class="btn-link text-danger float-right" href="javascript:void(0);">
                                                     <i>Reported</i>
                                                 </a>
@@ -199,6 +206,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -226,19 +234,21 @@
                     this.payments_contribs = contribs.map(contrib=>contrib.data);
                     const tmp_packages_promises = this.payments_contribs.map(contrib=>this.$store.dispatch('package/get', contrib.data.packageId));
                     const tmp_packages = await Promise.all(tmp_packages_promises);
-                    tmp_packages.forEach((package_z, index)=>{
-                        console.log(package_z)
-                        this.payments_contribs[index].data.packageId = package_z.data.data.name
-                    })
+                    this.payment_packages = tmp_packages.map(package_z=>package_z.data)
 
-                    // const tmp_profile_promises = this.queried_payments.map(payment=>this.$store.dispatch('profile/get', payment.data.receiverId));
-                    // const tmp_profiles = await Promise.all(tmp_profile_promises);
-                    // if(tmp_profiles.length > 0){
-                    //     this.payments_receiver_profiles = tmp_profiles.map(profile=>profile.data)
-                    // }
+
                 }
+            },
+            togglePaymentInfo(payment, package_z){
+                this.$emit('togglePaymentInfo', {
+                    payment,
+                    package: package_z
+                })
             }
         },
+        // components: {
+        //   paymentInfo
+        // },
         mounted(){
             this.queryPayments()
         }

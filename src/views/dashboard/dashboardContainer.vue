@@ -5,11 +5,15 @@
 
         <div class="content-body">
             <div class="container-fluid">
-                <router-view/>
+                <router-view @togglePaymentInfo="paymentInfoPayload=$event"/>
             </div>
         </div>
 
         <foot-nav/>
+        <payment-info
+                :package_z="paymentInfoPayload.package"
+                :payment="paymentInfoPayload.payment"
+        />
     </div>
 </template>
 
@@ -17,13 +21,20 @@
     import topNav from "../../components/navigation/dashboard/topNav";
     import footNav from "../../components/navigation/dashboard/footNav";
     import sideNav from "../../components/navigation/dashboard/sideNav";
+    import paymentInfo from "../../components/modals/paymentInfo";
 
     export default {
         name: "dashboard",
+        data(){
+          return {
+              paymentInfoPayload: {}
+          }
+        },
         components: {
             topNav,
             footNav,
-            sideNav
+            sideNav,
+            paymentInfo
         },
         created() {
             this.$toast.success('Welcome back', 'Invite')
