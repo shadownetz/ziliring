@@ -5,11 +5,15 @@
 
         <div class="content-body">
             <div class="container-fluid">
-                <router-view/>
+                <router-view @togglePaymentInfo="paymentInfoPayload=$event"/>
             </div>
         </div>
 
         <foot-nav/>
+        <payment-info
+                :package_z="paymentInfoPayload.package"
+                :payment="paymentInfoPayload.payment"
+        />
     </div>
 </template>
 
@@ -17,18 +21,29 @@
     import topNav from "../../components/navigation/dashboard/topNav";
     import footNav from "../../components/navigation/dashboard/footNav";
     import sideNav from "../../components/navigation/dashboard/sideNav";
+    import paymentInfo from "../../components/modals/paymentInfo";
 
     export default {
         name: "dashboard",
+        data(){
+          return {
+              paymentInfoPayload: {}
+          }
+        },
         components: {
             topNav,
             footNav,
-            sideNav
+            sideNav,
+            paymentInfo
         },
         created() {
-            this.$toast.success('Ziliring welcomes you back to the ring!', 'Hurray!')
+            this.$toast.success('Welcome back', 'Invite')
         },
         mounted() {
+            $('#main-wrapper').css('opacity', 1);
+            setTimeout(()=>{
+                $('#preloader').fadeOut('slow');
+            }, 1000)
             $('head').append(
                 "<link class='dash_custom_imports' rel='stylesheet' href='assets/dashboard/css/style.css'/>"
             );
@@ -44,6 +59,14 @@
                     "<script class='dash_custom_imports' src='assets/dashboard/js/dashboard/dashboard-1.js'/>",
                 ]
             )
+        },
+        beforeRouteEnter(to, from, next){
+            if(window.location.href[window.location.href.length-1] === '/'){
+                let curr_location = window.location.href.split('/');
+                curr_location.pop();
+                window.location.href = curr_location.join('/');
+            }
+            next()
         },
         beforeRouteLeave(to, from, next){
             $('.dash_custom_imports').remove();

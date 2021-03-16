@@ -502,7 +502,7 @@
                   </div>
                   <div class="col-lg-6">
                     <div class="form-group mt-2">
-                      <input name="email" id="email" class="form-control" placeholder="Your Email" type="email">
+                      <input name="email" id="emai" class="form-control" placeholder="Your Email" type="email">
                     </div>
                   </div>
                 </div>

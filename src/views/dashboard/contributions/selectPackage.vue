@@ -1,103 +1,110 @@
 <template>
-    <div class="row animated slideInLeft">
-        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-            <div class="card overflow-hidden">
-                <div class="text-center p-5 overlay-box" :style="{backgroundImage: 'url('+packageBG+')'}">
-                    <img src="../../../assets/dashboard/images/package.png" width="100" class="img-fluid rounded-circle" alt="">
-                    <h3 class="mt-3 mb-0 text-white">Steel</h3>
-                </div>
-                <div class="card-body">
-                    <div class="row text-center">
-                        <div class="col-6">
-                            <div class="bgl-primary rounded p-3">
-                                <h4 class="mb-0">Prices</h4>
-                                <small>₦5000</small><br>
-                                <small>₦10,000</small><br>
-                                <small>₦20,000</small><br>
-                                <small>₦40,000</small>
+    <div ref="selectPackage" class="row animated slideInLeft">
+        <template v-if="loading">
+            <div class="col-12 text-center">
+                <h3>
+                    <i class="flaticon-381-time"></i> Loading available packages
+                </h3>
+                <p>please wait...</p>
+            </div>
+        </template>
+        <template v-else-if="packages.length > 0">
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12" v-for="(package_z, index) in packages" :key="index">
+                <div class="card overflow-hidden" v-if="package_z.data">
+                    <div class="text-center p-5 overlay-box" :style="{backgroundImage: 'url('+packageBG+')'}">
+                        <img src="../../../assets/dashboard/images/package.png" width="100" class="img-fluid rounded-circle" alt="">
+                        <h3 class="mt-3 mb-0 text-white">{{package_z.data.name}}</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-6">
+                                <div class="bgl-primary rounded p-3">
+                                    <h4 class="mb-0">Prices</h4>
+                                    <div v-for="(price, index) in package_z.data.prices" :key="'price_'+index">
+                                        <small>₦{{price}}</small><br>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="bgl-primary rounded p-3">
-                                <h4 class="mb-0">Bonus</h4>
-                                <small>0%</small>
+                            <div class="col-6">
+                                <div class="bgl-primary rounded p-3">
+                                    <h4 class="mb-0">Bonus</h4>
+                                    <small>{{package_z.data.bonus}}%</small>
+                                </div>
+                            </div>
+
+                            <div class="col-6 text-left">
+                                <label class="text-left pt-3" :for="index+'package_selector'">
+                                    Select an amount
+                                </label>
+                            </div>
+                            <div class="col-6">
+                                <select :id="index+'package_selector'" class="form-control" v-model.number="selected_price">
+                                    <option :value="price" v-for="(price, index) in package_z.data.prices" :key="'selectprice'+index">
+                                        {{price}}
+                                    </option>
+                                </select>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="card-footer mt-0">
-                    <button class="btn btn-primary btn-lg btn-block">Proceed <i class="flaticon-381-next-1"></i></button>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-            <div class="card overflow-hidden">
-                <div class="text-center p-5 overlay-box" :style="{backgroundImage: 'url('+packageBG+')'}">
-                    <img src="../../../assets/dashboard/images/package.png" width="100" class="img-fluid rounded-circle" alt="">
-                    <h3 class="mt-3 mb-0 text-white">Bronze</h3>
-                </div>
-                <div class="card-body">
-                    <div class="row text-center">
-                        <div class="col-6">
-                            <div class="bgl-primary rounded p-3">
-                                <h4 class="mb-0">Prices</h4>
-                                <small>₦100,000</small><br>
-                                <small>₦200,000</small>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="bgl-primary rounded p-3">
-                                <h4 class="mb-0">Bonus</h4>
-                                <small>0%</small>
-                            </div>
-                        </div>
+                    <div class="card-footer mt-0">
+                        <button @click.prevent="addContribution(package_z.id)" class="btn btn-primary btn-lg btn-block">Proceed <i class="flaticon-381-next-1"></i></button>
                     </div>
                 </div>
-                <div class="card-footer mt-0">
-                    <button class="btn btn-primary btn-lg btn-block">Proceed <i class="flaticon-381-next-1"></i></button>
-                </div>
             </div>
-        </div>
-        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-            <div class="card overflow-hidden">
-                <div class="text-center p-5 overlay-box" :style="{backgroundImage: 'url('+packageBG+')'}">
-                    <img src="../../../assets/dashboard/images/package.png" width="100" class="img-fluid rounded-circle" alt="">
-                    <h3 class="mt-3 mb-0 text-white">Gold</h3>
-                </div>
-                <div class="card-body">
-                    <div class="row text-center">
-                        <div class="col-6">
-                            <div class="bgl-primary rounded p-3">
-                                <h4 class="mb-0">Prices</h4>
-                                <small>₦500,000</small><br>
-                                <small>₦1,000,000</small>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="bgl-primary rounded p-3">
-                                <h4 class="mb-0">Bonus</h4>
-                                <small>0%</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer mt-0">
-                    <button class="btn btn-primary btn-lg btn-block">Proceed <i class="flaticon-381-next-1"></i></button>
-                </div>
+        </template>
+        <template v-else>
+            <div class="col-12 text-center">
+                <h3>
+                    <i class="flaticon-381-box"></i> There are no packages available right now.
+                </h3>
+                <p>please check back later</p>
             </div>
-        </div>
+        </template>
     </div>
 </template>
 
 <script>
     import packageBG from "../../../assets/dashboard/images/big/img5.jpg"
+    import {mapGetters} from 'vuex'
 
     export default {
         name: "selectPackage",
         data(){
             return {
-                packageBG
+                packageBG,
+                selected_price: 5000,
+                loading: false
             }
+        },
+        computed: {
+            ...mapGetters('package', {
+                packages: 'getPackages'
+            })
+        },
+        methods: {
+            async addContribution(packageId){
+                const loader = this.$loading.show({container: this.$refs.selectPackage})
+                const response = await this.$store.dispatch('contribution/add', {
+                    amount: this.selected_price,
+                    package: packageId
+                });
+                loader.hide();
+                if(response.status){
+                    this.$toast.success('Contribution Initiated', '', {position: 'topRight'})
+                    setTimeout(()=>{
+                        this.$router.push({name: 'Dashboard'})
+                    }, 2000)
+                    // TODO: redirect to contributions to list payment details
+                }else{
+                    this.$toast.error(response.message, 'Error', {position: 'topRight'})
+                }
+            },
+        },
+        created() {
+            this.loading = true
+            this.$store.dispatch('package/fetch').then(()=>{
+                this.loading = false
+            })
         }
     }
 </script>

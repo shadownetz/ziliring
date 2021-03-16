@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalTitle" aria-hidden="true">
+    <div ref="zili_auth_modal" class="modal fade" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -41,6 +41,16 @@
         components: {
             login,
             register
+        },
+        mounted() {
+            let modalElem = $('#authModal');
+            modalElem.modal({
+                backdrop: 'static',
+                show: false
+            });
+            modalElem.on('hidden.bs.modal', ()=>{
+                this.activeComponent = 'login'
+            })
         }
     }
 </script>

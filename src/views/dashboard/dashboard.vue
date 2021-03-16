@@ -7,7 +7,9 @@
                 </div>
                 <input type="text" class="form-control" placeholder="Search here">
             </div>
-            <a href="javascript:void(0);" class="btn btn-primary ml-auto">+ New Contribution</a>
+            <router-link :to="{name: 'NewContribution'}" class="btn btn-primary ml-auto">
+                + New Contribution
+            </router-link>
         </div>
         <div class="row">
             <div class="col-xl-12 col-lg-12">
@@ -120,7 +122,7 @@
                 <div class="card">
                     <div class="card-header d-block d-sm-flex border-0">
                         <div>
-                            <h4 class="fs-20 text-black">Recent Contributions</h4>
+                            <h4 class="fs-20 text-black">Pending payments</h4>
                             <p class="mb-0 fs-13">
                                 Latest 10 results are displayed
                             </p>
@@ -140,70 +142,62 @@
                             <div class="table-responsive">
                                 <table class="table shadow-hover card-table">
                                     <tbody>
-                                    <tr>
-                                        <td>
-														<span class="bgl-success p-3 d-inline-block">
-															<svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-																	<path d="M23.6186 15.7207L23.6186 15.7207L23.6353 22.6289C23.6354 22.6328 23.6354 22.6363 23.6353 22.6396M23.6186 15.7207L23.1353 22.6341L23.6353 22.635C23.6353 22.6481 23.6347 22.6583 23.6345 22.6627L23.6344 22.6642C23.6346 22.6609 23.6351 22.652 23.6353 22.6407C23.6353 22.6403 23.6353 22.64 23.6353 22.6396M23.6186 15.7207C23.6167 14.9268 22.9717 14.2847 22.1777 14.2866C21.3838 14.2885 20.7417 14.9336 20.7436 15.7275L20.7436 15.7275L20.7519 19.1563M23.6186 15.7207L20.7519 19.1563M23.6353 22.6396C23.6329 23.4282 22.9931 24.0705 22.2017 24.0726C22.2 24.0726 22.1983 24.0727 22.1965 24.0727L22.1944 24.0727L22.1773 24.0726L15.2834 24.056L15.2846 23.556L15.2834 24.056C14.4897 24.054 13.8474 23.4091 13.8494 22.615C13.8513 21.8211 14.4964 21.179 15.2903 21.1809L15.2903 21.1809L18.719 21.1892L5.53639 8.0066C4.975 7.44521 4.975 6.53505 5.53639 5.97367C6.09778 5.41228 7.00793 5.41228 7.56932 5.97367L20.7519 19.1563M23.6353 22.6396C23.6353 22.6376 23.6353 22.6356 23.6353 22.6336L20.7519 19.1563M22.1964 24.0726C22.1957 24.0726 22.1951 24.0726 22.1944 24.0726L22.1964 24.0726Z" fill="#2BC155" stroke="#2BC155"/>
-															</svg>
-														</span>
-                                        </td>
-                                        <td>
-                                            <div class="font-w600 wspace-no">
-															<span class="mr-1">
-																<i class="flaticon-381-gift"></i>
-															</span>
-                                                Steel
-                                            </div>
-                                        </td>
-                                        <td class="font-w500">06:24:45 AM</td>
-                                        <td class="font-w600 text-center">₦5,553</td>
-                                        <td><a class="btn-link text-success float-right" href="javascript:void(0);">Completed</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-														<span class="bgl-danger p-3 d-inline-block">
-														<svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-															<path d="M5.13185 13.9043L5.13185 13.9043L5.11515 6.99607C5.11511 6.99224 5.11513 6.98868 5.11517 6.98542M5.13185 13.9043L5.61517 6.99089L5.11517 6.99005C5.11519 6.97692 5.11575 6.96665 5.116 6.96234L5.11608 6.96082C5.11588 6.96411 5.11535 6.97298 5.11519 6.98431C5.11518 6.98468 5.11517 6.98505 5.11517 6.98542M5.13185 13.9043C5.13378 14.6982 5.77881 15.3403 6.57281 15.3384C7.36672 15.3365 8.00877 14.6914 8.00689 13.8975L8.00689 13.8975L7.99856 10.4687M5.13185 13.9043L7.99856 10.4687M5.11517 6.98542C5.11755 6.19684 5.75739 5.55451 6.54875 5.55238C6.55044 5.55236 6.5522 5.55235 6.554 5.55234L6.55606 5.55234L6.57321 5.55239L13.4671 5.56905L13.4658 6.06905L13.4671 5.56905C14.2608 5.57098 14.903 6.21593 14.9011 7.01004C14.8992 7.80394 14.2541 8.44597 13.4602 8.44409L13.4602 8.4441L10.0315 8.43582L23.2141 21.6184C23.7755 22.1798 23.7755 23.0899 23.2141 23.6513C22.6527 24.2127 21.7426 24.2127 21.1812 23.6513L7.99856 10.4687M5.11517 6.98542C5.11516 6.98743 5.11517 6.98943 5.11517 6.99144L7.99856 10.4687M6.5541 5.55237C6.55474 5.55237 6.5554 5.55237 6.55606 5.55238L6.5541 5.55237Z" fill="#FF2E2E" stroke="#FF2E2E"/>
-														</svg>
-														</span>
-                                        </td>
-                                        <td>
-                                            <div class="font-w600  wspace-no">
-															<span class="mr-1">
-																<i class="flaticon-381-gift"></i>
-															</span>
-                                                Bronze
-                                            </div>
-                                        </td>
-                                        <td class="font-w500">06:24:45 AM</td>
-                                        <td class="font-w600 text-center">₦542</td>
-                                        <td>
-                                            <a class="btn-link text-dark float-right" href="javascript:void(0);">Pending</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-														<span class="bgl-danger p-3 d-inline-block ">
-															<svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-																<path d="M5.13185 13.9043L5.13185 13.9043L5.11515 6.99607C5.11511 6.99224 5.11513 6.98868 5.11517 6.98542M5.13185 13.9043L5.61517 6.99089L5.11517 6.99005C5.11519 6.97692 5.11575 6.96665 5.116 6.96234L5.11608 6.96082C5.11588 6.96411 5.11535 6.97298 5.11519 6.98431C5.11518 6.98468 5.11517 6.98505 5.11517 6.98542M5.13185 13.9043C5.13378 14.6982 5.77881 15.3403 6.57281 15.3384C7.36672 15.3365 8.00877 14.6914 8.00689 13.8975L8.00689 13.8975L7.99856 10.4687M5.13185 13.9043L7.99856 10.4687M5.11517 6.98542C5.11755 6.19684 5.75739 5.55451 6.54875 5.55238C6.55044 5.55236 6.5522 5.55235 6.554 5.55234L6.55606 5.55234L6.57321 5.55239L13.4671 5.56905L13.4658 6.06905L13.4671 5.56905C14.2608 5.57098 14.903 6.21593 14.9011 7.01004C14.8992 7.80394 14.2541 8.44597 13.4602 8.44409L13.4602 8.4441L10.0315 8.43582L23.2141 21.6184C23.7755 22.1798 23.7755 23.0899 23.2141 23.6513C22.6527 24.2127 21.7426 24.2127 21.1812 23.6513L7.99856 10.4687M5.11517 6.98542C5.11516 6.98743 5.11517 6.98943 5.11517 6.99144L7.99856 10.4687M6.5541 5.55237C6.55474 5.55237 6.5554 5.55237 6.55606 5.55238L6.5541 5.55237Z" fill="#FF2E2E" stroke="#FF2E2E"/>
-															</svg>
-														</span>
-                                        </td>
-                                        <td>
-                                            <div class="font-w600  wspace-no">
-															<span class="mr-1">
-																<i class="flaticon-381-gift"></i>
-															</span>
-                                                Gold
-                                            </div>
-                                        </td>
-                                        <td class="font-w500">06:24:45 AM</td>
-                                        <td class="font-w600 text-center">₦912</td>
-                                        <td>
-                                            <a class="btn-link text-danger float-right" href="javascript:void(0);">Canceled</a>
-                                        </td>
-                                    </tr>
+                                    <template v-if="payment_loading">
+                                        <tr>
+                                            <td class="text-center" colspan="5">
+                                                <h3><i class="flaticon-381-time"></i> Fetching Payments History.</h3>
+                                                <p>Please wait...</p>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                    <template v-else-if="queried_payments.length > 0">
+                                        <tr v-for="(payment, index) in queried_payments" :key="'payment_'+index">
+                                            <td>
+                                            <span class="p-3 d-inline-block">
+                                                <img src="../../assets/images/svg/pay.svg" alt="pay to upliner" style="width: 30px;height:30px">
+                                            </span>
+                                            </td>
+                                            <td>
+                                                <div class="font-w600 wspace-no">
+                                                <span class="mr-1">
+                                                    <i class="flaticon-381-gift"></i>
+                                                </span>
+                                                    <span v-if="payment_packages[index]!== undefined">
+                                                    {{payment_packages[index].data.name}}
+                                                </span>
+                                                </div>
+                                            </td>
+                                            <td class="font-w500">{{getReadableDatetime(payment.data.createdAt)}}</td>
+                                            <td class="font-w600 text-center">₦{{payment.data.amount}}</td>
+                                            <td>
+                                                <a
+                                                        href="javascript:void(0)"
+                                                        data-toggle="modal"
+                                                        data-target="#paymentInfo"
+                                                        @click.prevent="togglePaymentInfo(payment, payment_packages[index])"
+                                                >
+                                                    <i class="flaticon-381-file"></i> (details)
+                                                </a>
+                                                <a v-if="payment.data.reported" class="btn-link text-danger float-right" href="javascript:void(0);">
+                                                    <i>Reported</i>
+                                                </a>
+                                                <a v-else-if="payment.data.confirmed" class="btn-link text-success float-right" href="javascript:void(0);">
+                                                    <i>Completed</i>
+                                                </a>
+                                                <a v-else class="btn-link text-warning float-right" href="javascript:void(0);">
+                                                    <i>Pending</i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                    <template v-else>
+                                        <tr>
+                                            <td class="text-center" colspan="5">
+                                                <h3><i class="flaticon-381-file-1"></i> You have no payment history</h3>
+                                                <p>Recent payment transactions will be displayed here</p>
+                                            </td>
+                                        </tr>
+                                    </template>
                                     </tbody>
                                 </table>
                             </div>
@@ -212,12 +206,52 @@
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 
 <script>
+    import basicMethodMixins from "../../utils/mixins/basicMethodMixins";
+
     export default {
-        name: "dashboard"
+        name: "dashboard",
+        data(){
+            return {
+                payment_loading: false,
+                queried_payments: [],
+                payments_contribs: [],
+                payment_packages: [],
+                payments_receiver_profiles: []
+            }
+        },
+        mixins: [basicMethodMixins],
+        methods: {
+            async queryPayments(){
+                this.queried_payments = (await this.$store.dispatch('payment/queryPending')).data.result;
+                const contribPromises = this.queried_payments.map(payment=>this.$store.dispatch('contribution/get', payment.data.contribId));
+                const contribs = await Promise.all(contribPromises);
+                if(contribs.length > 0){
+                    this.payments_contribs = contribs.map(contrib=>contrib.data);
+                    const tmp_packages_promises = this.payments_contribs.map(contrib=>this.$store.dispatch('package/get', contrib.data.packageId));
+                    const tmp_packages = await Promise.all(tmp_packages_promises);
+                    this.payment_packages = tmp_packages.map(package_z=>package_z.data)
+
+
+                }
+            },
+            togglePaymentInfo(payment, package_z){
+                this.$emit('togglePaymentInfo', {
+                    payment,
+                    package: package_z
+                })
+            }
+        },
+        // components: {
+        //   paymentInfo
+        // },
+        mounted(){
+            this.queryPayments()
+        }
     }
 </script>
 
