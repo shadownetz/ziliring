@@ -49,18 +49,47 @@
                                     <h5>{{uplinerProfileInfo.data.bankName}}</h5>
                                 </div>
                             </template>
+                            <template v-if="confirmPay">
+                                <div class="col-12 my-3">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <button class="btn btn-primary btn-sm" type="button">Upload</button>
+                                        </div>
+                                        <div class="custom-file">
+                                            <input @change="uploadProof" id="paymentProof" type="file" class="custom-file-input" :disabled="uploading">
+                                            <label for="paymentProof" class="custom-file-label">Choose file</label>
+                                        </div>
+                                    </div>
+                                    <p class="text-muted">
+                                        The proof of payment could be your payment receipt from your bank or a screenshot of your online transaction
+                                    </p>
+                                    <div v-if="uploading">
+                                        <h6>Uploading
+                                            <span class="pull-right">{{progress}}%</span>
+                                        </h6>
+                                        <div class="progress ">
+                                            <div class="progress-bar bg-danger progress-animated"
+                                                 style="height:6px;"
+                                                 :style="{'width': progress+'%'}"
+                                                 role="progressbar">
+                                                <span class="sr-only">{{progress}}% Complete</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer" v-if="!payment.data.confirmed&&!payment.data.reported">
                     <div class="container-fluid">
                         <div class="row align-content-center justify-content-center">
-                            <button type="button" class="btn btn-primary btn-rounded">
-                                <i class="flaticon-381-enter"></i> Confirm Payment
+                            <button type="button" class="btn btn-primary btn-rounded" @click.prevent="confirmPay=true" :disabled="!uplinerProfileInfo.data">
+                                <i class="flaticon-381-cloud"></i> Upload Proof of Payment
                             </button>
                         </div>
                     </div>
-<!--                    <button type="button" class="btn btn-danger light" data-dismiss="modal">Close</button>-->
+                    <!--                    <button type="button" class="btn btn-danger light" data-dismiss="modal">Close</button>-->
                 </div>
             </div>
         </div>
@@ -69,24 +98,72 @@
 
 <script>
     import basicMethodMixins from "../../utils/mixins/basicMethodMixins";
+    import {storageRef} from "../../firebase/firebase";
 
     export default {
         name: "paymentInfo",
         data(){
             return {
-                uplinerProfileInfo: {}
+                uplinerProfileInfo: {},
+                uploading: false,
+                progress: 0,
+                confirmPay: false
             }
         },
         mixins: [basicMethodMixins],
         methods: {
-          async fetchUplinerInfo(){
-              console.log('fetching')
-              const response = await this.$store.dispatch('profile/get', this.payment.data.receiverId);
-              console.log(response)
-              if(response.status){
-                  this.uplinerProfileInfo = response.data
-              }
-          }
+            async fetchUplinerInfo(){
+                const response = await this.$store.dispatch('profile/get', this.payment.data.receiverId);
+                if(response.status){
+                    this.uplinerProfileInfo = response.data
+                }
+            },
+            async uploadProof(event){
+                const file = event.target.files[0];
+                const file_ext = file.name.split(".").pop();
+                const file_name = `zili_${(new Date()).valueOf()}.${file_ext}`
+                const metadata = {
+                    contentType: 'image/'+file_ext,
+                }
+                if(!this.image_is_valid(file_ext)){
+                    this.resetUpload();
+                    return this.$toast.warning("Please upload a valid image", "Invalid file type")
+                }
+                this.uploading = true;
+                const uploadTask = storageRef.ref()
+                    .child(`paymentProofs/${this.$store.getters['user/getUser'].id}/${file_name}`)
+                    .put(file, metadata);
+                uploadTask.on('state_changed',
+                    (snapshot)=>{
+                        this.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    },
+                    (error)=>{
+                        this.$toast.error('Upload Error', error.message);
+                        this.resetUpload()
+                    },
+                    ()=>{
+                        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                            return this.$store.dispatch('payment/uploadPaymentProof', {
+                                id: this.payment.id,
+                                fileURL: downloadURL
+                            })
+                        }).then(()=>{
+                            this.$toast.success('Payment proof received', 'Successful');
+                            this.resetUpload();
+                            $('#paymentInfo').modal('hide');
+                            $('.modal-backdrop').remove()
+                        }).catch(err=>{
+                            this.$toast.error('Upload Error', err.message);
+                            this.resetUpload()
+                        })
+                    }
+                )
+            },
+            resetUpload(){
+                this.progress = 0;
+                this.uploading = false;
+                $('#paymentProof').val('')
+            }
         },
         props: {
             payment: {
@@ -112,7 +189,8 @@
                 this.fetchUplinerInfo()
             })
             infoModal.on('hidden.bs.modal', ()=>{
-                this.uplinerProfileInfo = {}
+                this.uplinerProfileInfo = {};
+                this.confirmPay = false;
             })
         }
     }

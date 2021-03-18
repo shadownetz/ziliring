@@ -46,5 +46,8 @@ export default {
             }
             return 'No DateTime'
         },
+        image_is_valid(extension, otherExtension=[]){
+            return $.inArray(extension, ['jpg','png','jpeg'].concat(otherExtension)) !== -1
+        }
     }
 }

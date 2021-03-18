@@ -1,5 +1,6 @@
 import {paymentRef} from "../../firebase/firebase";
 import {ResponseObject} from "../../utils/globalObjects";
+import firebase from "../../firebase/firebase";
 
 export default {
     namespaced: true,
@@ -38,6 +39,18 @@ export default {
                 response.message = e.message;
                 response.status = false;
                 console.log('Err fetching queried payment::', e)
+            }
+            return Promise.resolve(response)
+        },
+        async uploadPaymentProof(context, {id, fileURL}){
+            const response = new ResponseObject();
+            try{
+                await paymentRef.doc(id).update({
+                    proof: firebase.firestore.FieldValue.arrayUnion(fileURL)
+                })
+            }catch (e) {
+                response.status = false;
+                response.message = e.message
             }
             return Promise.resolve(response)
         }

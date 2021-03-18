@@ -14,7 +14,7 @@ Vue.config.productionTip = false
 Vue.use(Loading);
 Vue.use(VueCountryCode);
 Vue.use(VueIziToast, {
-  position: 'bottomCenter'
+  position: 'topRight'
 });
 
 
