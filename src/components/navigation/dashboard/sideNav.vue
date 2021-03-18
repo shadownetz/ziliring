@@ -17,7 +17,9 @@
                         <li>
                             <router-link :to="{name: 'NewContribution'}">New</router-link>
                         </li>
-                        <li><a href="javascript:void(0)">Manage</a></li>
+                        <li>
+                            <router-link :to="{name: 'Contribution'}">Active</router-link>
+                        </li>
                     </ul>
                 </li>
             </ul>

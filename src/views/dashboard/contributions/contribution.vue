@@ -1,24 +1,35 @@
 <template>
     <div>
-        <component :is="activeComponent"/>
+        <component
+                @toggleContribComponent="toggleComponent($event)"
+                @togglePaymentProof="$emit('togglePaymentProof', $event)"
+                :is="activeComponent"
+                :payload="payload"
+        />
     </div>
 </template>
 
 <script>
-    import selectPackage from "./selectPackage";
+    import activeContributions from "./activeContributions";
+    import manageContributions from "./manageContributions";
 
     export default {
         name: "contribution",
         data(){
-            return {
-                activeComponent: 'selectPackage'
-            }
+          return {
+              activeComponent: 'activeContributions',
+              payload: {}
+          }
         },
         methods: {
-
+          toggleComponent(event){
+              this.activeComponent = event.component;
+              this.payload = event.payload
+          }
         },
         components: {
-            selectPackage
+            activeContributions,
+            manageContributions
         }
     }
 </script>

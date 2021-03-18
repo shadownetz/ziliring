@@ -140,7 +140,7 @@
                     <div class="card-body tab-content p-0">
                         <div class="tab-pane active show fade" id="monthly" role="tabpanel">
                             <div class="table-responsive">
-                                <table class="table shadow-hover card-table">
+                                <table class="table table-responsive-md shadow-hover card-table">
                                     <tbody>
                                     <template v-if="payment_loading">
                                         <tr>

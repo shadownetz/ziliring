@@ -112,7 +112,9 @@ export default {
             try{
                 if(reset){
                     //
-                    await router.push({name: 'Home'})
+                    const route = router.resolve({name: 'Home'}).resolved.fullPath.split('/')
+                    route.pop();
+                    window.location.href = route.join('/');
                 }
                 await firebase.auth().signOut()
             }catch (e) {

@@ -17,6 +17,20 @@ export default {
         fetch(){
             //
         },
+        async get(context, id){
+            const response = new ResponseObject();
+            try{
+                const payment = await paymentRef.doc(id).get();
+                if(payment.exists){
+                    response.data.id = payment.id;
+                    response.data.data = payment.data()
+                }
+            }catch (e) {
+                response.status = false;
+                response.message = e.message
+            }
+            return Promise.resolve(response)
+        },
         async queryPending({rootGetters}, limit=10){
             const response = new ResponseObject();
             response.data.result = [];
@@ -53,6 +67,6 @@ export default {
                 response.message = e.message
             }
             return Promise.resolve(response)
-        }
+        },
     }
 }

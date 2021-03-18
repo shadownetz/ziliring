@@ -1,7 +1,17 @@
+import {firestore, paymentRef} from "../firebase/firebase";
+
 class Payment{
-    constructor() {
+    constructor(id, data={}) {
+        this.id = id;
+        this.data = data
     }
 
+    confirmPayment(){
+        return paymentRef.doc(this.id).update({
+            confirmed: true,
+            updatedAt: firestore.FieldValue.serverTimestamp()
+        })
+    }
 }
 
 function Model() {
@@ -17,7 +27,5 @@ function Model() {
     this.updatedAt = new Date()
 }
 
-module.exports = {
-    PaymentModel : Model,
-    Payment
-}
+export const PaymentModel = Model
+export default Payment

@@ -5,7 +5,11 @@
 
         <div class="content-body">
             <div class="container-fluid">
-                <router-view @togglePaymentInfo="paymentInfoPayload=$event"/>
+                <router-view
+                        @togglePaymentInfo="paymentInfoPayload=$event"
+                        @toggleVContrib="personalContrib=$event"
+                        @togglePaymentProof="paymentProofs=$event"
+                />
             </div>
         </div>
 
@@ -14,6 +18,8 @@
                 :package_z="paymentInfoPayload.package"
                 :payment="paymentInfoPayload.payment"
         />
+        <view-personal-contribution :contribution="personalContrib"/>
+        <payment-proofs :urls="paymentProofs"/>
     </div>
 </template>
 
@@ -22,19 +28,25 @@
     import footNav from "../../components/navigation/dashboard/footNav";
     import sideNav from "../../components/navigation/dashboard/sideNav";
     import paymentInfo from "../../components/modals/paymentInfo";
+    import viewPersonalContribution from "../../components/modals/viewPersonalContribution";
+    import paymentProofs from "../../components/modals/paymentProofs";
 
     export default {
         name: "dashboard",
         data(){
-          return {
-              paymentInfoPayload: {}
-          }
+            return {
+                paymentInfoPayload: {},
+                personalContrib: {id: '', data: {}},
+                paymentProofs: []
+            }
         },
         components: {
             topNav,
             footNav,
             sideNav,
-            paymentInfo
+            paymentInfo,
+            viewPersonalContribution,
+            paymentProofs
         },
         created() {
             this.$toast.success('Welcome back', 'Invite')
@@ -44,9 +56,10 @@
             setTimeout(()=>{
                 $('#preloader').fadeOut('slow');
             }, 1000)
-            $('head').append(
+            $('head').append([
+                "<link class='dash_custom_imports' href='assets/dashboard/vendor/datatables/css/jquery.dataTables.min.css' rel='stylesheet'>",
                 "<link class='dash_custom_imports' rel='stylesheet' href='assets/dashboard/css/style.css'/>"
-            );
+            ]);
             $('body').append(
                 [
                     "<script class='dash_custom_imports' src='assets/dashboard/vendor/global/global.min.js'/>",

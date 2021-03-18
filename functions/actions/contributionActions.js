@@ -39,7 +39,8 @@ const attachUserToUpliner = functions.firestore
                     await firebaseRefModule.contributionRef.doc(uplinerContribInstance.id).update({
                         downliners: firebaseRefModule.firestoreRef.FieldValue.arrayUnion(downlinerContribInstance.data.userId),
                         paymentIds: firebaseRefModule.firestoreRef.FieldValue.arrayUnion(saved_payment.id),
-                        isComplete: uplinerContribInstance.profit_gain_is_reached()
+                        isComplete: uplinerContribInstance.profit_gain_is_reached(),
+                        paymentProgressions: uplinerContribInstance.getPaymentProgressions()
                     })
 
                     await firebaseRefModule.contributionRef.doc(downlinerContribInstance.id).update({

@@ -71,6 +71,9 @@ class Contribution{
         return PaymentDecision.getPaymentProgression(this.data.amountToBePaid)
     }
 
+    getPaymentProgressions(){
+        return this.data.paymentProgressions
+    }
 }
 
 function Model(){

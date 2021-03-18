@@ -27,8 +27,13 @@ const routes = [
             {
                 path: '/new-contribution',
                 name: 'NewContribution',
+                component: ()=>import('../views/dashboard/contributions/newContribution')
+            },
+            {
+                path: '/contributions',
+                name: 'Contribution',
                 component: ()=>import('../views/dashboard/contributions/contribution')
-            }
+            },
         ]
     }
 ]
