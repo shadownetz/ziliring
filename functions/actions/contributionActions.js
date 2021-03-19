@@ -48,7 +48,6 @@ const attachUserToUpliner = functions.firestore
                         payTo: upliner.id,
                         paymentProgressions: downlinerContribInstance.get_payment_progressions(),
                         paymentId: saved_payment.id,
-                        expireAt: firebaseRefModule.firestoreRef.Timestamp.fromDate(Contribution.get_expiration_timestamp())
                     })
                 }
             }catch (e) {

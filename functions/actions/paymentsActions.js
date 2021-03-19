@@ -18,7 +18,9 @@ const confirmPayment = functions.firestore
                     await firebaseRefModule.contributionRef.doc(paymentData.contribId).update({
                         hasPaid: true,
                         type: 'upliner',
-                        profitReceived: downlinerContribInstance.get_profit_received()
+                        profitReceived: downlinerContribInstance.get_profit_received(),
+                        beginAt: firebaseRefModule.firestoreRef.FieldValue.serverTimestamp(),
+                        expireAt: firebaseRefModule.firestoreRef.Timestamp.fromDate(Contribution.get_expiration_timestamp()),
                     });
                     await firebaseRefModule.profileRef.doc(paymentData.receiverId).update({
                         balance: (uplinerProfile.data().balance + paymentData.amount)

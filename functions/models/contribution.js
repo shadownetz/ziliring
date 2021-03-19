@@ -90,6 +90,7 @@ function Model(){
     this.paymentProgressions = []
     this.isComplete = false;
     this.expireAt = new Date();
+    this.beginAt = new Date();
     this.paymentId = '';
     this.paymentIds = [];
     this.downliners = [];

@@ -3,6 +3,7 @@
         <component
                 @toggleContribComponent="toggleComponent($event)"
                 @togglePaymentProof="$emit('togglePaymentProof', $event)"
+                @toggleVContrib="$emit('toggleVContrib', $event)"
                 :is="activeComponent"
                 :payload="payload"
         />

@@ -57,6 +57,15 @@ export default {
                 return Math.abs(now - _date) / 36e5
             }
             return 0
+        },
+        getDaysDiffFromNow(timestamp){
+            let _date = new Date(0);
+            let now = new Date();
+            _date.setSeconds(timestamp.seconds);
+            if(_date.getTime() === _date.getTime()){
+                return (now.getTime()-_date.getTime()) / (1000 * 3600 * 24);
+            }
+            return 0
         }
     }
 }

@@ -23,6 +23,7 @@
                                 <th><strong>Amount</strong></th>
                                 <th><strong>Payment</strong></th>
                                 <th><strong>Status</strong></th>
+                                <th><strong>Progress</strong></th>
                                 <th><strong>Created</strong></th>
                                 <th></th>
                             </tr>
@@ -48,8 +49,24 @@
                                     <span v-if="contrib.data.hasPaid" class="badge light badge-success">Completed</span>
                                     <span v-else class="badge light badge-info">in progress</span>
                                 </td>
+                                <td v-if="contrib.data.hasPaid">
+                                    <h6>
+                                        <span class="pull-right">{{getProgress(contrib)}}%</span>
+                                    </h6>
+                                    <div class="progress ">
+                                        <div class="progress-bar bg-danger progress-animated"
+                                             style="height:6px;"
+                                             :style="{'width': getProgress(contrib)+'%'}"
+                                             role="progressbar">
+                                            <span class="sr-only">{{getProgress(contrib)}}% Complete</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td v-else>
+                                    <span class="badge light badge-outline-primary">awaiting payment</span>
+                                </td>
                                 <td>
-                                    {{getReadableDatetime(contrib.data.createdAt)}}
+                                    {{getReadableDate(contrib.data.createdAt)}}
                                 </td>
                                 <td>
                                     <div class="dropdown">
@@ -146,6 +163,11 @@
                         this.fetchMetaInfo()
                     }, 2000)
                 }
+            },
+            getProgress(contrib){
+                return Math.floor(
+                    contrib.data.isComplete?100:(this.getDaysDiffFromNow(contrib.data.beginAt)/7)*100
+                )
             }
         },
         components: {
