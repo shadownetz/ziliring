@@ -6,9 +6,17 @@ class Payment{
         this.data = data
     }
 
-    confirmPayment(){
+    confirm(){
         return paymentRef.doc(this.id).update({
             confirmed: true,
+            reported: false,
+            updatedAt: firestore.FieldValue.serverTimestamp()
+        })
+    }
+
+    report(){
+        return paymentRef.doc(this.id).update({
+            reported: true,
             updatedAt: firestore.FieldValue.serverTimestamp()
         })
     }

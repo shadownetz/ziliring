@@ -100,9 +100,11 @@
                                 @change="onPageChange"
                                 :hide-single-page="true"
                                 :classes="{
-                                    'ul': 'dataTables_paginate paging_simple_numbers',
+                                    'ul': ['dataTables_paginate', 'paging_simple_numbers', 'w-100'],
+                                    'li': 'd-inline',
                                     'a': ['paginate_button'],
-                                    '.prev > a': 'previous'
+                                    'li.active > a': 'current',
+                                    'ul.paginate-links > li.disabled > a': 'disabled'
                                 }"
                         >
                         </paginate-links>
@@ -155,7 +157,7 @@
             async confirmPayment(id){
                 const paymentInstance = new Payment(id);
                 paymentInstance
-                    .confirmPayment()
+                    .confirm()
                     .then(()=>{
                         this.$toast.success("Confirmed", "Done");
                         this.$emit('toggleContribComponent', {component: 'activeContributions'})

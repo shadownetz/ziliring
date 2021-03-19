@@ -56,6 +56,29 @@ export default {
             }
             return Promise.resolve(response)
         },
+        async queryAll({rootGetters}){
+            const response = new ResponseObject();
+            response.data.result = [];
+            try{
+                const queriedSnapshots = await paymentRef
+                    .where('userId', '==', rootGetters['user/getUser'].id)
+                    .orderBy('createdAt', 'desc')
+                    .get();
+                queriedSnapshots.forEach(doc=>{
+                    if(doc.exists){
+                        response.data.result.push({
+                            id: doc.id,
+                            data: doc.data()
+                        })
+                    }
+                })
+            }catch (e) {
+                response.message = e.message;
+                response.status = false;
+                console.log('Err fetching all queried payment::', e)
+            }
+            return Promise.resolve(response)
+        },
         async uploadPaymentProof(context, {id, fileURL}){
             const response = new ResponseObject();
             try{

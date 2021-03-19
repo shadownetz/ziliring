@@ -2,13 +2,19 @@
     <div class="deznav">
         <div class="deznav-scroll">
             <ul class="metismenu" id="menu">
-                <li>
+                <li :class="$route.name==='Dashboard'?'mm-active':''">
                     <router-link :to="{name: 'Dashboard'}" class="ai-icon" aria-expanded="false">
                         <i class="flaticon-381-networking"></i>
                         <span class="nav-text">Dashboard</span>
                     </router-link>
                 </li>
-                <li>
+                <li :class="$route.name==='PaymentTransactions'?'mm-active':''">
+                    <router-link :to="{name: 'PaymentTransactions'}" class="ai-icon" aria-expanded="false">
+                        <i class="ti-files"></i>
+                        <span class="nav-text">Payments History</span>
+                    </router-link>
+                </li>
+                <li :class="$route.name==='Contribution'?'mm-active':''">
                     <a class="has-arrow ai-icon" href="javascript:void(0)" aria-expanded="false">
                         <i class="flaticon-381-layer-1"></i>
                         <span class="nav-text">Contributions</span>

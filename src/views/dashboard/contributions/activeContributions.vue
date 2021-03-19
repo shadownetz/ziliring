@@ -18,6 +18,7 @@
                             <thead>
                             <tr>
                                 <th class="width80"><strong>#</strong></th>
+                                <th>Reference</th>
                                 <th><strong>Package</strong></th>
                                 <th><strong>Amount</strong></th>
                                 <th><strong>Payment</strong></th>
@@ -33,6 +34,7 @@
                                     <span v-else> {{ 100 * currentPage + index + 1 }}</span>
                                     <!--                                    <strong>01</strong>-->
                                 </td>
+                                <td>{{contrib.id}}</td>
                                 <td>
                                     <span v-if="packageInfo[index]!==undefined">{{packageInfo[index].data.name}}</span>
                                     <span v-else>{{contrib.data.packageId}}</span>
@@ -83,9 +85,11 @@
                                 @change="onPageChange"
                                 :hide-single-page="true"
                                 :classes="{
-                                    'ul': 'dataTables_paginate paging_simple_numbers',
+                                    'ul': ['dataTables_paginate', 'paging_simple_numbers', 'w-100'],
+                                    'li': 'd-inline',
                                     'a': ['paginate_button'],
-                                    '.prev > a': 'previous'
+                                    'li.active > a': 'current',
+                                    'ul.paginate-links > li.disabled > a': 'disabled'
                                 }"
                         >
                         </paginate-links>

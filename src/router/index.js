@@ -34,6 +34,11 @@ const routes = [
                 name: 'Contribution',
                 component: ()=>import('../views/dashboard/contributions/contribution')
             },
+            {
+                path: '/payment-transactions',
+                name: 'PaymentTransactions',
+                component: ()=>import('../views/dashboard/paymentsHistory')
+            },
         ]
     }
 ]
@@ -42,6 +47,10 @@ const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes
+})
+
+router.afterEach(()=>{
+    $("html, body").animate({scrollTop: 0}, 1000)
 })
 
 router.beforeEach((to, from, next) => {
