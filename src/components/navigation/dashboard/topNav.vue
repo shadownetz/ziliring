@@ -40,77 +40,78 @@
                                     <span class="badge light text-white bg-primary">0</span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3 height380">
-                                        <ul class="timeline">
-                                            <li>
-                                                <div class="timeline-panel">
-                                                    <div class="media mr-2">
-                                                        <img alt="image" width="50" src="../../../assets/dashboard/images/avatar/1.jpg">
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h6 class="mb-1">Dr sultads Send you Photo</h6>
-                                                        <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="timeline-panel">
-                                                    <div class="media mr-2 media-info">
-                                                        KG
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h6 class="mb-1">Resport created successfully</h6>
-                                                        <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="timeline-panel">
-                                                    <div class="media mr-2 media-success">
-                                                        <i class="fa fa-home"></i>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h6 class="mb-1">Reminder : Treatment Time!</h6>
-                                                        <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="timeline-panel">
-                                                    <div class="media mr-2">
-                                                        <img alt="image" width="50" src="../../../assets/dashboard/images/avatar/1.jpg">
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h6 class="mb-1">Dr sultads Send you Photo</h6>
-                                                        <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="timeline-panel">
-                                                    <div class="media mr-2 media-danger">
-                                                        KG
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h6 class="mb-1">Resport created successfully</h6>
-                                                        <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="timeline-panel">
-                                                    <div class="media mr-2 media-primary">
-                                                        <i class="fa fa-home"></i>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h6 class="mb-1">Reminder : Treatment Time!</h6>
-                                                        <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <a class="all-notification" href="javascript:void(0)">See all notifications <i class="ti-arrow-right"></i></a>
+<!--                                    <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3 height380">-->
+<!--                                        <ul class="timeline">-->
+<!--                                            <li>-->
+<!--                                                <div class="timeline-panel">-->
+<!--                                                    <div class="media mr-2">-->
+<!--                                                        <img alt="image" width="50" src="../../../assets/dashboard/images/avatar/1.jpg">-->
+<!--                                                    </div>-->
+<!--                                                    <div class="media-body">-->
+<!--                                                        <h6 class="mb-1">Dr sultads Send you Photo</h6>-->
+<!--                                                        <small class="d-block">29 July 2020 - 02:26 PM</small>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </li>-->
+<!--                                            <li>-->
+<!--                                                <div class="timeline-panel">-->
+<!--                                                    <div class="media mr-2 media-info">-->
+<!--                                                        KG-->
+<!--                                                    </div>-->
+<!--                                                    <div class="media-body">-->
+<!--                                                        <h6 class="mb-1">Resport created successfully</h6>-->
+<!--                                                        <small class="d-block">29 July 2020 - 02:26 PM</small>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </li>-->
+<!--                                            <li>-->
+<!--                                                <div class="timeline-panel">-->
+<!--                                                    <div class="media mr-2 media-success">-->
+<!--                                                        <i class="fa fa-home"></i>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="media-body">-->
+<!--                                                        <h6 class="mb-1">Reminder : Treatment Time!</h6>-->
+<!--                                                        <small class="d-block">29 July 2020 - 02:26 PM</small>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </li>-->
+<!--                                            <li>-->
+<!--                                                <div class="timeline-panel">-->
+<!--                                                    <div class="media mr-2">-->
+<!--                                                        <img alt="image" width="50" src="../../../assets/dashboard/images/avatar/1.jpg">-->
+<!--                                                    </div>-->
+<!--                                                    <div class="media-body">-->
+<!--                                                        <h6 class="mb-1">Dr sultads Send you Photo</h6>-->
+<!--                                                        <small class="d-block">29 July 2020 - 02:26 PM</small>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </li>-->
+<!--                                            <li>-->
+<!--                                                <div class="timeline-panel">-->
+<!--                                                    <div class="media mr-2 media-danger">-->
+<!--                                                        KG-->
+<!--                                                    </div>-->
+<!--                                                    <div class="media-body">-->
+<!--                                                        <h6 class="mb-1">Resport created successfully</h6>-->
+<!--                                                        <small class="d-block">29 July 2020 - 02:26 PM</small>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </li>-->
+<!--                                            <li>-->
+<!--                                                <div class="timeline-panel">-->
+<!--                                                    <div class="media mr-2 media-primary">-->
+<!--                                                        <i class="fa fa-home"></i>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="media-body">-->
+<!--                                                        <h6 class="mb-1">Reminder : Treatment Time!</h6>-->
+<!--                                                        <small class="d-block">29 July 2020 - 02:26 PM</small>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </li>-->
+<!--                                        </ul>-->
+<!--                                    </div>-->
+                                    <a class="all-notification" href="javascript:void(0)">no new notification <i class="ti-info-alt"></i></a>
+<!--                                    <a class="all-notification" href="javascript:void(0)">See all notifications <i class="ti-arrow-right"></i></a>-->
                                 </div>
                             </li>
                             <!-- Whatsapp Message -->
@@ -123,13 +124,13 @@
                             <li class="nav-item header-profile">
                                 <a class="nav-link" href="javascript:void(0)" role="button">
                                     <div class="header-info">
-                                        <span class="text-black">₦0</span>
+                                        <span class="text-black">₦{{getProfile.data.balance||0}}</span>
                                         <p class="fs-12 mb-0">Balance</p>
                                     </div>
                                 </a>
                                 <a class="nav-link" href="javascript:void(0)" role="button">
                                     <div class="header-info">
-                                        <span class="text-black">₦0</span>
+                                        <span class="text-black">₦{{getProfile.data.profit||0}}</span>
                                         <p class="fs-12 mb-0">Profit</p>
                                     </div>
                                 </a>
@@ -202,15 +203,15 @@
                                 <a class="nav-link" href="javascript:void(0)" role="button" data-toggle="dropdown">
                                     <div class="header-info">
                                         <span class="text-black">Hello <strong>{{getUser.data.lastName}}</strong></span>
-                                        <p class="fs-12 mb-0">Contributor</p>
+                                        <p class="fs-12 mb-0">{{getUser.data.isAdmin?'Admin':'Contributor'}}</p>
                                     </div>
                                     <img src="../../../assets/dashboard/images/profile/user.png" width="20" alt=""/>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="javascript:void(0)" class="dropdown-item ai-icon">
+                                    <router-link :to="{name: 'Profile'}" class="dropdown-item ai-icon">
                                         <svg id="icon-user1" xmlns="http://www.w3.org/2000/svg" class="text-primary" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                         <span class="ml-2">Profile </span>
-                                    </a>
+                                    </router-link>
                                     <a @click.prevent="logout" href="javascript:void(0)" class="dropdown-item ai-icon">
                                         <svg id="icon-logout" xmlns="http://www.w3.org/2000/svg" class="text-danger" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                                         <span class="ml-2">Logout </span>
@@ -233,12 +234,20 @@
         computed: {
             ...mapGetters('user', [
                 'getUser'
+            ]),
+            ...mapGetters('profile', [
+                'getProfile'
             ])
         },
         methods: {
             ...mapActions('auth', [
                 'logout'
             ])
+        },
+        mounted() {
+            if(!this.$store.getters['profile/getProfile'].id){
+                this.$store.dispatch('profile/init')
+            }
         }
     }
 </script>

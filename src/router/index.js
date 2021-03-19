@@ -39,6 +39,11 @@ const routes = [
                 name: 'PaymentTransactions',
                 component: ()=>import('../views/dashboard/paymentsHistory')
             },
+            {
+                path: '/profile',
+                name: 'Profile',
+                component: ()=>import('../views/dashboard/profile')
+            },
         ]
     }
 ]

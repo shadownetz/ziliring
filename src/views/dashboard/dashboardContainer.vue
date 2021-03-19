@@ -20,6 +20,7 @@
         />
         <view-personal-contribution :contribution="personalContrib"/>
         <payment-proofs :urls="paymentProofs"/>
+        <update-account-details v-if="!profile.data.bankName"/>
     </div>
 </template>
 
@@ -30,6 +31,8 @@
     import paymentInfo from "../../components/modals/paymentInfo";
     import viewPersonalContribution from "../../components/modals/viewPersonalContribution";
     import paymentProofs from "../../components/modals/paymentProofs";
+    import updateAccountDetails from "../../components/modals/updateAccountDetails";
+    import {mapGetters} from "vuex";
 
     export default {
         name: "dashboard",
@@ -40,16 +43,33 @@
                 paymentProofs: []
             }
         },
+        computed: {
+            ...mapGetters({
+                profile: 'profile/getProfile'
+            })
+        },
         components: {
             topNav,
             footNav,
             sideNav,
             paymentInfo,
             viewPersonalContribution,
-            paymentProofs
+            paymentProofs,
+            updateAccountDetails
         },
         created() {
-            this.$toast.success('Welcome back', 'Invite')
+            this.$toast.success('Welcome back', 'Invite');
+            setTimeout(()=>{
+                if(!this.profile.data.bankName){
+                    const elem = $('#accountDetails');
+                    elem.modal({
+                        backdrop: 'static',
+                        show: false,
+                        focus: true
+                    });
+                    elem.modal('show')
+                }
+            }, 1000)
         },
         mounted() {
             $('#main-wrapper').css('opacity', 1);
