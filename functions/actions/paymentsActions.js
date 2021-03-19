@@ -8,18 +8,22 @@ const confirmPayment = functions.firestore
     .onUpdate(async (change, context) => {
         try{
             const paymentData = change.after.data();
+            const paymentPrevData = change.before.data();
             const downlinerContribDoc = await firebaseRefModule.contributionRef.doc(paymentData.contribId).get();
-            const downlinerDoc = await firebaseRefModule.userRef.doc(paymentData.userId).get()
-            if(downlinerContribDoc.exists && downlinerDoc.exists){
+            const uplinerProfile = await firebaseRefModule.profileRef.doc(paymentData.receiverId).get()
+            if(downlinerContribDoc.exists && uplinerProfile.exists){
                 const downlinerContribInstance = new Contribution({id: downlinerContribDoc.id, data: downlinerContribDoc.data()});
-                if(paymentData.confirmed){
+                // from false to true
+                if(!paymentPrevData.confirmed && paymentData.confirmed){
                     await firebaseRefModule.contributionRef.doc(paymentData.contribId).update({
                         hasPaid: true,
                         type: 'upliner',
-                        profitReceived: downlinerContribInstance.get_profit_received()
+                        profitReceived: downlinerContribInstance.get_profit_received(),
+                        beginAt: firebaseRefModule.firestoreRef.FieldValue.serverTimestamp(),
+                        expireAt: firebaseRefModule.firestoreRef.Timestamp.fromDate(Contribution.get_expiration_timestamp()),
                     });
-                    await firebaseRefModule.profileRef.doc(paymentData.userId).update({
-                        balance: (downlinerDoc.data().balance + paymentData.amount)
+                    await firebaseRefModule.profileRef.doc(paymentData.receiverId).update({
+                        balance: (uplinerProfile.data().balance + paymentData.amount)
                     })
                 }
             }

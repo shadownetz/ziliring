@@ -140,7 +140,7 @@
                     <div class="card-body tab-content p-0">
                         <div class="tab-pane active show fade" id="monthly" role="tabpanel">
                             <div class="table-responsive">
-                                <table class="table shadow-hover card-table">
+                                <table class="table table-responsive-md shadow-hover card-table">
                                     <tbody>
                                     <template v-if="payment_loading">
                                         <tr>
@@ -188,6 +188,11 @@
                                                     <i>Pending</i>
                                                 </a>
                                             </td>
+                                            <td v-if="!payment.data.confirmed&&!payment.data.reported&&getHourDiffFromNow(payment.data.createdAt)>=3">
+                                                <button class="btn btn-outline-danger" @click="reportPayment(payment.id)">
+                                                    <i class="ti-flag"></i> Report
+                                                </button>
+                                            </td>
                                         </tr>
                                     </template>
                                     <template v-else>
@@ -212,6 +217,7 @@
 
 <script>
     import basicMethodMixins from "../../utils/mixins/basicMethodMixins";
+    import Payment from "../../models/payment";
 
     export default {
         name: "dashboard",
@@ -227,6 +233,7 @@
         mixins: [basicMethodMixins],
         methods: {
             async queryPayments(){
+                this.payment_loading = true;
                 this.queried_payments = (await this.$store.dispatch('payment/queryPending')).data.result;
                 const contribPromises = this.queried_payments.map(payment=>this.$store.dispatch('contribution/get', payment.data.contribId));
                 const contribs = await Promise.all(contribPromises);
@@ -235,22 +242,30 @@
                     const tmp_packages_promises = this.payments_contribs.map(contrib=>this.$store.dispatch('package/get', contrib.data.packageId));
                     const tmp_packages = await Promise.all(tmp_packages_promises);
                     this.payment_packages = tmp_packages.map(package_z=>package_z.data)
-
-
                 }
+                this.payment_loading = false;
             },
             togglePaymentInfo(payment, package_z){
                 this.$emit('togglePaymentInfo', {
                     payment,
                     package: package_z
                 })
+            },
+            async reportPayment(id){
+                const paymentInstance = new Payment(id);
+                paymentInstance
+                    .report()
+                    .then(()=>{
+                        this.$toast.success("Confirmed", "Done");
+                        this.queryPayments()
+                    }).catch(err=>this.$toast.error(err.message, "Error"))
             }
         },
         // components: {
         //   paymentInfo
         // },
         mounted(){
-            this.queryPayments()
+            this.queryPayments();
         }
     }
 </script>

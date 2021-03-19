@@ -8,14 +8,16 @@ import 'izitoast/dist/css/iziToast.min.css';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import VueCountryCode from "vue-country-code";
+import VuePaginate from 'vue-paginate'
 
 Vue.config.productionTip = false
 
 Vue.use(Loading);
 Vue.use(VueCountryCode);
 Vue.use(VueIziToast, {
-  position: 'bottomCenter'
+  position: 'topRight'
 });
+Vue.use(VuePaginate)
 
 
 let app;

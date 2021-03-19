@@ -68,7 +68,7 @@
     import {mapGetters} from 'vuex'
 
     export default {
-        name: "selectPackage",
+        name: "NewContribution",
         data(){
             return {
                 packageBG,
