@@ -74,6 +74,22 @@ class Contribution{
     getPaymentProgressions(){
         return this.data.paymentProgressions
     }
+
+    async totalNoOfContribAmount(amount){
+        const contribSnapshots = await firebaseRef.contributionRef
+            .where('userId', '==', this.data.userId)
+            .where('hasPaid', '==', true)
+            .get();
+        let count = 0;
+        if(!contribSnapshots.empty){
+            contribSnapshots.forEach(doc=>{
+                if(doc.data().amountToBePaid === amount){
+                    count++
+                }
+            })
+        }
+        return Promise.resolve(count)
+    }
 }
 
 function Model(){

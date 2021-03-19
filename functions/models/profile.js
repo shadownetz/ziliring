@@ -15,7 +15,7 @@ function Model(){
     this.bankName = '';
     this.bankAccountName = '';
     this.bankAccountNumber = '';
-    this.contributions = [];
+    this.verifiedContributions = 0;
     this.balance = 0;
     this.profit = 0;
     this.purgeCount = 0;
