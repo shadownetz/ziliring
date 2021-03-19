@@ -9,8 +9,7 @@ class Package{
 
 function Model(){
     this.name = '';
-    this.prices = [];
-    this.bonus = 0;
+    this.prices = {};
     this.description = '';
     this.createdAt = new Date();
     this.updatedAt = new Date()

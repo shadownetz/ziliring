@@ -16,19 +16,25 @@
                         <h3 class="mt-3 mb-0 text-white">{{package_z.data.name}}</h3>
                     </div>
                     <div class="card-body">
-                        <div class="row text-center">
-                            <div class="col-6">
-                                <div class="bgl-primary rounded p-3">
-                                    <h4 class="mb-0">Prices</h4>
-                                    <div v-for="(price, index) in package_z.data.prices" :key="'price_'+index">
-                                        <small>₦{{price}}</small><br>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="bgl-primary rounded p-3" style="min-height: 170px">
+                                    <h4 class="mb-0">
+                                        Prices
+                                        <span class="pull-right">
+                                            Bonus
+                                        </span>
+                                    </h4>
+                                    <div class="mt-2" v-for="(price, index) in package_z.data.prices" :key="'price_'+index">
+                                        <div>
+                                            <h5>
+                                                ₦{{price.amount}}
+                                                <span class="pull-right">
+                                                {{price.bonus}}%
+                                                </span>
+                                            </h5>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="bgl-primary rounded p-3">
-                                    <h4 class="mb-0">Bonus</h4>
-                                    <small>{{package_z.data.bonus}}%</small>
                                 </div>
                             </div>
 
@@ -39,8 +45,8 @@
                             </div>
                             <div class="col-6">
                                 <select :id="index+'package_selector'" class="form-control" v-model.number="selected_price">
-                                    <option :value="price" v-for="(price, index) in package_z.data.prices" :key="'selectprice'+index">
-                                        {{price}}
+                                    <option :value="price.amount" v-for="(price, index) in package_z.data.prices" :key="'selectprice'+index">
+                                        {{price.amount}}
                                     </option>
                                 </select>
                             </div>
@@ -103,7 +109,7 @@
         created() {
             this.loading = true
             this.$store.dispatch('package/fetch').then(()=>{
-                this.loading = false
+                this.loading = false;
             })
         }
     }

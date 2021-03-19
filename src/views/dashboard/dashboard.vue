@@ -2,10 +2,10 @@
     <div class="animated slideInUp">
         <div class="form-head d-flex mb-4 mb-md-5 align-items-start">
             <div class="input-group search-area d-inline-flex">
-                <div class="input-group-append">
-                    <span class="input-group-text"><i class="flaticon-381-search-2"></i></span>
-                </div>
-                <input type="text" class="form-control" placeholder="Search here">
+<!--                <div class="input-group-append">-->
+<!--                    <span class="input-group-text"><i class="flaticon-381-search-2"></i></span>-->
+<!--                </div>-->
+<!--                <input type="text" class="form-control" placeholder="Search here">-->
             </div>
             <router-link :to="{name: 'NewContribution'}" class="btn btn-primary ml-auto">
                 + New Contribution
