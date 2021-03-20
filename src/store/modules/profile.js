@@ -1,10 +1,12 @@
 import {ResponseObject} from "../../utils/globalObjects";
 import {profileRef} from "../../firebase/firebase";
+import Profile from "../../models/profile";
 
 export default {
     namespaced: true,
     state: {
         profile: {id: '', data: {}},
+        listener: null,
         bankCodes: {
             "100": "SunTrust Bank",
             "214": "First City Monument Bank",
@@ -37,19 +39,27 @@ export default {
         getBankCodes: (state)=>state.bankCodes
     },
     mutations: {
-        setProfile: (state, payload)=>state.profile=payload
+        setProfile: (state, payload)=>state.profile=payload,
+        reset(state){
+            if(state.listener!==null){
+                state.listener();
+                state.listener = null;
+            }
+        }
     },
     actions: {
-        async init({commit, rootGetters}){
+        async init({state, commit, rootGetters}){
             const response = new ResponseObject();
             try{
-                const profile = await profileRef.doc(rootGetters['user/getUser'].id).get();
-                if(profile.exists){
-                    commit('setProfile', {
-                        id: profile.id,
-                        data: profile.data()
-                    })
-                }
+                state.listener = await profileRef.doc(rootGetters['user/getUser'].id)
+                    .onSnapshot(doc=>{
+                        if(doc.exists){
+                            commit('setProfile', {
+                                id: doc.id,
+                                data: doc.data()
+                            })
+                        }
+                    });
             }catch (e) {
                 response.status = false;
                 response.message = e.message
@@ -73,16 +83,27 @@ export default {
             }
             return Promise.resolve(response)
         },
+        async edit({rootGetters}, data){
+            const response = new ResponseObject();
+            try{
+                const tmp_profile = new Profile({id: rootGetters['profile/getProfile'].id});
+                await tmp_profile.update(data)
+            }catch (e) {
+                response.status = false;
+                response.message = e.message;
+            }
+            return Promise.resolve(response)
+        },
         async updateBankDetails({rootGetters}, data){
             const response = new ResponseObject();
             try{
                 await profileRef
                     .doc(rootGetters['profile/getProfile'].id)
                     .update({
-                    bankName : data._bankName,
-                    bankAccountName : data._bankAccountName,
-                    bankAccountNumber : data._bankAccountNumber
-                });
+                        bankName : data._bankName,
+                        bankAccountName : data._bankAccountName,
+                        bankAccountNumber : data._bankAccountNumber
+                    });
             }catch (e) {
                 response.status = false;
                 response.message = e.message;

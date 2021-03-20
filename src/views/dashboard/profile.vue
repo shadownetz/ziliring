@@ -76,12 +76,58 @@
             </div>
             <div class="col-xl-8">
                 <div class="card">
-                    <div class="card-body">
-                        <h4>Statistics</h4>
-                        <div class="col-12 text-center" style="margin-top: 40px">
-                            <h5><i>Buffering...</i></h5>
-                            <p>please check back later</p>
-                        </div>
+                    <div class="card-body" ref="profileEditable">
+                        <template v-if="!user.data.isAdmin">
+                            <h4>Statistics</h4>
+                            <div class="col-12 text-center" style="margin-top: 40px">
+                                <h5><i>Buffering...</i></h5>
+                                <p>please check back later</p>
+                            </div>
+                        </template>
+                        <template v-else>
+                            <h4>Personal Information</h4>
+                            <div class="form-group mt-3">
+                                <label>First Name</label>
+                                <input class="form-control" v-model="u_editable.firstName" type="text" :placeholder="user.data.firstName">
+                            </div>
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input class="form-control" v-model="u_editable.lastName" type="text" :placeholder="user.data.lastName">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input class="form-control" v-model="u_editable.email" type="email" :placeholder="user.data.email">
+                            </div>
+                            <div class="row my-3 mb-5 justify-content-center align-content-center">
+                                <button class="btn btn-outline-primary"
+                                        @click="updatePersonal"
+                                        :disabled="!u_editable.firstName&&!u_editable.lastName&&!u_editable.email"
+                                >
+                                    Update personal information
+                                </button>
+                            </div>
+                            <h4>Financial Information</h4>
+                            <div class="form-group mt-3">
+                                <label>Bank Name</label>
+                                <input class="form-control" v-model="p_editable.bankName" type="text" :placeholder="profile.data.bankName">
+                            </div>
+                            <div class="form-group">
+                                <label>Bank Account Name</label>
+                                <input class="form-control" v-model="p_editable.bankAccountName" type="text" :placeholder="profile.data.bankAccountName">
+                            </div>
+                            <div class="form-group">
+                                <label>Bank Account Number</label>
+                                <input class="form-control" v-model="p_editable.bankAccountNumber" type="text" :placeholder="profile.data.bankAccountNumber">
+                            </div>
+                            <div class="row my-3 justify-content-center align-content-center">
+                                <button class="btn btn-outline-warning"
+                                        @click="updateFinance"
+                                        :disabled="!p_editable.bankAccountNumber&&!p_editable.bankAccountName&&!p_editable.bankName"
+                                >
+                                    Update financial information
+                                </button>
+                            </div>
+                        </template>
                     </div>
                 </div>
             </div>
@@ -96,7 +142,16 @@
         name: "profile",
         data(){
             return {
-
+                u_editable: {
+                    firstName: '',
+                    lastName: '',
+                    email: ''
+                },
+                p_editable: {
+                    bankName: '',
+                    bankAccountName: '',
+                    bankAccountNumber: '',
+                }
             }
         },
         computed: {
@@ -104,6 +159,48 @@
                 user: 'user/getUser',
                 profile: 'profile/getProfile'
             })
+        },
+        methods: {
+            async updatePersonal(){
+                const update = {};
+                if(this.u_editable.firstName) update.firstName = this.u_editable.firstName;
+                if(this.u_editable.lastName) update.lastName = this.u_editable.lastName;
+                if(this.u_editable.email) update.email = this.u_editable.email;
+                if(Object.entries(update).length > 0){
+                    const loader = this.$loading.show({container: this.$refs.profileEditable});
+                    const response = await this.$store.dispatch('user/edit', update);
+                    loader.hide()
+                    if(response.status){
+                        this.$toast.success('Operation successful', 'Done');
+                        setTimeout(()=>{
+                            this.$router.push({name: 'Dashboard'})
+                        }, 1000)
+                    }else{
+                        this.$toast.error(response.message, 'Unable to complete request')
+                    }
+                }
+            },
+            async updateFinance(){
+                const f_update = {};
+                if(this.p_editable.bankName) f_update.bankName = this.p_editable.bankName;
+                if(this.p_editable.bankAccountName) f_update.bankAccountName = this.p_editable.bankAccountName;
+                if(this.p_editable.bankAccountNumber) f_update.bankAccountNumber = this.p_editable.bankAccountNumber;
+                if(Object.entries(f_update).length > 0){
+                    const loader = this.$loading.show({container: this.$refs.profileEditable});
+                    const response = await this.$store.dispatch('profile/edit', f_update);
+                    loader.hide()
+                    if(response.status){
+                        this.$toast.success('Operation successful', 'Done');
+                        setTimeout(()=>{
+                            this.$router.push({name: 'Dashboard'})
+                        }, 1000)
+                    }else{
+                        this.$toast.error(response.message, 'Unable to complete request')
+                    }
+                }
+            }
+        },
+        mounted() {
         }
     }
 </script>

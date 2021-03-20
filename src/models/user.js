@@ -32,6 +32,18 @@ class User{
         return userRef.doc(this.id).set(Object.assign({}, this.data))
     }
 
+    async update(data=null){
+        let u_data;
+        if(data){
+            u_data = data
+        }else{
+            u_data = Object.assign({}, this.data);
+        }
+        u_data.updatedAt = firestore.FieldValue.serverTimestamp();
+        delete u_data.createdAt;
+        return userRef.doc(this.id).update({...u_data})
+    }
+
     verify_password(raw_password){
         // console.log('Raw Pass::', (new Crypt(this.data.password).decrypt(this.data.phone)))
         // console.log('User Data::', this.data)

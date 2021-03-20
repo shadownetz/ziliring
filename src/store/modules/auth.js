@@ -38,7 +38,7 @@ export default {
             }
             return Promise.resolve(response)
         },
-        async proceedToLogin({commit}, {code, userData}){
+        async proceedToLogin({commit, dispatch}, {code, userData}){
             let response = new ResponseObject();
             try{
                 const result = await window.confirmationResult.confirm(code);
@@ -50,6 +50,7 @@ export default {
                     id: user.id,
                     data: user.data
                 }, {root: true})
+                dispatch('user/setListener', user.id, {root: true})
             }catch (e) {
                 console.log(e)
                 response.status = false;
@@ -83,6 +84,7 @@ export default {
                     const {id, data} = user;
                     await store.dispatch('profile/init')
                     commit('user/setUser', {id, data}, {root: true})
+                    dispatch('user/setListener', id, {root: true})
                 }else{
                     await dispatch('logout');
                     throw new Error("Invalid password")

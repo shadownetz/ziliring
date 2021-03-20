@@ -1,3 +1,5 @@
+import {profileRef} from "../firebase/firebase";
+
 class Profile{
 
     constructor({id, data}) {
@@ -7,6 +9,16 @@ class Profile{
 
     get_balance(){
         return this.data.balance
+    }
+
+    async update(data=null){
+        let u_data;
+        if(data){
+            u_data = data
+        }else{
+            u_data = Object.assign({}, this.data);
+        }
+        return profileRef.doc(this.id).update({...u_data})
     }
 }
 
@@ -21,7 +33,6 @@ function Model(){
     this.purgeCount = 0;
     this.isActive = true
 }
-module.exports = {
-    ProfileModel: Model,
-    Profile
-}
+
+export const ProfileModel = Model
+export default Profile

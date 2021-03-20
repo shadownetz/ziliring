@@ -69,7 +69,7 @@
                     });
                     elem.modal('show')
                 }
-            }, 1000)
+            }, 2500)
         },
         mounted() {
             $('#main-wrapper').css('opacity', 1);
