@@ -130,9 +130,9 @@
                         <div class="card-action card-tabs mt-3 mt-sm-0">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="javascript:void(0)" role="tab">
+                                    <router-link :to="{name: 'PaymentTransactions'}" class="nav-link active" role="tab">
                                         All
-                                    </a>
+                                    </router-link>
                                 </li>
                             </ul>
                         </div>
