@@ -4,6 +4,7 @@ admin.initializeApp();
 const UserActions = require('./actions/userActions')
 const ContributionActions = require('./actions/contributionActions')
 const PaymentActions = require('./actions/paymentsActions')
+const Counters = require('./counters')
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -15,4 +16,9 @@ const PaymentActions = require('./actions/paymentsActions')
 
 exports.addUserProfile = UserActions.addUserProfile;
 exports.attachUserToUpliner = ContributionActions.attachUserToUpliner;
-exports.confirmPayment = PaymentActions.confirmPayment
+exports.confirmPayment = PaymentActions.confirmPayment;
+// Counters
+exports.addUserCounter = Counters.addUserCounter;
+exports.addContribCounter = Counters.addContribCounter;
+exports.subUserCounter = Counters.subUserCounter;
+exports.subContribCounter = Counters.subContribCounter
