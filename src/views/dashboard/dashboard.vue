@@ -2,10 +2,10 @@
     <div class="animated slideInUp">
         <div class="form-head d-flex mb-4 mb-md-5 align-items-start">
             <div class="input-group search-area d-inline-flex">
-<!--                <div class="input-group-append">-->
-<!--                    <span class="input-group-text"><i class="flaticon-381-search-2"></i></span>-->
-<!--                </div>-->
-<!--                <input type="text" class="form-control" placeholder="Search here">-->
+                <!--                <div class="input-group-append">-->
+                <!--                    <span class="input-group-text"><i class="flaticon-381-search-2"></i></span>-->
+                <!--                </div>-->
+                <!--                <input type="text" class="form-control" placeholder="Search here">-->
             </div>
             <router-link :to="{name: 'NewContribution'}" class="btn btn-primary ml-auto">
                 + New Contribution
@@ -13,34 +13,34 @@
         </div>
         <div class="row">
             <div class="col-xl-12 col-lg-12">
-<!--                <div class="alert alert-primary solid alert-right-icon alert-dismissible fade show">-->
-<!--                    <span><i class="mdi mdi-account-search"></i></span>-->
-<!--                    <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>-->
-<!--                    </button> Success! Message has been sent.-->
-<!--                </div>-->
-<!--                <div class="alert alert-success solid alert-right-icon alert-dismissible fade show">-->
-<!--                    <span><i class="mdi mdi-check"></i></span>-->
-<!--                    <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>-->
-<!--                    </button> Success! Message has been sent.-->
-<!--                </div>-->
-<!--                <div class="alert alert-warning solid alert-right-icon alert-dismissible fade show">-->
-<!--                    <span><i class="mdi mdi-alert"></i></span>-->
-<!--                    <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>-->
-<!--                    </button>-->
-<!--                    <strong>Warning!</strong> Something went wrong. Please check.-->
-<!--                </div>-->
-<!--                <div class="alert alert-danger solid alert-right-icon alert-dismissible fade show">-->
-<!--                    <span><i class="mdi mdi-help"></i></span>-->
-<!--                    <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>-->
-<!--                    </button>-->
-<!--                    <strong>Error!</strong> Message Sending failed.-->
-<!--                </div>-->
-<!--                <div class="alert alert-light solid alert-right-icon alert-dismissible fade show">-->
-<!--                    <span><i class="mdi mdi-cogs"></i></span>-->
-<!--                    <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>-->
-<!--                    </button>-->
-<!--                    <strong>Error!</strong> Message Sending failed.-->
-<!--                </div>-->
+                <!--                <div class="alert alert-primary solid alert-right-icon alert-dismissible fade show">-->
+                <!--                    <span><i class="mdi mdi-account-search"></i></span>-->
+                <!--                    <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>-->
+                <!--                    </button> Success! Message has been sent.-->
+                <!--                </div>-->
+                <!--                <div class="alert alert-success solid alert-right-icon alert-dismissible fade show">-->
+                <!--                    <span><i class="mdi mdi-check"></i></span>-->
+                <!--                    <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>-->
+                <!--                    </button> Success! Message has been sent.-->
+                <!--                </div>-->
+                <!--                <div class="alert alert-warning solid alert-right-icon alert-dismissible fade show">-->
+                <!--                    <span><i class="mdi mdi-alert"></i></span>-->
+                <!--                    <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>-->
+                <!--                    </button>-->
+                <!--                    <strong>Warning!</strong> Something went wrong. Please check.-->
+                <!--                </div>-->
+                <!--                <div class="alert alert-danger solid alert-right-icon alert-dismissible fade show">-->
+                <!--                    <span><i class="mdi mdi-help"></i></span>-->
+                <!--                    <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>-->
+                <!--                    </button>-->
+                <!--                    <strong>Error!</strong> Message Sending failed.-->
+                <!--                </div>-->
+                <!--                <div class="alert alert-light solid alert-right-icon alert-dismissible fade show">-->
+                <!--                    <span><i class="mdi mdi-cogs"></i></span>-->
+                <!--                    <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>-->
+                <!--                    </button>-->
+                <!--                    <strong>Error!</strong> Message Sending failed.-->
+                <!--                </div>-->
             </div>
         </div>
         <div class="row">
@@ -117,6 +117,86 @@
                 </div>
             </div>
             <!-- End of Dashboard Statistics -->
+
+            <template v-if="user.data.isAdmin">
+                <!-- Admin Dashboard Statistics -->
+                <div class="col-12">
+                    <h4 class="text-uppercase text-primary font-weight-bolder">
+                        Platform Statistics
+                        <small class="text-muted text-lowercase">
+                            (only visible to you)
+                        </small>
+                    </h4>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-sm-6">
+                    <div class="widget-stat card bg-danger">
+                        <div class="card-body  p-4">
+                            <div class="media">
+									<span class="mr-3">
+										<i class="flaticon-381-user-7"></i>
+									</span>
+                                <div class="media-body text-white text-right">
+                                    <p class="mb-1">
+                                        Users
+                                        <small>
+                                            (last updated: {{getReadableDate(getUsersCounter.updatedAt)}})
+                                        </small>
+                                    </p>
+                                    <h3 class="text-white">{{getUsersCounter.count||0}}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-sm-6">
+                    <div class="widget-stat card bg-success">
+                        <div class="card-body p-4">
+                            <div class="media">
+									<span class="mr-3">
+										<i class="flaticon-381-diamond"></i>
+									</span>
+                                <div class="media-body text-white text-right">
+                                    <p class="mb-1">
+                                        Contributions
+                                        <small>
+                                            (last updated: {{getReadableDate(getContributionCounter.updatedAt)}})
+                                        </small>
+                                    </p>
+                                    <h3 class="text-white">{{getContributionCounter.count||0}}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-lg-6 col-sm-6"
+                     v-for="(package_z, index) in getPackages"
+                     :key="'package_'+index"
+                >
+                    <div class="widget-stat card"
+                         :class="[
+                             index===0?'bg-info': '',
+                             index===1?'bg-primary': '',
+                             index===2?'bg-dark': '',
+                             index > 2?'bg-primary': ''
+                         ]"
+                    >
+                        <div class="card-body p-4">
+                            <div class="media">
+									<span class="mr-3">
+										<i class="flaticon-381-gift"></i>
+									</span>
+                                <div class="media-body text-white text-right">
+                                    <p class="mb-1">{{package_z.data.name}}</p>
+                                    <h3 class="text-white">{{package_z.data.totalContributors||0}}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End of Admin Dashboard Statistics -->
+            </template>
+
 
             <div class="col-xl-12 col-xxl-12 col-lg-12">
                 <div class="card">
@@ -218,6 +298,7 @@
 <script>
     import basicMethodMixins from "../../utils/mixins/basicMethodMixins";
     import Payment from "../../models/payment";
+    import {mapGetters} from 'vuex'
 
     export default {
         name: "dashboard",
@@ -231,6 +312,16 @@
             }
         },
         mixins: [basicMethodMixins],
+        computed: {
+            ...mapGetters({
+                user: 'user/getUser'
+            }),
+            ...mapGetters('counters', [
+                'getPackages',
+                'getContributionCounter',
+                'getUsersCounter'
+            ])
+        },
         methods: {
             async queryPayments(){
                 this.payment_loading = true;
@@ -265,6 +356,9 @@
         //   paymentInfo
         // },
         mounted(){
+            if(this.$store.getters['user/getUser'].data.isAdmin){
+                this.$store.dispatch('counters/fetch')
+            }
             this.queryPayments();
         }
     }
