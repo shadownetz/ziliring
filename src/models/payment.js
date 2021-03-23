@@ -28,6 +28,7 @@ function Model() {
     this.amount = 0;
     this.confirmed = false;
     this.reported = false;
+    this.confirmedByAdmin = false;
     this.userId = '';
     this.receiverId = '';
     this.payContext = 'plan';   // plan || profit

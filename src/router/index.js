@@ -55,7 +55,12 @@ const routes = [
                     }
                     return next()
                 }
-            }
+            },
+            {
+                path: '/payments',
+                name: 'Payments',
+                component: ()=>import('../views/dashboard/admin/payments'),
+            },
         ]
     }
 ]
@@ -73,7 +78,9 @@ router.afterEach(()=>{
 router.beforeEach((to, from, next) => {
     let loggedUser = firebase.auth().currentUser;
     let requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+    let requiresAdmin = to.matched.some(record => record.meta.requiresAdmin);
     if(requiresAuth && !loggedUser) next({name: 'Home'});
+    else if(requiresAdmin && !store.getters['user/getUser'].data.isAdmin) next('/dashboard')
     else next()
 })
 

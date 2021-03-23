@@ -5,6 +5,12 @@
                 <div class="modal-header">
                     <h5 class="modal-title">
                         User Details
+                        <template v-if="userProfile.data.isActive">
+                            <span class="badge badge-success">active</span>
+                        </template>
+                        <template v-else>
+                            <span class="badge badge-danger">inactive</span>
+                        </template>
                     </h5>
                     <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                 </div>

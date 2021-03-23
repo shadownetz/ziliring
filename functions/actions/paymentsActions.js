@@ -37,9 +37,12 @@ const confirmPayment = functions.firestore
                         beginAt: firebaseRefModule.firestoreRef.FieldValue.serverTimestamp(),
                         expireAt: firebaseRefModule.firestoreRef.Timestamp.fromDate(Contribution.get_expiration_timestamp()),
                     });
-                    await firebaseRefModule.profileRef.doc(paymentData.receiverId).update({
-                        balance: (uplinerProfile.data().balance + paymentData.amount),
-                    })
+                    if(!paymentData.confirmedByAdmin){
+                        await firebaseRefModule.profileRef.doc(paymentData.receiverId).update({
+                            balance: (uplinerProfile.data().balance + paymentData.amount),
+                        })
+                    }
+
                     await firebaseRefModule.profileRef.doc(paymentData.userId).update({
                         verifiedContributions: firebaseRefModule.firestoreRef.FieldValue.increment(1),
                         ...downlinerUpdates

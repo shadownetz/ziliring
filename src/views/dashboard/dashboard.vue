@@ -267,11 +267,11 @@
                                                 >
                                                     <i class="ti ti-info-alt"></i>
                                                 </a>
-                                                <a v-if="payment.data.reported" class="btn-link text-danger float-right" href="javascript:void(0);">
-                                                    <i>Reported</i>
-                                                </a>
-                                                <a v-else-if="payment.data.confirmed" class="btn-link text-success float-right" href="javascript:void(0);">
+                                                <a v-if="payment.data.confirmed" class="btn-link text-success float-right" href="javascript:void(0);">
                                                     <i>Completed</i>
+                                                </a>
+                                                <a v-else-if="payment.data.reported" class="btn-link text-danger float-right" href="javascript:void(0);">
+                                                    <i>Reported</i>
                                                 </a>
                                                 <a v-else-if="!payment.data.isValid" class="btn-link text-danger float-right" href="javascript:void(0);">
                                                     <i>Invalid</i>

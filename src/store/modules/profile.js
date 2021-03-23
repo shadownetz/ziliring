@@ -109,6 +109,26 @@ export default {
                 response.message = e.message;
             }
             return Promise.resolve(response)
+        },
+        async getPurgedProfiles(){
+            const response = new ResponseObject();
+            response.data = [];
+            try{
+                const profileSnapshots = await profileRef
+                    .where('isActive', '==', false)
+                    .get();
+                if(!profileSnapshots.empty){
+                    profileSnapshots.forEach(doc=>{
+                        if(doc.exists){
+                            response.data.push({id: doc.id, data: doc.data()})
+                        }
+                    });
+                }
+            }catch (e) {
+                response.status = false;
+                response.message = e.message;
+            }
+            return Promise.resolve(response)
         }
     }
 }
