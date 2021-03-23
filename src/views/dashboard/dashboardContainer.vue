@@ -9,6 +9,7 @@
                         @togglePaymentInfo="paymentInfoPayload=$event"
                         @toggleVContrib="personalContrib=$event"
                         @togglePaymentProof="paymentProofs=$event"
+                        @toggle="payload=$event"
                 />
             </div>
         </div>
@@ -21,6 +22,7 @@
         <view-personal-contribution :contribution="personalContrib"/>
         <payment-proofs :urls="paymentProofs"/>
         <update-account-details v-if="!profile.data.bankName"/>
+        <view-user-info :user="payload" v-if="user.data.isAdmin"/>
     </div>
 </template>
 
@@ -32,6 +34,7 @@
     import viewPersonalContribution from "../../components/modals/viewPersonalContribution";
     import paymentProofs from "../../components/modals/paymentProofs";
     import updateAccountDetails from "../../components/modals/updateAccountDetails";
+    import viewUserInfo from "../../components/modals/viewUserInfo";
     import {mapGetters} from "vuex";
 
     export default {
@@ -40,12 +43,14 @@
             return {
                 paymentInfoPayload: {},
                 personalContrib: {id: '', data: {}},
-                paymentProofs: []
+                paymentProofs: [],
+                payload: {id: '', data: {}}
             }
         },
         computed: {
             ...mapGetters({
-                profile: 'profile/getProfile'
+                profile: 'profile/getProfile',
+                user: 'user/getUser'
             })
         },
         components: {
@@ -55,7 +60,8 @@
             paymentInfo,
             viewPersonalContribution,
             paymentProofs,
-            updateAccountDetails
+            updateAccountDetails,
+            viewUserInfo
         },
         created() {
             this.$toast.success('Welcome back', 'Invite');

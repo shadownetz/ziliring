@@ -170,9 +170,6 @@
                 )
             }
         },
-        components: {
-
-        },
         mounted() {
             this.$store.dispatch('contribution/queryPersonal')
                 .then(()=>{

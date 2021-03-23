@@ -3,7 +3,12 @@ const firebaseRefModule = require("../firebaseRef");
 const Contribution = require("../models/contribution").Contribution;
 const PaymentModel = require("../models/payment").PaymentModel;
 
-
+function getJsDate(timestamp){
+    const date = new Date(0);
+    date.setSeconds(timestamp.seconds);
+    if(date.getTime() === date.getTime()) return date
+    return new Date()
+}
 
 const attachUserToUpliner = functions.firestore
     .document('contributions/{contribId}')
@@ -16,12 +21,17 @@ const attachUserToUpliner = functions.firestore
                     .where('hasPaid', '==', true)
                     .where('type', '==', 'upliner')
                     .where('isComplete', '==', false)
-                    .orderBy('createdAt', 'asc')
+                    .where('userId', '!=', downlinerContribInstance.data.userId)
                     .get();
                 activeContributions.forEach(doc=>{
                     if(doc.exists){
                         uplinersContrib.push({id: doc.id, data: doc.data()})
                     }
+                })
+                uplinersContrib.sort((a, b)=>{
+                    let date1 = getJsDate(a.data.createdAt);
+                    let date2 = getJsDate(b.data.createdAt);
+                    return (date1 - date2)
                 })
                 let selected_upliner = await downlinerContribInstance.decide_upliner(uplinersContrib);
                 if(selected_upliner){

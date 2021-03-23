@@ -5,6 +5,7 @@ const UserActions = require('./actions/userActions')
 const ContributionActions = require('./actions/contributionActions')
 const PaymentActions = require('./actions/paymentsActions')
 const Counters = require('./counters')
+const ProfileActions = require('./actions/profileActions')
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -17,6 +18,7 @@ const Counters = require('./counters')
 exports.addUserProfile = UserActions.addUserProfile;
 exports.attachUserToUpliner = ContributionActions.attachUserToUpliner;
 exports.confirmPayment = PaymentActions.confirmPayment;
+exports.purgeUser = ProfileActions.purgeUser;
 // Counters
 exports.addUserCounter = Counters.addUserCounter;
 exports.addContribCounter = Counters.addContribCounter;

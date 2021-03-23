@@ -28,6 +28,23 @@
                         </li>
                     </ul>
                 </li>
+                <li class="mm-active" v-if="user.data.isAdmin">
+                    <a class="has-arrow ai-icon" href="javascript:void(0)" aria-expanded="false">
+                        <i class="flaticon-381-settings"></i>
+                        <span class="nav-text">Admin Panel</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li>
+                            <router-link :to="{name: 'Users'}">Users</router-link>
+                        </li>
+                        <li>
+                            <router-link :to="{name: 'Contribution'}">Payments</router-link>
+                        </li>
+                        <li>
+                            <router-link :to="{name: 'Contribution'}">Contributions</router-link>
+                        </li>
+                    </ul>
+                </li>
             </ul>
 
             <div class="add-menu-sidebar">
@@ -47,8 +64,15 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex'
+
     export default {
-        name: "sideNav"
+        name: "sideNav",
+        computed: {
+            ...mapGetters({
+                user: 'user/getUser'
+            })
+        }
     }
 </script>
 

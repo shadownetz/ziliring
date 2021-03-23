@@ -22,7 +22,10 @@
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                 <h4 class="font-weight-bolder">Package</h4>
-                                <h5>{{package_z.data.name}}</h5>
+                                <h5>
+                                    <template v-if="package_z.data">{{package_z.data.name}}</template>
+                                    <template v-else></template>
+                                </h5>
                             </div>
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                 <h4 class="font-weight-bolder">Amount</h4>

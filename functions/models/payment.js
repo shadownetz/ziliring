@@ -13,6 +13,7 @@ function Model() {
     this.userId = '';
     this.receiverId = '';
     this.payContext = 'plan';   // plan || profit
+    this.isValid = true;
     this.createdAt = new Date();
     this.updatedAt = new Date()
 }

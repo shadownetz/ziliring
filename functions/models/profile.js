@@ -18,6 +18,7 @@ function Model(){
     this.verifiedContributions = 0;
     this.balance = 0;
     this.profit = 0;
+    this.purgedAt = new Date()
     this.purgeCount = 0;
     this.isActive = true
 }

@@ -245,9 +245,7 @@
             ])
         },
         mounted() {
-            if(!this.$store.getters['profile/getProfile'].id){
-                this.$store.dispatch('profile/init')
-            }
+            this.$store.dispatch('profile/init')
         }
     }
 </script>

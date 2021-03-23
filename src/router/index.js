@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 
 import firebase from "../firebase/firebase"
+import store from "../store/index"
 
 Vue.use(VueRouter)
 
@@ -44,6 +45,17 @@ const routes = [
                 name: 'Profile',
                 component: ()=>import('../views/dashboard/profile')
             },
+            {
+                path: '/users',
+                name: 'Users',
+                component: ()=>import('../views/dashboard/admin/users/container'),
+                beforeEnter: (to, from, next)=>{
+                    if(!store.getters['user/getUser'].data.isAdmin){
+                        return next('/dashboard')
+                    }
+                    return next()
+                }
+            }
         ]
     }
 ]

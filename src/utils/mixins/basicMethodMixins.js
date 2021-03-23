@@ -1,3 +1,4 @@
+import iziToast from "izitoast";
 export default {
     methods: {
         getCountryTel(dial_code, phone){
@@ -66,6 +67,34 @@ export default {
                 return (now.getTime()-_date.getTime()) / (1000 * 3600 * 24);
             }
             return 0
+        },
+        affirm(callback){
+            return iziToast.question({
+                timeout: 20000,
+                close: false,
+                overlay: true,
+                displayMode: 'once',
+                id: 'question',
+                zindex: 999,
+                title: 'Affirm',
+                message: 'Are you sure this operation ?',
+                position: 'center',
+                buttons: [
+                    ['<button><b>yes</b></button>', function (instance, toast) {
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                        return callback()
+                    }, true],
+                    ['<button>never mind</button>', function (instance, toast) {
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                    }],
+                ],
+                // onClosing: function(instance, toast, closedBy){
+                //     console.info('Closing | closedBy: ' + closedBy);
+                // },
+                // onClosed: function(instance, toast, closedBy){
+                //     console.info('Closed | closedBy: ' + closedBy);
+                // }
+            });
         }
     }
 }

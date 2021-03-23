@@ -6,20 +6,30 @@ export default {
     namespaced: true,
     state: {
         user: {id: '', data: {}},
+        users: [],
+        loading: false,
+        users_listener: null,
         listener: null
     },
     getters: {
         getUser: (state)=>state.user,
+        getUsers: (state)=>state.users,
+        getLoading: (state)=>state.loading
     },
     mutations: {
         setUser: (state, payload)=>{
             state.user = payload;
         },
+        setUsers: (state, payload)=>state.users=payload,
+        setLoading: (state, payload)=>state.loading = payload,
         reset(state){
             if(state.listener !== null){
                 state.listener();
             }
-            state.listener = null
+            if(state.users_listener !== null){
+                state.users_listener();
+            }
+            state.listener = state.users_listener = null
         }
     },
     actions: {
@@ -29,6 +39,30 @@ export default {
                     commit('setUser', {id: doc.id, data: doc.data()})
                 }
             })
+        },
+        async fetch({state, rootGetters, commit}){
+            if(rootGetters['user/getUser'].data.isAdmin){
+                commit('setLoading', true)
+                state.users_listener = userRef
+                    .where('isSuper', '==', false)
+                    .orderBy('createdAt', 'desc')
+                    .onSnapshot(snapshot => {
+                            const tmp_arr = [];
+                            snapshot.forEach(doc=>{
+                                tmp_arr.push({id: doc.id, data: doc.data()})
+                            })
+                            commit('setUsers', tmp_arr)
+                            commit('setLoading', false)
+                        },
+                        (err)=>{
+                            commit('setLoading', false)
+                            console.log('Err fetching users::', err.message)
+                        },
+                        ()=>{
+                            commit('setLoading', false)
+                        },
+                    )
+            }
         },
         async get(context, id){
             const response = new ResponseObject();
