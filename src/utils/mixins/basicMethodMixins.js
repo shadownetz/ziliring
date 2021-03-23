@@ -68,7 +68,7 @@ export default {
             }
             return 0
         },
-        affirm(callback){
+        affirm(callback, message=''){
             return iziToast.question({
                 timeout: 20000,
                 close: false,
@@ -77,7 +77,7 @@ export default {
                 id: 'question',
                 zindex: 999,
                 title: 'Affirm',
-                message: 'Are you sure this operation ?',
+                message: message || 'Are you sure of this operation ?',
                 position: 'center',
                 buttons: [
                     ['<button><b>yes</b></button>', function (instance, toast) {

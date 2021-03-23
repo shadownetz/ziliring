@@ -1,4 +1,4 @@
-import {firestore, profileRef} from "../firebase/firebase";
+import {firestore, profileRef, userRef} from "../firebase/firebase";
 import User from "./user";
 import {ResponseObject} from "../utils/globalObjects";
 
@@ -55,6 +55,26 @@ class Profile extends User{
             response.message = e.message
         }
         return Promise.resolve(response)
+    }
+
+    static async getAdminProfile(){
+        let resposne = null;
+        try{
+            let admin = await userRef
+                .where('isAdmin', '==', true)
+                .orderBy('createdAt')
+                .limit(1)
+                .get();
+            if(!admin.empty) {
+                admin = await profileRef.doc(admin.docs[0].id).get()
+                if(admin.exists){
+                    resposne = {id: admin.id, data: admin.data()}
+                }
+            }
+        }catch (e) {
+            console.log('Unable to get Admin Profile', e)
+        }
+        return Promise.resolve(resposne)
     }
 }
 

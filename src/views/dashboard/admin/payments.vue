@@ -90,8 +90,19 @@
                                     </a>
                                 </td>
                                 <td v-if="payment.data.isValid&&!payment.data.confirmed&&getHourDiffFromNow(payment.data.createdAt)>=3">
-                                    <button class="btn btn-sm btn-outline-warning" @click="reportPayment(payment.id)">
+                                    <button class="btn btn-sm btn-outline-warning" @click="overrideConfirmPayment(payment.id)">
                                         <i class="ti-flag"></i> Confirm (Override)
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary"
+                                            v-if="payment.data.confirmedByAdmin"
+                                            @click="reassignPaymentReceiver(payment)"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            title="Renable the receiver to be automatched to a new downliner when due. Note:: This option is only enabled if the payment confirmation was overriden by an admin"
+                                    >
+                                        <i class="flaticon-381-switch-3"></i> Reassign
                                     </button>
                                 </td>
                             </tr>
@@ -128,7 +139,7 @@
 
 <script>
     import basicMethodMixins from "../../../utils/mixins/basicMethodMixins";
-    // import Payment from "../../../models/payment";
+    import Payment from "../../../models/payment";
     import {mapGetters} from 'vuex'
 
     export default {
@@ -144,10 +155,10 @@
         },
         mixins: [basicMethodMixins],
         computed: {
-          ...mapGetters({
-              payment_loading: 'payment/isLoading',
-              payments: 'payment/getPayments'
-          })
+            ...mapGetters({
+                payment_loading: 'payment/isLoading',
+                payments: 'payment/getPayments'
+            })
         },
         methods: {
             onPageChange: function (toPage) {
@@ -183,15 +194,26 @@
                     package: package_z
                 })
             },
-            // eslint-disable-next-line no-unused-vars
-            async reportPayment(id){
-                // const paymentInstance = new Payment(id);
-                // paymentInstance
-                //     .report()
-                //     .then(()=>{
-                //         this.$toast.success("Confirmed", "Done");
-                //         this.queryPayments()
-                //     }).catch(err=>this.$toast.error(err.message, "Error"))
+            async overrideConfirmPayment(id){
+                this.affirm(()=>{
+                    const paymentInstance = new Payment(id);
+                    paymentInstance
+                        .confirm(true)
+                        .then(()=>{
+                            this.$toast.success("Confirmed", "Done");
+                        }).catch(err=>this.$toast.error(err.message, "Error"))
+                })
+            },
+            async reassignPaymentReceiver(payment){
+                this.affirm(async ()=>{
+                    const paymentIns = new Payment(payment.id, payment.data);
+                    const response = await paymentIns.reassignReceiver();
+                    if(response.status){
+                        this.$toast.success('The receiver will be auto matched to a new downliner when due', 'Success');
+                    }else{
+                        this.$toast.error(response.message, "Unable to reassign receiver")
+                    }
+                }, "This is an expensive operation! Ensure you know what you are doing.")
             }
         },
         mounted(){
