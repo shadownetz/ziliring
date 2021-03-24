@@ -53,8 +53,8 @@
 										<i class="flaticon-381-gift"></i>
 									</span>
                             <div class="media-body">
-                                <p class="mb-1">Subscriptions</p>
-                                <h4 class="mb-0">0</h4>
+                                <p class="mb-1">Contributions</p>
+                                <h4 class="mb-0">{{getUserContributions||0}}</h4>
                                 <span class="badge badge-primary">total</span>
                             </div>
                         </div>
@@ -73,7 +73,7 @@
 									</span>
                             <div class="media-body">
                                 <p class="mb-1">Pending Payments</p>
-                                <h4 class="mb-0">0</h4>
+                                <h4 class="mb-0">{{getUserPendingPayments||0}}</h4>
                                 <span class="badge badge-warning">total</span>
                             </div>
                         </div>
@@ -93,7 +93,7 @@
 									</span>
                             <div class="media-body">
                                 <p class="mb-1">Profits</p>
-                                <h4 class="mb-0">0</h4>
+                                <h4 class="mb-0">{{profile.data.profit||0}}</h4>
                                 <span class="badge badge-success">total</span>
                             </div>
                         </div>
@@ -109,7 +109,7 @@
 									</span>
                             <div class="media-body">
                                 <p class="mb-1">Purged</p>
-                                <h4 class="mb-0">0</h4>
+                                <h4 class="mb-0">{{profile.data.purgeCount}}</h4>
                                 <span class="badge badge-danger">count</span>
                             </div>
                         </div>
@@ -326,12 +326,15 @@
         mixins: [basicMethodMixins],
         computed: {
             ...mapGetters({
-                user: 'user/getUser'
+                user: 'user/getUser',
+                profile: 'profile/getProfile'
             }),
             ...mapGetters('counters', [
                 'getPackages',
                 'getContributionCounter',
-                'getUsersCounter'
+                'getUsersCounter',
+                'getUserContributions',
+                'getUserPendingPayments'
             ])
         },
         methods: {
@@ -368,13 +371,11 @@
                     }).catch(err=>this.$toast.error(err.message, "Error"))
             }
         },
-        // components: {
-        //   paymentInfo
-        // },
         mounted(){
             if(this.$store.getters['user/getUser'].data.isAdmin){
                 this.$store.dispatch('counters/fetch')
             }
+            this.$store.dispatch('counters/fetchUserStatistics')
             this.queryPayments().then(()=>{
                 setTimeout(()=>{
                     $('[data-toggle="tooltip"]').tooltip()
