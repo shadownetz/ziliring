@@ -23,6 +23,7 @@
         <payment-proofs :urls="paymentProofs"/>
         <update-account-details v-if="!profile.data.bankName"/>
         <view-user-info :user="payload" v-if="user.data.isAdmin"/>
+        <edit-contribution :contribution="payload" v-if="user.data.isAdmin"/>
     </div>
 </template>
 
@@ -35,6 +36,7 @@
     import paymentProofs from "../../components/modals/paymentProofs";
     import updateAccountDetails from "../../components/modals/updateAccountDetails";
     import viewUserInfo from "../../components/modals/viewUserInfo";
+    import editContribution from "../../components/modals/editContribution";
     import {mapGetters} from "vuex";
 
     export default {
@@ -61,7 +63,8 @@
             viewPersonalContribution,
             paymentProofs,
             updateAccountDetails,
-            viewUserInfo
+            viewUserInfo,
+            editContribution
         },
         created() {
             this.$toast.success('Welcome back', 'Invite');

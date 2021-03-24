@@ -1,4 +1,4 @@
-import {userRef} from "../firebase/firebase";
+import {contributionRef, firestore, userRef} from "../firebase/firebase";
 
 class Contribution{
 
@@ -11,6 +11,16 @@ class Contribution{
         return Promise.resolve(
             await userRef.doc(this.data.userId).get()
         )
+    }
+
+    async update(){
+        const tmp_contrib = Object.assign({}, this.data);
+        delete tmp_contrib.createdAt;
+        delete tmp_contrib.beginAt;
+        if(typeof tmp_contrib.expireAt === 'string'){
+            tmp_contrib.expireAt = firestore.Timestamp.fromDate(new Date(tmp_contrib.expireAt))
+        }
+        return contributionRef.doc(this.id).update(tmp_contrib)
     }
 
     get_expected_profit(){
@@ -40,8 +50,6 @@ class Contribution{
         }
         return total
     }
-
-
 
 }
 

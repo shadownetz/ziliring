@@ -47,6 +47,25 @@ export default {
             }
             return 'No DateTime'
         },
+        getInputDateTime(store_timestamp){
+            let _date = new Date(0);
+            if(store_timestamp){
+                if(store_timestamp instanceof Date){
+                    _date = store_timestamp
+                }
+                else if(typeof store_timestamp === "string"){
+                    _date = new Date(store_timestamp)
+                }else{
+                    _date.setSeconds(store_timestamp.seconds);
+                }
+                if(_date.getTime() === _date.getTime()){
+                    let day = ("0" + _date.getDate()).slice(-2);
+                    let month = ("0" + (_date.getMonth() + 1)).slice(-2);
+                    return `${_date.getUTCFullYear()}-${month}-${day}`
+                }
+            }
+            return ''
+        },
         image_is_valid(extension, otherExtension=[]){
             return $.inArray(extension, ['jpg','png','jpeg'].concat(otherExtension)) !== -1
         },

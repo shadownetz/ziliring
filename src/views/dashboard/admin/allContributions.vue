@@ -3,7 +3,7 @@
         <div class="col-lg-12 dataTables_wrapper">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Contributions</h4>
+                    <h4 class="card-title">All Contributions</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -22,9 +22,9 @@
                                 <th><strong>Package</strong></th>
                                 <th><strong>Amount</strong></th>
                                 <th><strong>Payment</strong></th>
-                                <th><strong>Status</strong></th>
                                 <th><strong>Progress</strong></th>
                                 <th><strong>Created</strong></th>
+                                <th><strong>Expire</strong></th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -45,28 +45,27 @@
                                     <span v-if="contrib.data.hasPaid" class="badge light badge-success">Confirmed</span>
                                     <span v-else class="badge light badge-warning">awaiting</span>
                                 </td>
-                                <td>
-                                    <span v-if="contrib.data.isComplete" class="badge light badge-success">Completed</span>
-                                    <span v-else class="badge light badge-info">in progress</span>
-                                </td>
                                 <td v-if="contrib.data.hasPaid">
-                                    <h6>
-                                        <span class="pull-right">{{getProgress(contrib)}}%</span>
-                                    </h6>
-                                    <div class="progress ">
-                                        <div class="progress-bar bg-danger progress-animated"
-                                             style="height:6px;"
-                                             :style="{'width': getProgress(contrib)+'%'}"
-                                             role="progressbar">
-                                            <span class="sr-only">{{getProgress(contrib)}}% Complete</span>
+                                        <h6>
+                                            <span class="pull-right">{{getProgress(contrib)}}%</span>
+                                        </h6>
+                                        <div class="progress ">
+                                            <div class="progress-bar bg-danger progress-animated"
+                                                 style="height:6px;"
+                                                 :style="{'width': getProgress(contrib)+'%'}"
+                                                 role="progressbar">
+                                                <span class="sr-only">{{getProgress(contrib)}}% Complete</span>
+                                            </div>
                                         </div>
-                                    </div>
                                 </td>
                                 <td v-else>
                                     <span class="badge light badge-outline-primary">awaiting payment</span>
                                 </td>
                                 <td>
                                     {{getReadableDate(contrib.data.createdAt)}}
+                                </td>
+                                <td>
+                                    {{getReadableDate(contrib.data.expireAt)}}
                                 </td>
                                 <td>
                                     <div class="dropdown">
@@ -81,8 +80,11 @@
                                                @click="$emit('toggleVContrib', contrib)">
                                                 <i class="ti-eye"></i> View
                                             </a>
-                                            <a href="javascript:void(0)" class="dropdown-item" @click="switchToManageComponent(contrib.id)">
-                                                <i class="ti-menu-alt"></i> Manage
+                                            <a href="javascript:void(0)" class="dropdown-item"
+                                               data-toggle="modal"
+                                               data-target="#editContrib"
+                                               @click="$emit('toggle', contrib)">
+                                                <i class="ti-pencil"></i> Modify
                                             </a>
                                         </div>
                                     </div>
@@ -91,8 +93,8 @@
                             </tbody>
                         </paginate>
                         <div class="col-12 text-center" v-else>
-                            <h3><i class="flaticon-381-gift"></i> You have not made any contribution yet</h3>
-                            <p>Initiate a contribution and it will show up here</p>
+                            <h3><i class="flaticon-381-gift"></i> No contribution have been made yet.</h3>
+                            <p>When a contributor initiates a contribution, it will show up here</p>
                         </div>
                         <paginate-links
                                 for="contributions"
@@ -123,11 +125,11 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex'
     import basicMethodMixins from "../../../utils/mixins/basicMethodMixins";
+    import {mapGetters} from "vuex";
 
     export default {
-        name: "ManageContributions",
+        name: "allContributions",
         data(){
             return {
                 currentPage: 0,
@@ -139,7 +141,7 @@
         mixins: [basicMethodMixins],
         computed: {
             ...mapGetters('contribution', {
-                contributions: 'getPersonalContrib'
+                contributions: 'getContributions'
             })
         },
         methods: {
@@ -171,7 +173,7 @@
             }
         },
         mounted() {
-            this.$store.dispatch('contribution/queryPersonal')
+            this.$store.dispatch('contribution/fetch')
                 .then(()=>{
                     this.fetchMetaInfo()
                 })

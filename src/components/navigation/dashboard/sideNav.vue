@@ -41,7 +41,7 @@
                             <router-link :to="{name: 'Payments'}">Payments</router-link>
                         </li>
                         <li>
-                            <router-link :to="{name: 'Contribution'}">Contributions</router-link>
+                            <router-link :to="{name: 'AllContributions'}">Contributions</router-link>
                         </li>
                     </ul>
                 </li>

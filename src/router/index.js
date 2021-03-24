@@ -49,18 +49,26 @@ const routes = [
                 path: '/users',
                 name: 'Users',
                 component: ()=>import('../views/dashboard/admin/users/container'),
-                beforeEnter: (to, from, next)=>{
-                    if(!store.getters['user/getUser'].data.isAdmin){
-                        return next('/dashboard')
-                    }
-                    return next()
-                }
+                meta: {
+                    requiresAdmin: true
+                },
             },
             {
                 path: '/payments',
                 name: 'Payments',
                 component: ()=>import('../views/dashboard/admin/payments'),
+                meta: {
+                    requiresAdmin: true
+                },
             },
+            {
+                path: '/all-contributions',
+                name: "AllContributions",
+                component: ()=>import("../views/dashboard/admin/allContributions"),
+                meta: {
+                    requiresAdmin: true
+                },
+            }
         ]
     }
 ]
