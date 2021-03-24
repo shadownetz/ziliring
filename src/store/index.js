@@ -11,6 +11,7 @@ import contribution from "./modules/contribution";
 import payment from "./modules/payment";
 import profile from "./modules/profile";
 import counters from "./modules/counters";
+import request from "./modules/request";
 
 Vue.use(Vuex)
 
@@ -36,6 +37,7 @@ export default new Vuex.Store({
     contribution,
     payment,
     profile,
-    counters
+    counters,
+    request
   }
 })

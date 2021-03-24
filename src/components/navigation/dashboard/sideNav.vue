@@ -43,6 +43,9 @@
                         <li>
                             <router-link :to="{name: 'AllContributions'}">Contributions</router-link>
                         </li>
+                        <li>
+                            <router-link :to="{name: 'AllWithdrawals'}">Withdrawal Requests</router-link>
+                        </li>
                     </ul>
                 </li>
             </ul>

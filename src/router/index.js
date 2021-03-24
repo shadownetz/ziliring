@@ -46,6 +46,11 @@ const routes = [
                 component: ()=>import('../views/dashboard/profile')
             },
             {
+                path: '/withdrawals',
+                name: "Withdrawals",
+                component: ()=>import("../views/dashboard/withdrawals"),
+            },
+            {
                 path: '/users',
                 name: 'Users',
                 component: ()=>import('../views/dashboard/admin/users/container'),
@@ -68,7 +73,15 @@ const routes = [
                 meta: {
                     requiresAdmin: true
                 },
-            }
+            },
+            {
+                path: '/all-withdrawals',
+                name: "AllWithdrawals",
+                component: ()=>import("../views/dashboard/admin/allWithdrawals"),
+                meta: {
+                    requiresAdmin: true
+                }
+            },
         ]
     }
 ]

@@ -50,8 +50,37 @@
                                     </div>
                                 </div>
                                 <div class="mt-4">
-                                    <a href="javascript:void(0)" class="btn btn-primary mb-1 mr-1">Withdraw Balance</a>
-                                    <a href="javascript:void(0)" class="btn btn-primary mb-1">Withdraw Profit</a>
+                                    <div class="col-12" v-if="withdrawalFocused">
+                                        <p class="text text-info">
+                                            <small>send {{withdrawalContext}} request</small>
+                                        </p>
+                                        <p class="text-warning">
+                                            Avoid sending multiple requests to prevent rendering your request invalid
+                                        </p>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <button @click.prevent="withdrawalFocused=false" class="btn btn-primary" type="button">
+                                                    <i class="ti-close"></i>
+                                                </button>
+                                            </div>
+                                            <input type="number" class="form-control" v-model.number="withdrawalAmount" :placeholder="withdrawalContext+ ' amount'">
+                                            <div class="input-group-append">
+                                                <button @click.prevent="makeWithdrawal()" class="btn btn-primary" type="button">Send</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="javascript:void(0)"
+                                       class="btn btn-primary mb-1 mr-1"
+                                       @click="initWithdrawal('withdrawal')"
+                                    >
+                                        Withdraw Balance
+                                    </a>
+                                    <a href="javascript:void(0)"
+                                       class="btn btn-primary mb-1"
+                                       @click="initWithdrawal('profit')"
+                                    >
+                                        Withdraw Profit
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -137,6 +166,8 @@
 
 <script>
     import {mapGetters} from 'vuex'
+    import {RequestModel} from "../../models/request";
+    import basicMethodMixins from "../../utils/mixins/basicMethodMixins";
 
     export default {
         name: "profile",
@@ -151,6 +182,18 @@
                     bankName: '',
                     bankAccountName: '',
                     bankAccountNumber: '',
+                },
+                withdrawalAmount: 0,
+                withdrawalContext: 'withdrawal',
+                withdrawalFocused: false
+            }
+        },
+        mixins: [basicMethodMixins],
+        watch: {
+            withdrawalFocused(newVal){
+                if(!newVal){
+                    this.withdrawalAmount = 0;
+                    this.withdrawalContext = 'withdrawal'
                 }
             }
         },
@@ -198,6 +241,35 @@
                         this.$toast.error(response.message, 'Unable to complete request')
                     }
                 }
+            },
+            initWithdrawal(context){
+                this.withdrawalContext = context;
+                this.withdrawalFocused = true
+            },
+            makeWithdrawal(){
+                if(this.withdrawalAmount <= 0){
+                    this.$toast.warning("Invalid amount specified")
+                }else if(this.withdrawalContext === 'withdrawal' && (this.withdrawalAmount > this.profile.data.balance)){
+                    this.$toast.warning("You do not have sufficient balance for this operation", "Oops")
+                }else if(this.withdrawalContext === 'profit' && (this.withdrawalAmount > this.profile.data.profit)){
+                    this.$toast.warning("You do not have sufficient profit for this operation", "Oops")
+                }else{
+                    this.affirm(async()=>{
+                        const newRequest = new RequestModel();
+                        newRequest.context = this.withdrawalContext;
+                        newRequest.amount = this.withdrawalAmount;
+                        const response = await this.$store.dispatch('request/add', newRequest);
+                        if(response.status){
+                            this.$toast.success("Request sent", "Done");
+                            setTimeout(()=>{
+                                this.$router.push({name: 'Withdrawals'})
+                            }, 2000)
+                        }else{
+                            this.$toast.error(response.message, "Unable to send request")
+                        }
+                    }, "Continue? This action cannot be reversed")
+                }
+
             }
         },
         mounted() {
