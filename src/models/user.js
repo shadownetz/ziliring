@@ -1,6 +1,7 @@
 import {userRef} from "../firebase/firebase";
 import {firestore} from "../firebase/firebase";
 import Crypt from "../utils/crypt";
+import {ResponseObject} from "../utils/globalObjects";
 
 class User{
 
@@ -50,13 +51,20 @@ class User{
         return new Crypt(this.data.password).decrypt(this.data.phone) === raw_password
     }
     static async verify_phone(phone){
-        const _user = await userRef
-            .where('phone', '==', phone)
-            .limit(1)
-            .get();
-        if(!_user.empty)
-            return _user.docs[0]
-        return null
+        let response = new ResponseObject()
+        try{
+            const snapshots = await userRef
+                .where('phone', '==', phone)
+                .limit(1)
+                .get();
+            if(!snapshots.empty)
+                response.data = {id: snapshots.docs[0].id, data: snapshots.docs[0].data()};
+        }catch (e) {
+            response.status = false;
+            response.message = e.message;
+            console.log('Err verifying phone:', e.message)
+        }
+        return Promise.resolve(response)
     }
 }
 

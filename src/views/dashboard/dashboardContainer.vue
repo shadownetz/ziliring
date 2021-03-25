@@ -111,7 +111,15 @@
                 curr_location.pop();
                 window.location.href = curr_location.join('/');
             }
-            next()
+            next(vm=>{
+                if(!vm.$store.getters['profile/getProfile'].data.isActive){
+                    return vm.$router.push({
+                        name: 'PurgedAccount',
+                        params: {userId: vm.$store.getters['profile/getProfile'].id}
+                    })
+                }
+
+            })
         },
         beforeRouteLeave(to, from, next){
             $('.dash_custom_imports').remove();

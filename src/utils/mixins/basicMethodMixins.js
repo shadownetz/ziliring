@@ -1,4 +1,6 @@
 import iziToast from "izitoast";
+const moment = require('moment')
+
 export default {
     methods: {
         getCountryTel(dial_code, phone){
@@ -69,6 +71,24 @@ export default {
         image_is_valid(extension, otherExtension=[]){
             return $.inArray(extension, ['jpg','png','jpeg'].concat(otherExtension)) !== -1
         },
+        getDaysDiffFromTimestamp(timestamp){
+            let _date = new Date(0);
+            _date.setSeconds(timestamp.seconds);
+            if(_date.getTime() === _date.getTime()){
+                let _dateAfter = moment(_date).add('3', 'hours')
+                return _dateAfter.format('MMMM Do YYYY, h:mm:ss a')
+            }
+            return moment()
+        },
+        timestampIsGreaterThanNow(timestamp){
+            let _date = new Date(0);
+            _date.setSeconds(timestamp.seconds);
+            if(_date.getTime() === _date.getTime()){
+                _date = moment(_date).add('3', 'hours')
+                return moment().isAfter(_date, 'hour')
+            }
+            return false
+        },
         getHourDiffFromNow(timestamp){
             let _date = new Date(0);
             let now = new Date();
@@ -114,6 +134,11 @@ export default {
                 //     console.info('Closed | closedBy: ' + closedBy);
                 // }
             });
+        },
+        toHome(){
+            const route = this.$router.resolve({name: 'Dashboard'}).resolved.fullPath.split('/')
+            route.pop();
+            window.location.href = route.join('/');
         }
     }
 }

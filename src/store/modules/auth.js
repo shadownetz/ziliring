@@ -62,10 +62,15 @@ export default {
             let response = new ResponseObject();
             const appVerifier = window.recaptchaVerifier;
             try{
-                if(await User.verify_phone(phoneNumber)){
-                    window.confirmationResult = await firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier);
+                const response = await User.verify_phone(phoneNumber);
+                if(response.status){
+                    if(response.data.id){
+                        window.confirmationResult = await firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier);
+                    }else{
+                        throw new Error("This phone number is not registered")
+                    }
                 }else{
-                    throw new Error("Invalid phone number")
+                    throw new Error(response.message)
                 }
             }catch (e) {
                 response.status = false;

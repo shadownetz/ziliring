@@ -83,7 +83,12 @@ const routes = [
                 }
             },
         ]
-    }
+    },
+    {
+        path: '/:userId',
+        name: 'PurgedAccount',
+        component: ()=>import("../views/roadBlocks/purgedAccount")
+    },
 ]
 
 const router = new VueRouter({
@@ -96,7 +101,7 @@ router.afterEach(()=>{
     $("html, body").animate({scrollTop: 0}, 1000)
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     let loggedUser = firebase.auth().currentUser;
     let requiresAuth = to.matched.some(record => record.meta.requiresAuth);
     let requiresAdmin = to.matched.some(record => record.meta.requiresAdmin);
