@@ -44,7 +44,7 @@
                                 </label>
                             </div>
                             <div class="col-6">
-                                <select :id="index+'package_selector'" class="form-control" v-model.number="selected_price">
+                                <select :id="index+'package_selector'" class="form-control" v-model.number="selected_prices[index]">
                                     <option :value="price.amount" v-for="(price, index) in package_z.data.prices" :key="'selectprice'+index">
                                         {{price.amount}}
                                     </option>
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                     <div class="card-footer mt-0">
-                        <button @click.prevent="addContribution(package_z.id)" class="btn btn-primary btn-lg btn-block">Proceed <i class="flaticon-381-next-1"></i></button>
+                        <button @click.prevent="addContribution(package_z.id, index)" class="btn btn-primary btn-lg btn-block">Proceed <i class="flaticon-381-next-1"></i></button>
                     </div>
                 </div>
             </div>
@@ -78,7 +78,7 @@
         data(){
             return {
                 packageBG,
-                selected_price: 5000,
+                selected_prices: [5000, 100000, 500000],
                 loading: false
             }
         },
@@ -88,10 +88,10 @@
             })
         },
         methods: {
-            async addContribution(packageId){
+            async addContribution(packageId, index){
                 const loader = this.$loading.show({container: this.$refs.selectPackage})
                 const response = await this.$store.dispatch('contribution/add', {
-                    amount: this.selected_price,
+                    amount: this.selected_prices[index],
                     package: packageId
                 });
                 loader.hide();
