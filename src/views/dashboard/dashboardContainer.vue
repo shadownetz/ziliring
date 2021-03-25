@@ -9,6 +9,7 @@
                         @togglePaymentInfo="paymentInfoPayload=$event"
                         @toggleVContrib="personalContrib=$event"
                         @togglePaymentProof="paymentProofs=$event"
+                        @toggle="payload=$event"
                 />
             </div>
         </div>
@@ -21,6 +22,9 @@
         <view-personal-contribution :contribution="personalContrib"/>
         <payment-proofs :urls="paymentProofs"/>
         <update-account-details v-if="!profile.data.bankName"/>
+        <view-user-info :user="payload" v-if="user.data.isAdmin"/>
+        <edit-contribution :contribution="payload" v-if="user.data.isAdmin"/>
+        <view-request-info :request="payload" v-if="user.data.isAdmin"/>
     </div>
 </template>
 
@@ -32,6 +36,9 @@
     import viewPersonalContribution from "../../components/modals/viewPersonalContribution";
     import paymentProofs from "../../components/modals/paymentProofs";
     import updateAccountDetails from "../../components/modals/updateAccountDetails";
+    import viewUserInfo from "../../components/modals/viewUserInfo";
+    import editContribution from "../../components/modals/editContribution";
+    import viewRequestInfo from "../../components/modals/viewRequestInfo";
     import {mapGetters} from "vuex";
 
     export default {
@@ -40,12 +47,14 @@
             return {
                 paymentInfoPayload: {},
                 personalContrib: {id: '', data: {}},
-                paymentProofs: []
+                paymentProofs: [],
+                payload: {id: '', data: {}}
             }
         },
         computed: {
             ...mapGetters({
-                profile: 'profile/getProfile'
+                profile: 'profile/getProfile',
+                user: 'user/getUser'
             })
         },
         components: {
@@ -55,7 +64,10 @@
             paymentInfo,
             viewPersonalContribution,
             paymentProofs,
-            updateAccountDetails
+            updateAccountDetails,
+            viewUserInfo,
+            editContribution,
+            viewRequestInfo
         },
         created() {
             this.$toast.success('Welcome back', 'Invite');
@@ -69,7 +81,7 @@
                     });
                     elem.modal('show')
                 }
-            }, 1000)
+            }, 2500)
         },
         mounted() {
             $('#main-wrapper').css('opacity', 1);
@@ -99,7 +111,15 @@
                 curr_location.pop();
                 window.location.href = curr_location.join('/');
             }
-            next()
+            next(vm=>{
+                if(!vm.$store.getters['profile/getProfile'].data.isActive){
+                    return vm.$router.push({
+                        name: 'PurgedAccount',
+                        params: {userId: vm.$store.getters['profile/getProfile'].id}
+                    })
+                }
+
+            })
         },
         beforeRouteLeave(to, from, next){
             $('.dash_custom_imports').remove();

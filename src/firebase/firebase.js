@@ -26,5 +26,7 @@ export const profileRef = firestore().collection('profiles')
 export const contributionRef = firestore().collection('contributions')
 export const packageRef = firestore().collection('packages')
 export const paymentRef = firestore().collection('payments')
+export const counterRef = firestore().collection('counters')
+export const requestRef = firestore().collection('requests')
 
 export default firebase

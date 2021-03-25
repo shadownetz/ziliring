@@ -43,33 +43,46 @@
                                                 <span class="mr-1">
                                                     <i class="flaticon-381-gift"></i>
                                                 </span>
-                                            <span v-if="payment_packages[index]!== undefined">
-                                                    {{payment_packages[index].data.name}}
-                                                </span>
+                                            <template v-if="payment_packages[index]!== undefined">
+                                                <span v-if="payment_packages[index].data">{{payment_packages[index].data.name}}</span>
+                                                <span v-else>{{payment.data.packageId}}</span>
+                                            </template>
                                         </div>
                                     </td>
                                     <td class="font-w500">{{getReadableDatetime(payment.data.createdAt)}}</td>
                                     <td class="font-w600 text-center">₦{{payment.data.amount}}</td>
-                                    <td>
+                                    <td class="text-center">
                                         <a
                                                 href="javascript:void(0)"
                                                 data-toggle="modal"
                                                 data-target="#paymentInfo"
+                                                v-if="payment.data.isValid"
                                                 @click.prevent="togglePaymentInfo(payment, payment_packages[index])"
                                         >
                                             <i class="flaticon-381-file"></i> (details)
                                         </a>
-                                        <a v-if="payment.data.reported" class="btn-link text-danger float-right" href="javascript:void(0);">
+                                        <a v-else href="javascript:void(0)"
+                                           data-toggle="tooltip"
+                                           data-placement="top"
+                                           title="This payment is no longer valid as you were purged while this payment was not completed"
+                                        >
+                                            <i class="ti ti-info-alt"></i>
+                                        </a>
+
+                                        <a v-if="payment.data.confirmed" class="btn-link text-success float-right" href="javascript:void(0);">
+                                            <i>Completed</i>
+                                        </a>
+                                        <a v-else-if="payment.data.reported" class="btn-link text-danger float-right" href="javascript:void(0);">
                                             <i>Reported</i>
                                         </a>
-                                        <a v-else-if="payment.data.confirmed" class="btn-link text-success float-right" href="javascript:void(0);">
-                                            <i>Completed</i>
+                                        <a v-else-if="!payment.data.isValid" class="btn-link text-danger float-right" href="javascript:void(0);">
+                                            <i>Invalid</i>
                                         </a>
                                         <a v-else class="btn-link text-warning float-right" href="javascript:void(0);">
                                             <i>Pending</i>
                                         </a>
                                     </td>
-                                    <td v-if="!payment.data.confirmed&&!payment.data.reported&&getHourDiffFromNow(payment.data.createdAt)>=3">
+                                    <td v-if="payment.data.isValid&&!payment.data.confirmed&&!payment.data.reported&&getHourDiffFromNow(payment.data.createdAt)>=3">
                                         <button class="btn btn-outline-danger" @click="reportPayment(payment.id)">
                                             <i class="ti-flag"></i> Report
                                         </button>
@@ -116,7 +129,11 @@
                 const contribs = await Promise.all(contribPromises);
                 if(contribs.length > 0){
                     this.payments_contribs = contribs.map(contrib=>contrib.data);
-                    const tmp_packages_promises = this.payments_contribs.map(contrib=>this.$store.dispatch('package/get', contrib.data.packageId));
+                    const tmp_packages_promises = this.payments_contribs.map(contrib=>{
+                        let packageId = '';
+                        if(contrib.data) packageId = contrib.data.packageId;
+                        return this.$store.dispatch('package/get', packageId)
+                    });
                     const tmp_packages = await Promise.all(tmp_packages_promises);
                     this.payment_packages = tmp_packages.map(package_z=>package_z.data)
                 }
@@ -139,7 +156,12 @@
             }
         },
         mounted(){
-            this.queryPayments()
+            this.queryPayments().then(()=>{
+                setTimeout(()=>{
+                    $('[data-toggle="tooltip"]').tooltip()
+                }, 2000)
+            });
+
         }
     }
 </script>

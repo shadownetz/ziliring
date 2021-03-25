@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 
 import firebase from "../firebase/firebase"
+import store from "../store/index"
 
 Vue.use(VueRouter)
 
@@ -44,8 +45,50 @@ const routes = [
                 name: 'Profile',
                 component: ()=>import('../views/dashboard/profile')
             },
+            {
+                path: '/withdrawals',
+                name: "Withdrawals",
+                component: ()=>import("../views/dashboard/withdrawals"),
+            },
+            {
+                path: '/users',
+                name: 'Users',
+                component: ()=>import('../views/dashboard/admin/users/container'),
+                meta: {
+                    requiresAdmin: true
+                },
+            },
+            {
+                path: '/payments',
+                name: 'Payments',
+                component: ()=>import('../views/dashboard/admin/payments'),
+                meta: {
+                    requiresAdmin: true
+                },
+            },
+            {
+                path: '/all-contributions',
+                name: "AllContributions",
+                component: ()=>import("../views/dashboard/admin/allContributions"),
+                meta: {
+                    requiresAdmin: true
+                },
+            },
+            {
+                path: '/all-withdrawals',
+                name: "AllWithdrawals",
+                component: ()=>import("../views/dashboard/admin/allWithdrawals"),
+                meta: {
+                    requiresAdmin: true
+                }
+            },
         ]
-    }
+    },
+    {
+        path: '/:userId',
+        name: 'PurgedAccount',
+        component: ()=>import("../views/roadBlocks/purgedAccount")
+    },
 ]
 
 const router = new VueRouter({
@@ -58,10 +101,12 @@ router.afterEach(()=>{
     $("html, body").animate({scrollTop: 0}, 1000)
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     let loggedUser = firebase.auth().currentUser;
     let requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+    let requiresAdmin = to.matched.some(record => record.meta.requiresAdmin);
     if(requiresAuth && !loggedUser) next({name: 'Home'});
+    else if(requiresAdmin && !store.getters['user/getUser'].data.isAdmin) next('/dashboard')
     else next()
 })
 

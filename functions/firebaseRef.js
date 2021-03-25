@@ -5,5 +5,7 @@ module.exports = {
     userRef : admin.firestore().collection('users'),
     contributionRef : admin.firestore().collection('contributions'),
     paymentRef : admin.firestore().collection('payments'),
-    profileRef : admin.firestore().collection('profiles')
+    profileRef : admin.firestore().collection('profiles'),
+    counterRef: admin.firestore().collection('counters'),
+    packageRef: admin.firestore().collection('packages')
 }

@@ -109,7 +109,7 @@
                     _bankAccountNumber: this.bankAccountNumber
                 });
                 if(response.status){
-                    await this.$store.dispatch('profile/init');
+                    // await this.$store.dispatch('profile/init');
                     this.$toast.success("bank information updated", "success")
                 }else{
                     this.$toast.error("Unable to complete request", "Error")

@@ -53,6 +53,8 @@
 
 <script>
     import basicMethodMixins from "../../utils/mixins/basicMethodMixins";
+    import User from "../../models/user";
+    import Profile from "../../models/profile";
 
     export default {
         name: "login",
@@ -86,9 +88,40 @@
                 if(!this.phone){
                     return this.$toast.warning('Please enter a correct phone number', 'Caution')
                 }
-                this.phone = this.getCountryTel(this.phone_dial_code, this.phone)
                 const loader = this.$loading.show({container: this.$refs.zili_auth_modal})
-                const response = await this.$store.dispatch('auth/loginWithPhone', this.phone);
+
+                const tmp_tel = this.getCountryTel(this.phone_dial_code, this.phone)
+                let response = await User.verify_phone(tmp_tel)
+                if(response.status){
+                    response = await this.$store.dispatch('profile/get', response.data.id);
+                    if(response.status){
+                        if(!response.data.data.isActive){
+                            if(response.data.data.purgeCount <= 3 && this.timestampIsGreaterThanNow(response.data.data.purgedAt)){
+                                await (new Profile({id: response.data.id}))
+                                    .update({
+                                        isActive: true
+                                    })
+                            }else{
+                                loader.hide();
+                                $('.modal-backdrop').remove();
+                                return this.$router.push({
+                                    name: 'PurgedAccount',
+                                    params: {userId: response.data.id}
+                                })
+                            }
+
+                        }
+                    }else{
+                        loader.hide()
+                        return this.$toast.error(response.message, 'Oops!')
+                    }
+                }else{
+                    loader.hide()
+                    return this.$toast.error(response.message, 'Oops!')
+                }
+
+                this.phone = this.getCountryTel(this.phone_dial_code, this.phone)
+                response = await this.$store.dispatch('auth/loginWithPhone', this.phone);
                 loader.hide()
                 if(response.status){
                     // code sent, await code confirmation
@@ -107,9 +140,7 @@
                 });
                 loader.hide();
                 if(response.status){
-                    const route = this.$router.resolve({name: 'Dashboard'}).resolved.fullPath.split('/')
-                    route.pop();
-                    window.location.href = route.join('/');
+                    this.toHome()
                 }else{
                     this.$toast.error(response.message)
                 }

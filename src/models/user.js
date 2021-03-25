@@ -1,6 +1,7 @@
 import {userRef} from "../firebase/firebase";
 import {firestore} from "../firebase/firebase";
 import Crypt from "../utils/crypt";
+import {ResponseObject} from "../utils/globalObjects";
 
 class User{
 
@@ -32,19 +33,38 @@ class User{
         return userRef.doc(this.id).set(Object.assign({}, this.data))
     }
 
+    async update(data=null){
+        let u_data;
+        if(data){
+            u_data = data
+        }else{
+            u_data = Object.assign({}, this.data);
+        }
+        u_data.updatedAt = firestore.FieldValue.serverTimestamp();
+        delete u_data.createdAt;
+        return userRef.doc(this.id).update({...u_data})
+    }
+
     verify_password(raw_password){
         // console.log('Raw Pass::', (new Crypt(this.data.password).decrypt(this.data.phone)))
         // console.log('User Data::', this.data)
         return new Crypt(this.data.password).decrypt(this.data.phone) === raw_password
     }
     static async verify_phone(phone){
-        const _user = await userRef
-            .where('phone', '==', phone)
-            .limit(1)
-            .get();
-        if(!_user.empty)
-            return _user.docs[0]
-        return null
+        let response = new ResponseObject()
+        try{
+            const snapshots = await userRef
+                .where('phone', '==', phone)
+                .limit(1)
+                .get();
+            if(!snapshots.empty)
+                response.data = {id: snapshots.docs[0].id, data: snapshots.docs[0].data()};
+        }catch (e) {
+            response.status = false;
+            response.message = e.message;
+            console.log('Err verifying phone:', e.message)
+        }
+        return Promise.resolve(response)
     }
 }
 

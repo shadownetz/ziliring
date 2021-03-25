@@ -65,7 +65,7 @@
 <script>
     import basicValidationMixin from "../../utils/mixins/basicValidationMixin";
     import basicMethodMixins from "../../utils/mixins/basicMethodMixins";
-    import {UserModel} from "../../models/user";
+    import User, {UserModel} from "../../models/user";
 
     export default {
         name: "register",
@@ -122,8 +122,19 @@
             async register(){
                 if(this.validateFields()){
                     const loader = this.$loading.show({container: this.$refs.zili_auth_modal})
+                    const tmp_tel = this.getCountryTel(this.phone_dial_code, this.user.phone)
+                    let response = await User.verify_phone(tmp_tel)
+                    if(response.status){
+                        if(response.data.id){
+                            loader.hide()
+                            return this.$toast.warning('This phone number is registered. Kindly login to continue', 'Oops!')
+                        }
+                    }else{
+                        loader.hide()
+                        return this.$toast.error(response.message, 'Oops!')
+                    }
                     this.user.phone = this.getCountryTel(this.phone_dial_code, this.user.phone)
-                    const response = await this.$store.dispatch('auth/registerWithPhone', this.user.phone);
+                    response = await this.$store.dispatch('auth/registerWithPhone', this.user.phone);
                     loader.hide()
                     if(response.status){
                         // code sent, await code confirmation

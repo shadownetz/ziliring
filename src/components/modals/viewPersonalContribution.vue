@@ -24,7 +24,7 @@
                             </div>
                             <div class="col-12">
                                 <h4 class="font-weight-bolder">Payment</h4>
-                                <span class="badge badge-outline-danger" v-if="contribution.data.hasPaid">
+                                <span class="badge badge-outline-success" v-if="contribution.data.hasPaid">
                                     paid
                                 </span>
                                 <span class="badge badge-outline-warning" v-else>

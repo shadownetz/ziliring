@@ -5,17 +5,42 @@ import firebase from "../../firebase/firebase";
 export default {
     namespaced: true,
     state: {
-
+        payments: [],
+        loading: false,
+        listener: null
     },
     getters: {
-
+        getPayments: (state)=>state.payments,
+        isLoading: (state)=>state.loading
     },
     mutations: {
-
+        setPayments: (state, payload)=>state.payments=payload,
+        setLoading: (state, payload)=>state.loading=payload,
+        reset(state){
+            if(state.listener !== null) state.listener();
+            state.listener = null;
+        }
     },
     actions: {
-        fetch(){
-            //
+        fetch({state, commit}){
+            commit('setLoading', true)
+            state.listener = paymentRef
+                .orderBy('createdAt', 'desc')
+                .onSnapshot(snapshot => {
+                    const tmp_arr = [];
+                    snapshot.forEach(doc=>{
+                        if(doc.exists){
+                            tmp_arr.push({id: doc.id, data: doc.data()})
+                        }
+                    });
+                    commit('setPayments', tmp_arr);
+                    commit('setLoading', false)
+                }, (err)=>{
+                    console.log('Unable to query payments', err)
+                    commit('setLoading', false)
+                }, ()=>{
+                    commit('setLoading', false)
+                })
         },
         async get(context, id){
             const response = new ResponseObject();
@@ -91,5 +116,25 @@ export default {
             }
             return Promise.resolve(response)
         },
+        async queryReportedPayments(){
+            const response = new ResponseObject();
+            response.data = [];
+            try{
+                const paymentsSnapshot = await paymentRef
+                    .where('reported', '==', true)
+                    .get();
+                if(!paymentsSnapshot.empty){
+                    paymentsSnapshot.forEach(doc=>{
+                        if(doc.exists){
+                            response.data.push({id: doc.id, data: doc.data()})
+                        }
+                    })
+                }
+            }catch (e) {
+                response.status = false;
+                response.message = e.message;
+            }
+            return Promise.resolve(response)
+        }
     }
 }

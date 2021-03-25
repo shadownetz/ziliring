@@ -22,7 +22,10 @@
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                 <h4 class="font-weight-bolder">Package</h4>
-                                <h5>{{package_z.data.name}}</h5>
+                                <h5>
+                                    <template v-if="package_z.data">{{package_z.data.name}}</template>
+                                    <template v-else></template>
+                                </h5>
                             </div>
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                 <h4 class="font-weight-bolder">Amount</h4>
@@ -47,6 +50,10 @@
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 mt-2">
                                     <h4 class="font-weight-bolder">Bank Name</h4>
                                     <h5>{{uplinerProfileInfo.data.bankName}}</h5>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 mt-2" v-if="uplinerInfo.data">
+                                    <h4 class="font-weight-bolder">Contact Phone</h4>
+                                    <h5>{{uplinerInfo.data.phone}}</h5>
                                 </div>
                             </template>
                             <template v-if="confirmPay">
@@ -105,6 +112,7 @@
         data(){
             return {
                 uplinerProfileInfo: {},
+                uplinerInfo: {},
                 uploading: false,
                 progress: 0,
                 confirmPay: false
@@ -113,9 +121,13 @@
         mixins: [basicMethodMixins],
         methods: {
             async fetchUplinerInfo(){
-                const response = await this.$store.dispatch('profile/get', this.payment.data.receiverId);
+                let response = await this.$store.dispatch('profile/get', this.payment.data.receiverId);
                 if(response.status){
-                    this.uplinerProfileInfo = response.data
+                    this.uplinerProfileInfo = response.data;
+                    response = await this.$store.dispatch('user/get', this.payment.data.receiverId);
+                    if(response.status){
+                        this.uplinerInfo = response.data;
+                    }
                 }
             },
             async uploadProof(event){
@@ -189,7 +201,7 @@
                 this.fetchUplinerInfo()
             })
             infoModal.on('hidden.bs.modal', ()=>{
-                this.uplinerProfileInfo = {};
+                this.uplinerProfileInfo = this.uplinerInfo = {};
                 this.confirmPay = false;
             })
         }

@@ -75,7 +75,7 @@
                                                 <a
                                                         class="dropdown-item text-success"
                                                         href="javascript:void(0)"
-                                                        v-if="!payment.data.confirmed&&!payment.data.reported"
+                                                        v-if="!payment.data.confirmed"
                                                         @click="confirmPayment(payment.id)"
                                                 >
                                                     <i class="ti-check"></i> Confirm

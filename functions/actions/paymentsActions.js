@@ -1,6 +1,7 @@
 const functions = require('firebase-functions');
 const firebaseRefModule = require("../firebaseRef");
 const Contribution = require("../models/contribution").Contribution
+const Profile = require("../models/profile").Profile
 
 
 const confirmPayment = functions.firestore
@@ -37,9 +38,20 @@ const confirmPayment = functions.firestore
                         beginAt: firebaseRefModule.firestoreRef.FieldValue.serverTimestamp(),
                         expireAt: firebaseRefModule.firestoreRef.Timestamp.fromDate(Contribution.get_expiration_timestamp()),
                     });
-                    await firebaseRefModule.profileRef.doc(paymentData.receiverId).update({
-                        balance: (uplinerProfile.data().balance + paymentData.amount),
-                    })
+                    if(!paymentData.confirmedByAdmin){
+                        await firebaseRefModule.profileRef.doc(paymentData.receiverId).update({
+                            balance: (uplinerProfile.data().balance + paymentData.amount),
+                        })
+                    }else{
+                        // balance will go to admin
+                        const adminProfile = await Profile.getAdminProfile();
+                        if(adminProfile){
+                            await firebaseRefModule.profileRef.doc(adminProfile.id).update({
+                                balance: (adminProfile.data.balance + paymentData.amount),
+                            })
+                        }
+                    }
+
                     await firebaseRefModule.profileRef.doc(paymentData.userId).update({
                         verifiedContributions: firebaseRefModule.firestoreRef.FieldValue.increment(1),
                         ...downlinerUpdates

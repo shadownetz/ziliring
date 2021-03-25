@@ -7,7 +7,7 @@ class Contribution{
         admin_contrib.userId = adminID;
         admin_contrib.type = 'upliner';
         admin_contrib.adminInitiated = true;
-        admin_contrib.amountToBePaid = 90E10;
+        admin_contrib.amountToBePaid = 900000000000E10;
         admin_contrib.createdAt = admin_contrib.updatedAt = firebaseRef.firestoreRef.FieldValue.serverTimestamp();
         return firebaseRef.contributionRef.add(Object.assign({}, admin_contrib))
     }
@@ -55,6 +55,7 @@ class PaymentDecision{
                 if(!admin.empty){
                     let admin_contrib = await firebaseRef.contributionRef
                         .where('userId', '==', admin.docs[0].id)
+                        .where('adminInitiated', '==', true)
                         .limit(1)
                         .get();
                     if(admin_contrib.empty){
@@ -79,6 +80,20 @@ class PaymentDecision{
         }
 
         return Promise.resolve(upliner_contrib)
+    }
+
+    static setPaymentProgression(paymentProgressions={}, amount=0, value=true){
+        const tmp_progressions = Object.entries(paymentProgressions);
+        if(tmp_progressions.length > 0){
+            for(let j=0; j < tmp_progressions.length; j++){
+                if(tmp_progressions[j][1][0] === amount){
+                    const key = tmp_progressions[j][0]
+                    paymentProgressions[key][1] = value;
+                    break;
+                }
+            }
+        }
+        return paymentProgressions
     }
 
     static getPaymentProgression(paidAmount){
