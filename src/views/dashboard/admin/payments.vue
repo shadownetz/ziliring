@@ -36,7 +36,7 @@
                                 class="table table-responsive-md shadow-hover card-table"
                         >
                             <tbody>
-                            <tr v-for="(payment, index) in payments" :key="'payment_'+index">
+                            <tr v-for="(payment, index) in paginated('payments')" :key="'payment_'+index">
                                 <td>
                                             <span class="p-3 d-inline-block">
                                                 <img src="../../../assets/images/svg/pay.svg" alt="pay to upliner" style="width: 30px;height:30px">
@@ -94,9 +94,8 @@
                                         <i class="ti-flag"></i> Confirm (Override)
                                     </button>
                                 </td>
-                                <td>
+                                <td v-if="payment.data.confirmedByAdmin">
                                     <button class="btn btn-sm btn-outline-primary"
-                                            v-if="payment.data.confirmedByAdmin"
                                             @click="reassignPaymentReceiver(payment)"
                                             data-toggle="tooltip"
                                             data-placement="top"
@@ -194,14 +193,15 @@
                     package: package_z
                 })
             },
-            async overrideConfirmPayment(id){
-                this.affirm(()=>{
+            overrideConfirmPayment(id){
+                this.affirm(async ()=>{
                     const paymentInstance = new Payment(id);
-                    paymentInstance
-                        .confirm(true)
-                        .then(()=>{
-                            this.$toast.success("Confirmed", "Done");
-                        }).catch(err=>this.$toast.error(err.message, "Error"))
+                    let response = await paymentInstance.confirm(true);
+                    if(response.status){
+                        this.$toast.success("Confirmed", "Done");
+                    }else{
+                        this.$toast.error(response.message, "Error")
+                    }
                 })
             },
             async reassignPaymentReceiver(payment){

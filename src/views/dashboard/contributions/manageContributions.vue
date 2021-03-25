@@ -38,7 +38,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(payment, index) in payments" :key="'contrib_'+index">
+                            <tr v-for="(payment, index) in paginated('payments')" :key="'contrib_'+index">
                                 <template v-if="payment.data">
                                     <td>
                                         <span v-if="currentPage === 0"> {{ index + 1 }}</span>
@@ -156,12 +156,13 @@
             },
             async confirmPayment(id){
                 const paymentInstance = new Payment(id);
-                paymentInstance
-                    .confirm()
-                    .then(()=>{
-                        this.$toast.success("Confirmed", "Done");
-                        this.$emit('toggleContribComponent', {component: 'activeContributions'})
-                    }).catch(err=>this.$toast.error(err.message, "Error"))
+                let response = await paymentInstance.confirm();
+                if(response.status){
+                    this.$toast.success("Confirmed", "Done");
+                    this.$emit('toggleContribComponent', {component: 'activeContributions'})
+                }else{
+                    this.$toast.error(response.message, "Error")
+                }
             }
         },
         mounted() {

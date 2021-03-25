@@ -1,20 +1,36 @@
-import {contributionRef, firestore, paymentRef} from "../firebase/firebase";
+import {contributionRef, firestore, paymentRef, profileRef} from "../firebase/firebase";
 import {ResponseObject} from "../utils/globalObjects";
 import Profile from "./profile";
+import Contribution from "./contribution";
 
 class Payment{
     constructor(id, data={}) {
         this.id = id;
-        this.data = data
+        this.data = data;
+        this.firestore = paymentRef.doc(id)
     }
 
-    confirm(override=false){
-        return paymentRef.doc(this.id).update({
-            confirmed: true,
-            confirmedByAdmin: override,
-            reported: false,
-            updatedAt: firestore.FieldValue.serverTimestamp()
-        })
+    async confirm(override=false){
+        const response = new ResponseObject();
+        try{
+            const contribDoc = await contributionRef.doc(this.data.contribId).get();
+            if(contribDoc.exists){
+                const contribInstance = new Contribution({id: contribDoc.id, data: contribDoc.data()});
+                await contributionRef.doc(contribInstance.id).update({
+                    profitReceived: firestore.FieldValue.increment(this.data.amount)
+                })
+                await paymentRef.doc(this.id).update({
+                    confirmed: true,
+                    confirmedByAdmin: override,
+                    reported: false,
+                    updatedAt: firestore.FieldValue.serverTimestamp()
+                })
+            }
+        }catch (e) {
+            response.status = false;
+            response.message = e.message
+        }
+        return Promise.resolve(response)
     }
 
     report(){
@@ -70,6 +86,30 @@ class Payment{
         }catch (e) {
             response.status = false;
             response.message = e.message
+        }
+        return Promise.resolve(response)
+    }
+
+    async completePayment(amount=0){
+        const response = new ResponseObject();
+        try{
+            const contrib = await contributionRef
+                .doc(this.data.contribId)
+                .get();
+            const uplinerProfile = await profileRef
+                .doc(this.data.receiverId)
+                .get();
+            if(contrib.exists && uplinerProfile.exists){
+                await contributionRef.doc(contrib.id).update({
+                    profitReceived: firestore.FieldValue.increment(amount)
+                })
+                await profileRef.doc(uplinerProfile.id).update({
+                    balance: firestore.FieldValue.increment(this.data.amount)
+                })
+            }
+        }catch (e) {
+            response.status = false;
+            response.message = e.message;
         }
         return Promise.resolve(response)
     }

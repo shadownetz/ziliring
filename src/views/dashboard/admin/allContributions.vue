@@ -29,7 +29,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(contrib, index) in contributions" :key="'contrib_'+index">
+                            <tr v-for="(contrib, index) in paginated('contributions')" :key="'contrib_'+index">
                                 <td>
                                     <span v-if="currentPage === 0"> {{ index + 1 }}</span>
                                     <span v-else> {{ 100 * currentPage + index + 1 }}</span>
@@ -86,6 +86,14 @@
                                                @click="$emit('toggle', contrib)">
                                                 <i class="ti-pencil"></i> Modify
                                             </a>
+                                            <a href="javascript:void(0)" class="dropdown-item"
+                                               data-toggle="tooltip"
+                                               data-placement="top"
+                                               title="Manually complete a payment due to platform edge case (only applies to the 5k package)"
+                                               v-if="contrib.data.amountToBePaid===5000&contrib.data.hasPaid"
+                                               @click="completePackagePayment(contrib, 2500)">
+                                                <i class="ti-money"></i> Complete Payment
+                                            </a>
                                         </div>
                                     </div>
                                 </td>
@@ -127,6 +135,7 @@
 <script>
     import basicMethodMixins from "../../../utils/mixins/basicMethodMixins";
     import {mapGetters} from "vuex";
+    import Payment from "../../../models/payment";
 
     export default {
         name: "allContributions",
@@ -159,7 +168,10 @@
                     clearInterval(this.checkInterval);
                     const packagePromises = this.contributions.map(contrib=>this.$store.dispatch('package/get', contrib.data.packageId));
                     const results = await Promise.all(packagePromises);
-                    this.packageInfo = results.map(result=>result.status?result.data:undefined)
+                    this.packageInfo = results.map(result=>result.status?result.data:undefined);
+                    setTimeout(()=>{
+                        $('[data-toggle="tooltip"]').tooltip()
+                    }, 2000)
                 }else{
                     this.checkInterval = setInterval(()=>{
                         this.fetchMetaInfo()
@@ -170,6 +182,23 @@
                 return Math.floor(
                     contrib.data.isComplete?100:(this.getDaysDiffFromNow(contrib.data.beginAt)/7)*100
                 )
+            },
+            completePackagePayment(contrib, amount){
+                this.affirm(async()=>{
+                    let response = await this.$store.dispatch('payment/get', contrib.data.paymentId)
+                    if(response.status){
+                        const _payment = new Payment(response.data.id, response.data.data);
+                        response = await _payment.completePayment(amount);
+                        if(response.status){
+                            this.$toast.success("Operation successful")
+                        }else{
+                            this.$toast.error(response.message, "Error")
+                        }
+                    }else{
+                        this.$toast.error(response.message, "Error")
+                    }
+
+                }, `This contribution is at ${this.getProgress(contrib)}%. Do you still wish to continue?`)
             }
         },
         mounted() {

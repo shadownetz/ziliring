@@ -36,7 +36,7 @@
                                 class="table table-responsive-md shadow-hover card-table"
                         >
                             <tbody>
-                            <tr v-for="(request, index) in requests" :key="'request_'+index">
+                            <tr v-for="(request, index) in paginated('requests')" :key="'request_'+index">
                                 <td>
                                     <span class="p-3 d-inline-block">
                                         <img src="../../../assets/images/svg/withdraw.png" alt="withdrawal" style="width: 30px;height:30px">

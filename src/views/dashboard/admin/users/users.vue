@@ -39,7 +39,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(user, index) in users" :key="'users_'+index">
+                            <tr v-for="(user, index) in paginated('users')" :key="'users_'+index">
                                 <td>
                                     <span v-if="currentPage === 0"> {{ index + 1 }}</span>
                                     <span v-else> {{ 100 * currentPage + index + 1 }}</span>

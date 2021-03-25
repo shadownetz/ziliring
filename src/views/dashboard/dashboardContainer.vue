@@ -131,3 +131,19 @@
 <style scoped>
 
 </style>
+<style>
+    .paginate-links{
+        display: flex;
+        justify-content: center;
+    }
+    .paginate-links li{
+        /*FF6418C3*/
+        background-color: var(--primary);
+        padding: 5px 10px;
+        color: #ffffff;
+        margin: 0 5px;
+    }
+    .paginate-links li:not(.disabled):hover{
+        cursor: pointer;
+    }
+</style>

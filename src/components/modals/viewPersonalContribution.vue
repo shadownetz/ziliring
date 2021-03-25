@@ -51,6 +51,26 @@
                                 <h4 class="font-weight-bolder">Created</h4>
                                 <h5>{{getReadableDatetime(contribution.data.createdAt)}}</h5>
                             </div>
+
+                            <template v-if="downlinersUserInfo.length > 0">
+                                <p class="alert alert-outline-primary">
+                                    Contributors below have been attached to you for payment.
+                                </p>
+                                <div v-for="(user, index) in downlinersUserInfo" :key="'profile_'+index">
+                                    <div class="col-12 my-3">
+                                        <h4 class="text-left">#{{index+1}}</h4>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                        <h4 class="font-weight-bolder">Amount</h4>
+                                        <h5 v-if="paymentsInfo[index]!==undefined">{{paymentsInfo[index].data.amount}}</h5>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                        <h4 class="font-weight-bolder">Contact</h4>
+                                        <h5>{{user.data.phone}}</h5>
+                                    </div>
+                                </div>
+                            </template>
+
                         </div>
                     </div>
                 </div>
@@ -73,7 +93,9 @@
         name: "viewPersonalContribution",
         data(){
             return {
-                packageInfo: {id: '', data: {}}
+                packageInfo: {id: '', data: {}},
+                paymentsInfo: [],
+                downlinersUserInfo: []
             }
         },
         mixins: [basicMethodMixins],
@@ -87,9 +109,19 @@
         },
         methods: {
             async fetchMetaInfo(){
-                const response = await this.$store.dispatch('package/get', this.contribution.data.packageId);
+                let response = await this.$store.dispatch('package/get', this.contribution.data.packageId);
                 if(response.status){
-                    this.packageInfo = response.data
+                    this.packageInfo = response.data;
+                    let promises = this.contribution.data.paymentIds.map(id=>{
+                        return this.$store.dispatch('payment/get', id)
+                    })
+                    let results = await Promise.all(promises);
+                    this.paymentsInfo = results.map(result=>result.data)
+                    promises = this.paymentsInfo.map(payment=>{
+                        return this.$store.dispatch('user/get', payment.data.userId)
+                    })
+                    results = await Promise.all(promises);
+                    this.downlinersUserInfo = results.map(result=>result.data)
                 }
             }
         },
@@ -101,6 +133,7 @@
             })
             modalElem.on('hidden.bs.modal', ()=>{
                 this.packageInfo = {id: '', data: {}}
+                this.paymentsInfo = this.downlinersUserInfo = []
             })
         }
     }

@@ -29,7 +29,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(contrib, index) in contributions" :key="'contrib_'+index">
+                            <tr v-for="(contrib, index) in paginated('contributions')" :key="'contrib_'+index">
                                 <td>
                                     <span v-if="currentPage === 0"> {{ index + 1 }}</span>
                                     <span v-else> {{ 100 * currentPage + index + 1 }}</span>
