@@ -2,37 +2,38 @@
     <footer>
         <div class="container-fluid" style="padding-top: 20px">
             <div class="row">
-                <div class="col-12 col-md-6 pt-5">
+                <div class="col-12 col-md-4">
                     <img src="../../../assets/images/logo/ziliring.png"
                          alt="ziliring logo"
                     >.com
-                    <div>
-                        <ul class="social-links">
-                            <li>
-                                <a href="javascript:void(0)">
-                                    <i class="fa fa-twitter text-info"></i> Twitter
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)">
-                                    <i class="fa fa-facebook text-primary"></i> Facebook
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)">
-                                    <i class="fa fa-whatsapp text-success"></i> Whatsapp
-                                </a>
-                            </li>
-                        </ul>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="row pt-md-3">
+                        <div class="col-12 col-md-4">
+                            <a href="javascript:void(0)">
+                                <i class="fa fa-twitter text-info"></i> Twitter
+                            </a>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <a href="javascript:void(0)">
+                                <i class="fa fa-facebook text-primary"></i> Facebook
+                            </a>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <a href="javascript:void(0)">
+                                <i class="fa fa-whatsapp text-success"></i> Whatsapp
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 pt-5">
-                    <h4>Resources</h4>
-                    <p><a href="javascript:void(0)">Support</a></p>
-                    <p><a href="javascript:void(0)">Terms</a></p>
-                    <p><a href="javascript:void(0)">Privacy</a></p>
+                <div class="col-12 col-md-4">
+                    <p class="pt-md-3">
+                        <a href="javascript:void(0)">Support</a>
+                    </p>
+<!--                    <p><a href="javascript:void(0)">Terms</a></p>-->
+<!--                    <p><a href="javascript:void(0)">Privacy</a></p>-->
                 </div>
-                <div class="col-12 text-center pt-4">
+                <div class="col-12 text-center pt-2">
                     <p>&copy;{{(()=>new Date().getFullYear())()}} Ziliring. All Rights Reserved</p>
                 </div>
             </div>

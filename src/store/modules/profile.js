@@ -48,7 +48,7 @@ export default {
         }
     },
     actions: {
-        async init({state, commit, rootGetters}, {force = false}){
+        async init({state, commit, rootGetters}, {force=false}){
             const response = new ResponseObject();
             try{
                 if(force){

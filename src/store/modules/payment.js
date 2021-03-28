@@ -56,7 +56,7 @@ export default {
             }
             return Promise.resolve(response)
         },
-        async queryPending({rootGetters}, limit=10){
+        async queryPendingAsDownliner({rootGetters}){
             const response = new ResponseObject();
             response.data.result = [];
             try{
@@ -64,7 +64,6 @@ export default {
                     .where('userId', '==', rootGetters['user/getUser'].id)
                     .where('confirmed', '==', false)
                     .orderBy('createdAt', 'desc')
-                    .limit(limit)
                     .get();
                 queriedSnapshots.forEach(doc=>{
                     if(doc.exists){
@@ -81,7 +80,31 @@ export default {
             }
             return Promise.resolve(response)
         },
-        async queryAll({rootGetters}){
+        async queryPendingPaymentsAsUpliner({rootGetters}){
+            const response = new ResponseObject();
+            response.data.result = [];
+            try{
+                const queriedSnapshots = await paymentRef
+                    .where('receiverId', '==', rootGetters['user/getUser'].id)
+                    .where('confirmed', '==', false)
+                    .orderBy('createdAt', 'desc')
+                    .get();
+                queriedSnapshots.forEach(doc=>{
+                    if(doc.exists){
+                        response.data.result.push({
+                            id: doc.id,
+                            data: doc.data()
+                        })
+                    }
+                })
+            }catch (e) {
+                response.message = e.message;
+                response.status = false;
+                console.log('Err fetching all queried payment as upliner::', e)
+            }
+            return Promise.resolve(response)
+        },
+        async queryPaymentsAsDownliner({rootGetters}){
             const response = new ResponseObject();
             response.data.result = [];
             try{
@@ -100,7 +123,7 @@ export default {
             }catch (e) {
                 response.message = e.message;
                 response.status = false;
-                console.log('Err fetching all queried payment::', e)
+                console.log('Err fetching all queried payment as downliner::', e)
             }
             return Promise.resolve(response)
         },

@@ -102,51 +102,35 @@ class PaymentDecision{
             1: [5000, false]
         }
         const tenThousand = {
-            1: [5000, false],
+            1: [10000, false],
             2: [5000, false],
-            3: [5000, false]
         }
         const twentyThousand = {
-            1: [10000, false],
-            2: [10000, false],
-            3: [5000, false],
-            4: [5000, false]
-        }
-        const fortyThousand = {
             1: [20000, false],
             2: [10000, false],
-            3: [10000, false],
-            4: [10000, false],
-            5: [10000, false],
+        }
+        const fortyThousand = {
+            1: [40000, false],
+            2: [20000, false],
         }
         const hundredThousand = {
-            1: [40000, false],
+            1: [100000, false],
             2: [40000, false],
-            3: [40000, false],
-            4: [20000, false],
             5: [10000, false]
         }
         const twoHundredThousand = {
-            1: [100000, false],
+            1: [200000, false],
             2: [100000, false],
-            3: [40000, false],
-            4: [40000, false],
-            5: [20000, false]
         }
         const fiveHundredThousand = {
-            1: [200000, false],
+            1: [500000, false],
             2: [200000, false],
-            3: [200000, false],
-            4: [100000, false],
             5: [40000, false],
             6: [10000, false]
         }
         const oneMilli = {
-            1: [500000, false],
+            1: [1000000, false],
             2: [500000, false],
-            3: [200000, false],
-            4: [200000, false],
-            5: [100000, false]
         }
         switch (paidAmount) {
             case 5000: progression = fiveThousand; break;
