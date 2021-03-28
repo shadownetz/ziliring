@@ -64,13 +64,17 @@
         background: #fb3e3e;
         color: #ffffff;
     }
+    .modal-header h5{
+        color: #ffffff;
+    }
     .modal-header .close{
         background: rgba(0,0,0,.5);
         border-radius: 50%;
         width: 30px;
         height: 30px;
         padding: 2px 4px;
-        margin-top: 1px;
+        margin-top: 5px;
+        margin-right: 5px;
         color: #ffffff;
         text-align: center;
     }
