@@ -1,0 +1,236 @@
+/*html {*/
+/*    scroll-behavior: smooth;*/
+/*}*/
+#preloader{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    z-index: 9999;
+}
+.text-pink{
+    color: #ec3e3b
+}
+.btn{border-radius: 10px!important;}
+.btn-pink{
+    background-color: #ec3e3b;
+    color: #ffffff;
+}
+.btn-outline-pink{
+    background-color: transparent;
+    border-color: #ec3e3b;
+    color: #ec3e3b;
+}
+.btn-pink:hover,
+.btn-pink:focus{
+    background-color: #c63431;
+    color: #ffffff!important;
+}
+.btn-outline-pink:hover,
+.btn-outline-pink:focus{
+    background-color: #ec3e3b;
+    color: #ffffff!important;
+}
+.main .navbar{
+    background-color: var(--primary);
+}
+.main .navbar-nav .nav-item.active .nav-link{
+    color: #ec3e3b!important;
+}
+.main .navbar-nav .nav-item:not(:last-child){
+    margin-right: 10px
+}
+.main .navbar-nav .nav-item .nav-link{
+    color: #ffffff;
+    font-weight: bold;
+}
+.main .navbar-nav .nav-item .nav-link:hover{
+    color: #ec3e3b
+}
+
+@media screen and (min-width: 320px){
+    #preloader > img{
+        position: relative;
+        top: 20%;
+        left: 10%
+    }
+    #home .banner,
+    #roadmap .banner,
+    #showoff .banner{
+        position: relative;
+        min-height: 500px;
+        background-color: var(--primary);
+    }
+    #home .banner .banner-2,
+    #roadmap .banner .banner-2,
+    #showoff .banner .banner-2{
+        /*background-image: linear-gradient(to right, red , yellow);*/
+        /*background-color: var(--primary);*/
+        background-image: linear-gradient(180deg, #6418C3, rgba(100, 24, 195, 0.64));
+        min-height: 500px;
+        z-index: 1;
+    }
+    #home .banner .txt-block,
+    #roadmap .banner .txt-block,
+    #showoff .banner .txt-block{
+        padding-top: 100px
+    }
+    #home .banner .txt-block h1,
+    #roadmap .banner .txt-block h1,
+    #showoff .banner .txt-block h1{
+        font-size: 2rem
+    }
+    #home .banner .txt-block p,
+    #roadmap .banner .txt-block p,
+    #showoff .banner .txt-block p{
+        font-size: 1em;
+        font-weight: bold;
+        margin-top: 20px
+    }
+    #home .banner-trans-under,
+    #roadmap .banner-trans-under,
+    #showoff .banner-trans-under{
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+    }
+    /* About Us  */
+    #about .aboutus{
+        min-height: 400px;
+    }
+    #about .container-fluid{
+        padding-top: 100px
+    }
+    #about .tag-info{
+        font-size: 20px;
+    }
+    .options{
+        padding-top: 40px
+    }
+    .options, .options-img{
+        display: none;
+    }
+    .options li{
+        position: relative;
+    }
+    .options li:not(:first-child){
+        padding-top: 20px
+    }
+    .options li p{
+        display: none;
+    }
+    .options li.active:before{
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -20px;
+        width: 5px;
+        height: 100%;
+        background-color: var(--primary);
+    }
+    .options li.active p{
+        display: block;
+    }
+    .options li:hover{
+        cursor: pointer;
+    }
+    .options-slide{
+        display: block
+    }
+
+    /* RoadMap */
+    #roadmap .banner{
+        min-height: 400px;
+    }
+    #roadmap .banner .banner-2{
+        min-height: 400px;
+        padding-bottom: 100px;
+    }
+    #roadmap .banner .txt-block{
+        padding-top: 50px
+    }
+    #roadmap .step{
+        color: #ffffff;
+    }
+    #roadmap .step:not(:first-child){
+        margin-top: 10px
+    }
+    #roadmap .step h3{
+        color: #ffffff;
+    }
+    #roadmap .step .item{
+        background-color: var(--primary);
+        box-shadow: 1px 1px 2px rgba(255,255,255,.1);
+        padding: 10px 10px 10px 20px;
+        min-height: 250px
+    }
+    #roadmap .step .item p{
+        font-weight: normal;
+    }
+    /* Footer */
+    footer{
+        color: black;
+        background-color: rgb(250,250,250);
+    }
+    footer .social-links li{
+        padding: 10px 10px 0 0;
+        color: var(--primary);
+        font-size: 16px;
+    }
+    footer img{
+        margin-left: 0
+    }
+    /* FAQ */
+    #faq .accordion button{
+        font-size: 20px;
+    }
+    /* ShowOff */
+    #showoff .container{
+        height: 100%;
+    }
+    #showoff .txt-block{
+        height: 100%
+    }
+    #showoff .txt-block img{
+        position: relative;
+        display: block;
+        width: 300px;
+        bottom:0
+    }
+}
+@media screen and (min-width: 768px){
+    #preloader > img{
+        left: 40%
+    }
+    #home .banner .txt-block h1{
+        font-size: 3rem
+    }
+    #home .banner .txt-block p{
+        font-size: 1.2em;
+    }
+    .options, .options-img{
+        display: block;
+    }
+    .options-slide{
+        display: none
+    }
+    #roadmap .step:not(:first-child){
+        margin-top: 0
+    }
+    footer img{
+        margin-left: 10px
+    }
+    footer .social-links li{
+        padding-left: 10px
+    }
+    #showoff .banner .txt-block h1{
+        font-size: 3rem;
+    }
+    #showoff .txt-block img{
+        left: 35%
+    }
+}

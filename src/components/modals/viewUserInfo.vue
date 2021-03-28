@@ -32,7 +32,7 @@
                             <div class="col-6 alert alert-primary">
                                 <h4>Last Purge</h4>
                                 <h6 v-if="userProfile.data.purgedAt">{{getReadableDatetime(userProfile.data.purgedAt)}}</h6>
-                                <h6>None</h6>
+                                <h6 v-else>None</h6>
                             </div>
 
                             <div class="col-12 col-md-6">
@@ -43,7 +43,7 @@
                                 <h4>Last Name</h4>
                                 <h6>{{user.data.lastName}}</h6>
                             </div>
-                            <div class="col-12 col-md-6 mt-3">
+                            <div class="col-12 col-md-6 mt-3" style="word-break: break-word">
                                 <h4>Email</h4>
                                 <h6>{{user.data.email}}</h6>
                             </div>

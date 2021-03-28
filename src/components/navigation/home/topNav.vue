@@ -1,57 +1,58 @@
 <template>
-    <div>
+    <div class="main">
         <!-- Pre-loader -->
         <div id="preloader">
-            <div id="status">
-                <div class="spinner">Loading...</div>
-            </div>
+            <img src="../../../assets/images/logo/ziliring_preloader.svg"
+                 alt="ziliring preloader">
         </div>
         <!-- End Preloader-->
 
         <!--Navbar Start-->
-        <nav class="navbar navbar-expand-lg fixed-top navbar-custom sticky sticky-dark">
-            <div class="container">
-                <!-- LOGO -->
-                <router-link :to="{name:'Home'}" class="logo">
-                    <img id="main-logo" src="../../../assets/images/logo/ziliring_light.png" alt="ziliring logo" style="width: 150px;height: 50px">
-                    <img id="logo-alt" src="../../../assets/images/logo/ziliring.png" alt="ziliring logo" style="width: 150px;height: 50px; display: none">
-                </router-link>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="mdi mdi-menu"></i>
-                </button>
-                <!-- Start Navbar -->
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav ml-auto navbar-center" id="mySidenav">
-                        <li class="nav-item font-weight-600 active">
-                            <a href="javascript:void(0)" to="#home" class="nav-link">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="javascript:void(0)" to="#about" class="nav-link">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="javascript:void(0)" to="#services" class="nav-link">Plans</a>
-                        </li>
-<!--                        <li class="nav-item">-->
-<!--                            <a href="javascript:void(0)" to="#token" class="nav-link">Token Sale</a>-->
-<!--                        </li>-->
-                        <li class="nav-item">
-                            <a href="javascript:void(0)" to="#roadmap" class="nav-link">How it works</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="javascript:void(0)" to="#team" class="nav-link">Team</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="javascript:void(0)" to="#faq" class="nav-link">FAQ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="javascript:void(0)" to="#contact" class="nav-link">Contact</a>
-                        </li>
-                    </ul>
-                    <button v-if="!isSignedIn" class="btn btn-sm navbar-btn btn-round" data-toggle="modal" data-target="#authModal">Account</button>
-                    <a v-else href="/dashboard" class="btn btn-sm navbar-btn btn-round">
-                        Dashboard
-                    </a>
-                </div>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="#">
+                <img src="../../../assets/images/logo/ziliring_light.png" alt="ziliring logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#home">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#roadmap">How it works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#faq">FAQ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fa fa-whatsapp"></i> Support
+                        </a>
+                    </li>
+<!--                    <li class="nav-item dropdown">-->
+<!--                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                            Dropdown-->
+<!--                        </a>-->
+<!--                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--                            <a class="dropdown-item" href="#">Action</a>-->
+<!--                            <a class="dropdown-item" href="#">Another action</a>-->
+<!--                            <div class="dropdown-divider"></div>-->
+<!--                            <a class="dropdown-item" href="#">Something else here</a>-->
+<!--                        </div>-->
+<!--                    </li>-->
+                </ul>
+                <a href="/dashboard" class="text-white my-sm-0" :to="{name: 'Dashboard'}" v-if="isSignedIn">
+                    <i class="fa fa-user"></i> Dashboard
+                </a>
+                <a v-else href="javascript:void(0)" class="text-white my-sm-0" data-toggle="modal" data-target="#authModal">
+                    <i class="fa fa-user"></i> Account
+                </a>
             </div>
         </nav>
         <!-- Navbar End -->
@@ -61,12 +62,12 @@
 </template>
 
 <script>
-    import "../../../assets/css/style.css"
+    import "../../../assets/css/customStyle.css"
     import authModal from "../../auth/authModal";
     import {mapGetters} from 'vuex'
 
     export default {
-        name: "homeNav",
+        name: "topNav",
         computed: {
             ...mapGetters('auth', [
                 'isSignedIn'
@@ -80,8 +81,6 @@
         },
         mounted() {
             $('#status').fadeOut();
-            $('#preloader').delay(350).fadeOut('slow');
-
 
             let navLinks = $('#mySidenav .nav-link');
             // eslint-disable-next-line no-unused-vars

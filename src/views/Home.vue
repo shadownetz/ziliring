@@ -1,551 +1,377 @@
 <template>
-  <div>
-    <top-nav/>
+    <div>
+        <top-nav/>
 
-    <!-- Start Home -->
-    <section class="bg-home" id="home">
-      <div class="home-center">
-        <div class="home-desc-center demo2">
-          <div class="container slidero">
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="home-title text-white">
-                  <h1>You earn your future. Let us earn your trust</h1>
-                  <p class="mt-4">
-                    At Ziliring, our goal is to make the world smarter, happier, and richer.
-                    So hop on the moving train today by subscribing to any of our plans
-                  </p>
-                  <div class="watch-video mt-5">
-                    <a href="javascript:void(0)" data-toggle="modal" data-target="#authModal" class="btn btn-custom mr-4 btn-round">Register</a>
-                    <a href="http://vimeo.com/99025203" class="video-play-icon text-white">
-                      <i class="mdi mdi-play play-icon-circle mr-2"></i></a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-6">
-                <div class="software-home-img">
-                  <img src="../assets/images/svg/crypto.svg" alt="img-responsive" class="img-fluid mx-auto d-block">
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- End Home -->
-
-    <!-- Start About -->
-    <section class="section" id="about">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-8">
-            <div class=" title text-center mb-5">
-              <h3 class="font-weight-600 mb-3">Fully Decentralized Network</h3>
-              <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="row vertical-content mt-4">
-          <div class="col-lg-6">
-            <div class="about-image">
-              <img src="../assets/images/svg/blockchain.svg" alt="" class="mx-auto d-block img-fluid">
-            </div>
-          </div>
-
-          <div class="col-lg-5">
-            <div class="about-content">
-              <div class="upper-heading">Who are we?</div>
-              <h3 class="font-weight-600">Let us Introduce Ourselves.</h3>
-              <p class="text-muted ">
-                Lorem ipsum dolor sit amet, has at lorem utinam mucius, per at elitr dicam malorum. Fugit convenire ei eam, adhuc putant eam et. Verear petentium vel an, nullam viderer eam an. Illud liber ad sed. Ea eos scripta iudicabit, dicit persius ponderum id nec.
-                Lorem ipsum dolor sit amet, has at lorem utinam mucius, per at elitr dicam malorum. Fugit convenire ei eam, adhuc putant eam et. Verear petentium vel an, nullam viderer eam an. Illud liber ad sed. Ea eos scripta iudicabit, dicit persius ponderum id nec.
-                Lorem ipsum dolor sit amet, has at lorem utinam mucius, per at elitr dicam malorum. Fugit convenire ei eam, adhuc putant eam et. Verear petentium vel an, nullam viderer eam an. Illud liber ad sed. Ea eos scripta iudicabit, dicit persius ponderum id nec.
-              </p>
-              <a href="javascript:void(0)" class="font-weight-600">Join Us<i class="mdi mdi-chevron-right"></i></a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- Start Services-->
-    <section class="section bg-light" id="services">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-8 text-center">
-            <div class="title text-center mb-5">
-              <h3 class="font-weight-600 mb-3">Our Awesome Plans</h3>
-              <p class="text-muted">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="row vertical-content mt-4">
-          <div class="col-lg-5">
-            <div class="row">
-              <div class="col-lg-6 col-md-6">
-                <div class="card widget-flat">
-                  <div class="card-body">
-                    <h3 class="mb-3">Steel</h3>
-                    <p class="mb-0 text-muted">
-                      <span class="text-success mr-2">₦5000</span> <br>
-                      <span class="text-success mr-2">₦10000</span><br>
-                      <span class="text-success mr-2">₦20000</span><br>
-                      <span class="text-success mr-2">₦40000</span>
-                    </p>
-                    <a href="javascript:void(0)" class="btn mt-4 btn-custom mr-4 btn-round">Register</a>
-                  </div> <!-- end card-body-->
-                </div>
-              </div>
-
-              <div class="col-lg-6 col-md-6">
-                <div class="card widget-flat">
-                  <div class="card-body">
-                    <div class="float-right">
+        <!-- Banner Section -->
+        <section id="home">
+            <div class="container-fluid">
+                <div class="row banner">
+                    <div class="col-12 banner-2">
+                        <div class="container">
+                            <div class="col-12 txt-block text-white text-center">
+                                <h1 class="text-capitalize text-white">
+                                    We earn your future <br>let us earn your trust
+                                </h1>
+                                <p>
+                                    Trusted by 70K+ Nigerians - with Over 100K+ Contributors on standby - Since 2013
+                                </p>
+                                <a v-if="isSignedIn" href="/dashboard" class="btn btn-lg btn-pink mt-3">Go to Dashboard</a>
+                                <button v-else data-toggle="modal" data-target="#authModal" class="btn btn-lg btn-pink mt-5">Get Started</button>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="mb-3">Bronze</h3>
-                    <p class="mb-0 text-muted">
-<!--                      <span class="text-success mr-2"><i class="mdi mdi-arrow-up-bold"></i> 5.27%</span>-->
-                      <span class="text-success mr-2">₦100,000</span><br>
-                      <span class="text-success mr-2">₦200,000</span>
-                    </p>
-                    <a href="javascript:void(0)" class="btn mt-4 btn-custom mr-4 btn-round">Register</a>
-                  </div> <!-- end card-body-->
+                    <img class="banner-trans-under" src="../assets/images/bg/hero-gradient.svg" alt="banner bg">
                 </div>
-              </div>
             </div>
+        </section>
 
-            <div class="row">
-              <div class="col-lg-6 col-md-6">
-                <div class="card widget-flat">
-                  <div class="card-body">
-                    <div class="float-right">
+        <!-- About us Section -->
+        <section id="about">
+            <div class="container-fluid">
+                <div class="row aboutus">
+                    <div class="col-12 col-md-5 pl-3 pl-md-5">
+                        <div class="tag-info">
+                            <i class="ti ti-cloud"></i>
+                            <span class="badge light badge-info ml-3">about us</span>
+                        </div>
+                        <h1 class="pt-3">
+                            Fully Decentralized System
+                        </h1>
+                        <a v-if="isSignedIn" href="/dashboard" class="btn btn-lg btn-primary">Go to Dashboard</a>
+                        <button v-else data-toggle="modal" data-target="#authModal" class="btn btn-lg btn-primary">Join in</button>
+                        <ul class="options">
+                            <li :class="about_options[0]?'active':''" @click="toggleOptions(0)">
+                                <h3>Swift Earning</h3>
+                                <p class="animated fadeIn">
+                                    Make your contribution and earn within the next 7 days.
+                                </p>
+                            </li>
+                            <li :class="about_options[1]?'active':''" @click="toggleOptions(1)">
+                                <h3>Reliable Contributors</h3>
+                                <p class="animated fadeIn">
+                                    Contributors undergo various authentication and verification so do not fret when
+                                    a contributor faults. You will be reassigned ASAP
+                                </p>
+                            </li>
+                            <li :class="about_options[2]?'active':''" @click="toggleOptions(2)">
+                                <h3>Automated Payouts</h3>
+                                <p class="animated fadeIn">
+                                    Request for a withdrawal and get notified of your funds transfer
+                                    to your local bank within minutes
+                                </p>
+                            </li>
+                            <li :class="about_options[3]?'active':''" @click="toggleOptions(3)">
+                                <h3>Prompt Customer Support</h3>
+                                <p class="animated fadeIn">
+                                    You have a problem or suggestions, feel free to hit us up.
+                                    We will get back to you within the seconds
+                                </p>
+                            </li>
+                        </ul>
                     </div>
-                    <h3 class="mb-3">Gold</h3>
-                    <p class="mb-0 text-muted">
-                      <span class="text-success mr-2">₦500,000</span><br>
-                      <span class="text-success mr-2">₦1,000,000</span>
-                    </p>
-                    <a href="javascript:void(0)" class="btn mt-4 btn-custom mr-4 btn-round">Register</a>
-                  </div> <!-- end card-body-->
+                    <div class="col-12 col-md-7 text-right options-img">
+                        <img class="img-fluid" :src="active_option_bg" alt="" style="width: 600px;height: 500px">
+                    </div>
+                    <div class="col-12 pt-5 options-slide">
+                        <div class="options-carousel">
+                            <div>
+                                <h3>Swift Earning</h3>
+                                <p class="animated fadeIn">
+                                    Make your contribution and earn within the next 7 days.
+                                </p>
+                                <div class="col-12 text-center">
+                                    <img class="img-fluid"  :src="about_options_bg[1]" alt="" style="">
+                                </div>
+                            </div>
+                            <div>
+                                <h3>Reliable Contributors</h3>
+                                <p class="animated fadeIn">
+                                    Contributors undergo various authentication and verification so do not fret when
+                                    a contributor faults. You will be reassigned ASAP
+                                </p>
+                                <div class="col-12 text-center">
+                                    <img class="img-fluid" :src="about_options_bg[1]" alt="" style="">
+                                </div>
+                            </div>
+                            <div>
+                                <h3>Automated Payouts</h3>
+                                <p class="animated fadeIn">
+                                    Request for a withdrawal and get notified of your funds transfer
+                                    to your local bank within minutes
+                                </p>
+                                <div class="col-12 text-center">
+                                    <img class="img-fluid"  :src="about_options_bg[1]" alt="" style="">
+                                </div>
+                            </div>
+                            <div>
+                                <h3>Prompt Customer Support</h3>
+                                <p class="animated fadeIn">
+                                    You have a problem or suggestions, feel free to hit us up.
+                                    We will get back to you within the seconds
+                                </p>
+                                <div class="col-12 text-center">
+                                    <img class="img-fluid" :src="about_options_bg[1]" alt="" style="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-
-<!--              <div class="col-lg-6 col-md-6">-->
-<!--                <div class="card widget-flat">-->
-<!--                  <div class="card-body">-->
-<!--                    <div class="float-right">-->
-<!--                      <i class="mid mid-bitcoin"></i>-->
-<!--                    </div>-->
-<!--                    <h3 class="mb-3">Emerald</h3>-->
-<!--                    <p class="mb-0 text-muted">-->
-<!--                      <span class="text-success mr-2"><i class="mdi mdi-arrow-up-bold"></i> 5.27%</span>-->
-<!--                      <span class="text-nowrap">Since last month</span>-->
-<!--                    </p>-->
-<!--                  </div> &lt;!&ndash; end card-body&ndash;&gt;-->
-<!--                </div>-->
-<!--              </div>-->
             </div>
-          </div>
+        </section>
 
-          <div class="col-lg-6">
-            <img src="../assets/images/svg/services.svg" alt="" class="mx-auto d-block img-fluid">
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- Start Token -->
-    <!--    <section class="section token-sale" id="token">-->
-    <!--      <div class="container">-->
-    <!--        <div class="row justify-content-center">-->
-    <!--          <div class="col-lg-8">-->
-    <!--            <div class="title text-center mb-5">-->
-    <!--              <h3 class="font-weight-600 mb-3">Token Sale</h3>-->
-    <!--              <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>-->
-    <!--            </div>-->
-    <!--          </div>-->
-    <!--        </div>-->
-
-    <!--        <div class="row vertical-content mt-4">-->
-    <!--          <div class="col-md-8">-->
-    <!--            <div class="row">-->
-    <!--              <div class="col-lg-4 col-md-6 mt-4">-->
-    <!--                <div class="info-box">-->
-    <!--                  <h6>Exchnage Rate</h6>-->
-    <!--                  <p class="mb-0 text-muted">1 CTB = 0.003 BTC</p>-->
-    <!--                </div>-->
-    <!--              </div>-->
-
-    <!--              <div class="col-lg-4 col-md-6 mt-4">-->
-    <!--                <div class="info-box">-->
-    <!--                  <h6>Total of Token</h6>-->
-    <!--                  <p class="mb-0 text-muted">5 BTB = 2.003 ETH</p>-->
-    <!--                </div>-->
-    <!--              </div>-->
-
-    <!--              <div class="col-lg-4 col-md-6 mt-4">-->
-    <!--                <div class="info-box">-->
-    <!--                  <h6>Maximam Cap</h6>-->
-    <!--                  <p class="mb-0 text-muted">1 USD = 1.003 ETC</p>-->
-    <!--                </div>-->
-    <!--              </div>-->
-
-    <!--              <div class="col-lg-4 col-md-6 mt-4">-->
-    <!--                <div class="info-box">-->
-    <!--                  <h6>Token Hardcap</h6>-->
-    <!--                  <p class="mb-0 text-muted">$7 USD = 5.001 NEM</p>-->
-    <!--                </div>-->
-    <!--              </div>-->
-
-    <!--              <div class="col-lg-4 col-md-6 mt-4">-->
-    <!--                <div class="info-box">-->
-    <!--                  <h6>Circulation Supply</h6>-->
-    <!--                  <p class="mb-0 text-muted">$8 ARD = 15.003 ETH</p>-->
-    <!--                </div>-->
-    <!--              </div>-->
-
-    <!--              <div class="col-lg-4 col-md-6 mt-4">-->
-    <!--                <div class="info-box">-->
-    <!--                  <h6>Soft Cap</h6>-->
-    <!--                  <p class="mb-0 text-muted">$12 M = 0.003 EOS</p>-->
-    <!--                </div>-->
-    <!--              </div>-->
-    <!--            </div>-->
-    <!--          </div>-->
-
-
-    <!--          <div class="col-lg-4 col-md-8 mt-2">-->
-    <!--            <div class="token-box">-->
-    <!--              <h4 class="text-white">Token sale</h4>-->
-    <!--              <div id="clock" class=""></div>-->
-    <!--              <div class="progress">-->
-    <!--                <div class="progress-bar"></div>-->
-    <!--              </div>-->
-    <!--              &lt;!&ndash; End of .progress &ndash;&gt;-->
-    <!--              <p class="text-white mb-0">$97,800 pledged of $25,000 goal</p>-->
-    <!--            </div>-->
-    <!--            &lt;!&ndash; End of .token-box &ndash;&gt;-->
-    <!--          </div>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--    </section>-->
-
-    <!-- Start Roadmap -->
-    <section class="section bg-light" id="roadmap">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-8">
-            <div class="title text-center mb-5">
-              <h3 class="font-weight-600 mb-3">Roadmap to Success</h3>
-              <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+        <section id="roadmap">
+            <div class="container-fluid">
+                <div class="row banner">
+                    <div class="col-12 banner-2">
+                        <div class="container">
+                            <div class="col-12 txt-block text-white text-center">
+                                <h1 class="text-capitalize text-white">
+                                    How it works
+                                </h1>
+                                <p>Here is a brief RoadMap you will need to go through</p>
+                                <div class="row text-left">
+                                    <div class="col-12 col-md-4 step">
+                                        <div class="item">
+                                            <div class="text-pink"><i class="fa fa-2x fa-sign-in"></i></div>
+                                            <h3>Register</h3>
+                                            <p>
+                                                Quickly signup with the relevant details to begin your contributions
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 step">
+                                        <div class="item">
+                                            <div class="text-pink"><i class="fa-2x flaticon-381-phone-call"></i></div>
+                                            <h3>Verify Phone</h3>
+                                            <p>
+                                                To prevent spamming we require you verify your phone number.
+                                                Do not worry it takes less than a second.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 step">
+                                        <div class="item">
+                                            <div class="text-pink"><i class="fa fa-2x fa-bank"></i></div>
+                                            <h3>Make Payment</h3>
+                                            <p>
+                                               Low on cash? make payment and see the magin that happens thereon
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3 text-left">
+                                    <div class="col-12 col-md-4 step">
+                                        <div class="item">
+                                            <div class="text-pink"><i class="fa fa-2x fa-file"></i></div>
+                                            <h3>Upload Proof of Payment</h3>
+                                            <p>
+                                                You need to show the contributor you are assigned to proof
+                                                that you have completed your part in order to begin your earning
+                                                process
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 step">
+                                        <div class="item">
+                                            <div class="text-pink"><i class="fa fa-2x fa-money"></i></div>
+                                            <h3>Begin Earning</h3>
+                                            <p>
+                                                At Ziliring, you get 50% plus your initial contribution within the next 7 days
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 step">
+                                        <div class="item">
+                                            <div class="text-pink"><i class="ti fa-2x ti-export"></i></div>
+                                            <h3>Make Withdrawal</h3>
+                                            <p>
+                                                When you feel you have enough on your portfolio, send us a withdrawal request.
+                                                We will review your transaction history and transfer your funds to your local
+                                                bank
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="banner-trans-under" src="../assets/images/bg/how_it_works.jpg" alt="banner bg">
+                </div>
             </div>
-          </div>
-        </div>
-
-        <div class="row vertical-content mt-4">
-          <div class="col-md-12">
-            <div class="customNavigation">
-              <a class="prev-roadmap"><i class="mdi mdi-arrow-left"></i></a>
-              <a class="next-roadmap"><i class="mdi mdi-arrow-right"></i></a>
-            </div>
-
-            <div id="owl-demo" class=" owl-carousel owl-theme owl-roadmap text-center">
-              <div class="item">
-                <div class="item-box">
-                  <p class="text-muted">Stage 1</p>
-                  <h5 class="font-weight-600">Register</h5>
-                </div>
-              </div>
-
-              <div class="item">
-                <div class="item-box">
-                  <p class="text-muted">Stage 2</p>
-                  <h5 class="font-weight-600">Verify Sign Up Details</h5>
-                </div>
-              </div>
-
-              <div class="item">
-                <div class="item-box">
-                  <p class="text-muted">Stage 3</p>
-                  <h5 class="font-weight-600">Make Payment</h5>
-                </div>
-              </div>
-
-              <div class="item">
-                <div class="item-box">
-                  <p class="text-muted">Stage 4</p>
-                  <h5 class="font-weight-600">Upload Payment Proof</h5>
-                </div>
-              </div>
-
-              <div class="item">
-                <div class="item-box">
-                  <p class="text-muted">Stage 5</p>
-                  <h5 class="font-weight-600">Start Earning</h5>
-                </div>
-              </div>
-
-              <div class="item">
-                <div class="item-box">
-                  <p class="text-muted">Stage 6</p>
-                  <h5 class="font-weight-600">Withdraw</h5>
-                </div>
-              </div>
-
-              <div class="item">
-                <div class="item-box">
-                  <p class="text-muted">Stage 7</p>
-                  <h5 class="font-weight-600">Re-Subscribe</h5>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Start Team -->
-    <section class="section" id="team">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-8 text-center">
-            <div class="title text-center mb-5">
-              <h3 class="font-weight-600 mb-3">Team</h3>
-              <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="row vertical-content mt-4">
-          <div class="col-lg-3 col-md-6">
-            <div class="team-box p-4 mt-4">
-              <div class="team-img">
-                <img src="../assets/images/team/img-1.jpg" alt="img" class="img-fluid mx-auto d-block rounded-circle">
-              </div>
-              <div class="team-content text-center pt-5">
-                <h5 class="team-name mb-1"><a href="javascript:void(0)" class="text-dark">Sandra L. Flowers</a></h5>
-                <p class="mb-0 text-custom f-14">CEO/Founder</p>
-              </div>
-
-              <ul class="list-inline team-social mt-4 mb-0 text-center">
-                <li class="list-inline-item"><a href="javascript:void(0)"><i class="mdi mdi-facebook"></i></a></li>
-                <li class="list-inline-item"><a href="javascript:void(0)"><i class="mdi mdi-google"></i></a></li>
-                <li class="list-inline-item"><a href="javascript:void(0)"><i class="mdi mdi-twitter"></i></a></li>
-                <li class="list-inline-item"><a href="javascript:void(0)"><i class="mdi mdi-instagram"></i></a></li>
-              </ul>
-
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6">
-            <div class="team-box p-4 mt-4">
-              <div class="team-img">
-                <img src="../assets/images/team/img-2.jpg" alt="img" class="img-fluid mx-auto d-block rounded-circle">
-              </div>
-              <div class="team-content text-center pt-5">
-                <h5 class="team-name mb-1"><a href="javascript:void(0)" class="text-dark">Richard A. Patton</a></h5>
-                <p class="mb-0 text-custom f-14">Web Developer</p>
-              </div>
-
-              <ul class="list-inline team-social mt-4 mb-0 text-center">
-                <li class="list-inline-item"><a href="javascript:void(0)"><i class="mdi mdi-facebook"></i></a></li>
-                <li class="list-inline-item"><a href="javascript:void(0)"><i class="mdi mdi-google"></i></a></li>
-                <li class="list-inline-item"><a href="javascript:void(0)"><i class="mdi mdi-twitter"></i></a></li>
-                <li class="list-inline-item"><a href="javascript:void(0)"><i class="mdi mdi-instagram"></i></a></li>
-              </ul>
-
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6">
-            <div class="team-box p-4 mt-4">
-              <div class="team-img">
-                <img src="../assets/images/team/img-3.jpg" alt="img" class="img-fluid mx-auto d-block rounded-circle">
-              </div>
-              <div class="team-content text-center pt-5">
-                <h5 class="team-name mb-1"><a href="javascript:void(0)" class="text-dark">Helen J. Dalton</a></h5>
-                <p class="mb-0 text-custom f-14">Web Designer</p>
-              </div>
-
-              <ul class="list-inline team-social mt-4 mb-0 text-center">
-                <li class="list-inline-item"><a href="javascript:void(0)"><i class="mdi mdi-facebook"></i></a></li>
-                <li class="list-inline-item"><a href="javascript:void(0)"><i class="mdi mdi-google"></i></a></li>
-                <li class="list-inline-item"><a href="javascript:void(0)"><i class="mdi mdi-twitter"></i></a></li>
-                <li class="list-inline-item"><a href="javascript:void(0)"><i class="mdi mdi-instagram"></i></a></li>
-              </ul>
-
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6">
-            <div class="team-box p-4 mt-4">
-              <div class="team-img">
-                <img src="../assets/images/team/img-4.jpg" alt="img" class="img-fluid mx-auto d-block rounded-circle">
-              </div>
-              <div class="team-content text-center pt-5">
-                <h5 class="team-name mb-1"><a href="javascript:void(0)" class="text-dark">Kenneth Simpson</a></h5>
-                <p class="mb-0 text-custom f-14">CTO/Co-Founder</p>
-              </div>
-
-              <ul class="list-inline team-social mt-4 mb-0 text-center">
-                <li class="list-inline-item"><a href="javascript:void(0)"><i class="mdi mdi-facebook"></i></a></li>
-                <li class="list-inline-item"><a href="javascript:void(0)"><i class="mdi mdi-google"></i></a></li>
-                <li class="list-inline-item"><a href="javascript:void(0)"><i class="mdi mdi-twitter"></i></a></li>
-                <li class="list-inline-item"><a href="javascript:void(0)"><i class="mdi mdi-instagram"></i></a></li>
-              </ul>
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Start FAQ -->
-    <section class="section bg-light" id="faq">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-8">
-            <div class="title text-center mb-5">
-              <h3 class="font-weight-600 mb-3">FAQ</h3>
-              <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="row vertical-content mt-4">
-          <div class="col-lg-6">
-            <img src="../assets/images/svg/FAQ.svg" alt="" class="mx-auto d-block img-fluid">
-          </div>
-
-          <div class="col-lg-6">
-            <div class="accordion" id="faqs-content">
-              <div class="card">
-                <div class="card-header">
-                  <h5 data-toggle="collapse" data-target="#item1" class="collapsed text-white font-weight-600 mb-0" aria-expanded="false">
-                    What currencies can i use to start earning?
-                  </h5>
-                </div>
-                <div id="item1" class="collapse show" data-parent="#faqs-content">
-                  <div class="card-body">
-                    <p class="text-muted contain mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card">
-                <div class="card-header">
-                  <h5 data-toggle="collapse" data-target="#item2" class="collapsed text-white font-weight-600 mb-0" aria-expanded="false">
-                    How long will it take to earn a profit?
-                  </h5>
-                </div>
-                <div id="item2" class="collapse" data-parent="#faqs-content">
-                  <div class="card-body">
-                    <p class="text-muted contain mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card">
-                <div class="card-header">
-                  <h5 data-toggle="collapse" data-target="#item3" class="collapsed text-white font-weight-600 mb-0" aria-expanded="false">
-                    What do you mean by Re-subscription?
-                  </h5>
-                </div>
-                <div id="item3" class="collapse" data-parent="#faqs-content">
-                  <div class="card-body">
-                    <p class="text-muted contain mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!--End col-md-12 -->
-        </div>
-        <!-- End row -->
-      </div>
-      <!-- End container -->
-    </section>
-    <!-- End section -->
-
-    <!-- Start contact -->
-    <section class="section" id="contact">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-8">
-            <div class="title text-center mb-5">
-              <h3 class="font-weight-600 mb-3">Contact Us</h3>
-              <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="row justify-content-center mt-4">
-          <div class="col-lg-10">
-            <div class="custom-form">
-              <div id="message"></div>
-              <form method="post" name="contact-form" id="contact-form">
+        </section>
+        <!-- FAQ Section -->
+        <section id="faq">
+            <div class="container-fluid">
                 <div class="row">
-                  <div class="col-lg-6">
-                    <div class="form-group mt-2">
-                      <input name="name" id="name" class="form-control" placeholder="Your name" type="text">
-                    </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="form-group mt-2">
-                      <input name="email" id="emai" class="form-control" placeholder="Your Email" type="email">
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="form-group mt-2">
-                      <input class="form-control" id="subject" placeholder="Your Subject.." type="text">
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="form-group mt-2">
-                      <textarea name="comments" id="comments" rows="4" class="form-control" placeholder="Your Message...."></textarea>
-                    </div>
-                  </div>
-                </div>
-                <div class="row text-center">
-                  <div class="col-lg-12 mt-3">
-                    <input id="submit" name="send" class="submitBnt btn btn-sm btn-custom btn-round" value="Send Message" type="button">
-                    <div id="simple-msg"></div>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+                    <div class="col-12 py-5">
+                        <h3 class="text-center">Frequently Asked Questions</h3>
+                        <div class="container">
+                            <div class="accordion" id="accordionExample">
+                                <div class="card">
+                                    <div class="card-header" id="headingOne">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                What currencies can i use to start earning?
+                                            </button>
+                                        </h2>
+                                    </div>
 
-    <foot-nav/>
-  </div>
+                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            Currently we only support Nigerian Currency (₦). We hope to support more
+                                            as time goes
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header" id="headingTwo">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                How long will it take to earn a profit?
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            As soon as you upload your payment proof and it is confirmed by the contributor
+                                            you are attached to, you begin making profit within the next 7 days
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header" id="headingThree">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                What do you mean by Re-subscription?
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            It gets to a time your contribution will expire, you can make another contribution if you
+                                            need to earn more obviously, not withstanding you can run multiple contributions as long as
+                                            you upload your payments proof within the next 3 hours
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ad banner -->
+        <section id="showoff">
+            <div class="container-fluid">
+                <div class="row banner">
+                    <div class="col-12 banner-2">
+                        <div class="container">
+                            <div class="col-12 txt-block text-white text-center">
+                                <h1 class="text-capitalize text-white">
+                                    From Zero to Naira in Minutes.
+                                </h1>
+                                <a v-if="isSignedIn" href="/dashboard" class="btn btn-lg btn-pink mt-3">Go to Dashboard</a>
+                                <button v-else data-toggle="modal" data-target="#authModal" class="btn btn-lg btn-pink mt-3">Get Started</button>
+                                <img class="img-fluid" src="../assets/images/bg/home-bottom-mobile.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <img class="banner-trans-under" src="../assets/images/bg/hero-gradient.svg" alt="banner bg">
+                </div>
+            </div>
+        </section>
+        <foot-nav/>
+    </div>
 </template>
 
 <script>
-  import topNav from "../components/navigation/home/topNav";
-  import footNav from "../components/navigation/home/footNav";
+    import topNav from "../components/navigation/home/topNav";
+    import footNav from "../components/navigation/home/footNav";
+    import option1BG from "../assets/images/bg/explorer-explore.png"
+    import option2BG from "../assets/images/bg/explorer-api.png"
+    import {mapGetters} from "vuex";
 
-  export default {
-    name: 'Home',
-    components: {
-      topNav,
-      footNav
+    export default {
+        name: 'Home',
+        data(){
+            return {
+                about_options: [true, false, false, false],
+                about_options_bg: [
+                    option1BG,
+                    option2BG,
+                    option1BG,
+                    option2BG
+                ],
+                active_option_bg: option1BG
+            }
+        },
+        computed: {
+            ...mapGetters('auth', [
+                'isSignedIn'
+            ])
+        },
+        watch: {
+            about_options: function (){
+                this.about_options.forEach((option, index)=>{
+                    if(option) this.active_option_bg = this.about_options_bg[index]
+                })
+            }
+        },
+        methods: {
+            toggleOptions(idx){
+                this.about_options = this.about_options.map((option, index)=>idx === index);
+            }
+        },
+        components: {
+            topNav,
+            footNav
+        },
+        mounted() {
+            // this.$store.dispatch('auth/logout', {reset: false})
+
+            $(".options-carousel").owlCarousel({
+                autoPlay: true,
+                slideSpeed: 2000,
+                pagination: false,
+                navigation: true,
+                items: 1,
+                /* transitionStyle : "fade", */
+                /* [This code for animation ] */
+                navigationText: [
+                    "<i class='fa fa-angle-left'></i>",
+                    "<i class='fa fa-angle-right'></i>"
+                ],
+                // itemsDesktop: [1199, 4],
+                // itemsDesktopSmall: [980, 2],
+                // itemsTablet: [768, 1],
+                // itemsMobile: [479, 1],
+            });
+            // smooth scrolling
+            $(document).ready(function(){
+                // Add smooth scrolling to all links
+                $("a").on('click', function(event) {
+
+                    // Make sure this.hash has a value before overriding default behavior
+                    if (this.hash !== "") {
+                        // Prevent default anchor click behavior
+                        event.preventDefault();
+
+                        // Store hash
+                        var hash = this.hash;
+
+                        // Using jQuery's animate() method to add smooth page scroll
+                        // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+                        $('html, body').animate({
+                            scrollTop: $(hash).offset().top
+                        }, 1000, function(){
+
+                            // Add hash (#) to URL when done scrolling (default click behavior)
+                            // window.location.hash = hash;
+                        });
+                    } // End if
+                });
+            });
+        }
     }
-  }
 </script>

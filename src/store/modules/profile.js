@@ -48,9 +48,18 @@ export default {
         }
     },
     actions: {
-        async init({state, commit, rootGetters}){
+        async init({state, commit, rootGetters}, {force = false}){
             const response = new ResponseObject();
             try{
+                if(force){
+                    const profile = await profileRef.doc(rootGetters['user/getUser'].id).get();
+                    if(profile.exists){
+                        commit('setProfile', {
+                            id: profile.id,
+                            data: profile.data()
+                        })
+                    }
+                }
                 state.listener = await profileRef.doc(rootGetters['user/getUser'].id)
                     .onSnapshot(doc=>{
                         if(doc.exists){

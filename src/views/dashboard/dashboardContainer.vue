@@ -90,7 +90,7 @@
             }, 1000)
             $('head').append([
                 "<link class='dash_custom_imports' href='assets/dashboard/vendor/datatables/css/jquery.dataTables.min.css' rel='stylesheet'>",
-                "<link class='dash_custom_imports' rel='stylesheet' href='assets/dashboard/css/style.css'/>"
+                // "<link class='dash_custom_imports' rel='stylesheet' href='assets/dashboard/css/style.css'/>"
             ]);
             $('body').append(
                 [
@@ -111,13 +111,16 @@
                 curr_location.pop();
                 window.location.href = curr_location.join('/');
             }
-            next(vm=>{
-                if(!vm.$store.getters['profile/getProfile'].data.isActive){
-                    return vm.$router.push({
-                        name: 'PurgedAccount',
-                        params: {userId: vm.$store.getters['profile/getProfile'].id}
-                    })
-                }
+            next(async (vm)=>{
+                await vm.$store.dispatch('profile/init', {force: true})
+                setTimeout(()=>{
+                    if(!vm.$store.getters['profile/getProfile'].data.isActive){
+                        return vm.$router.push({
+                            name: 'PurgedAccount',
+                            params: {userId: vm.$store.getters['profile/getProfile'].id}
+                        })
+                    }
+                }, 2000)
 
             })
         },
@@ -130,4 +133,20 @@
 </script>
 <style scoped>
 
+</style>
+<style>
+    .paginate-links{
+        display: flex;
+        justify-content: center;
+    }
+    .paginate-links li{
+        /*FF6418C3*/
+        background-color: var(--primary);
+        padding: 5px 10px;
+        color: #ffffff;
+        margin: 0 5px;
+    }
+    .paginate-links li:not(.disabled):hover{
+        cursor: pointer;
+    }
 </style>

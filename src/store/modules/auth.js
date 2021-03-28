@@ -4,7 +4,6 @@ import iziToast from "izitoast";
 import {ResponseObject} from "../../utils/globalObjects";
 import User from "../../models/user";
 import router from "../../router";
-import store from "../../store/index"
 
 export default {
     namespaced: true,
@@ -45,11 +44,11 @@ export default {
                 const user = new User(result.user.uid, userData);
                 await user.add();
                 await user.fetch();
-                await store.dispatch('profile/init')
                 commit('user/setUser', {
                     id: user.id,
                     data: user.data
                 }, {root: true})
+                await dispatch('profile/init', {}, {root: true})
                 dispatch('user/setListener', user.id, {root: true})
             }catch (e) {
                 console.log(e)
@@ -87,8 +86,8 @@ export default {
                 await user.fetch();
                 if(user.verify_password(password)){
                     const {id, data} = user;
-                    await store.dispatch('profile/init')
                     commit('user/setUser', {id, data}, {root: true})
+                    await dispatch('profile/init', {}, {root: true})
                     dispatch('user/setListener', id, {root: true})
                 }else{
                     await dispatch('logout');
