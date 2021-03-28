@@ -19,6 +19,10 @@
                 :package_z="paymentInfoPayload.package"
                 :payment="paymentInfoPayload.payment"
         />
+        <payment-info-upliner
+                :package_z="paymentInfoPayload.package"
+                :payment="paymentInfoPayload.payment"
+        />
         <view-personal-contribution :contribution="personalContrib"/>
         <payment-proofs :urls="paymentProofs"/>
         <update-account-details v-if="!profile.data.bankName"/>
@@ -32,9 +36,10 @@
     import topNav from "../../components/navigation/dashboard/topNav";
     import footNav from "../../components/navigation/dashboard/footNav";
     import sideNav from "../../components/navigation/dashboard/sideNav";
-    import paymentInfo from "../../components/modals/paymentInfo";
+    import paymentInfo from "../../components/modals/payments/paymentInfo";
+    import paymentInfoUpliner from "../../components/modals/payments/paymentInfoUpliner";
     import viewPersonalContribution from "../../components/modals/viewPersonalContribution";
-    import paymentProofs from "../../components/modals/paymentProofs";
+    import paymentProofs from "../../components/modals/payments/paymentProofs";
     import updateAccountDetails from "../../components/modals/updateAccountDetails";
     import viewUserInfo from "../../components/modals/viewUserInfo";
     import editContribution from "../../components/modals/editContribution";
@@ -67,7 +72,8 @@
             updateAccountDetails,
             viewUserInfo,
             editContribution,
-            viewRequestInfo
+            viewRequestInfo,
+            paymentInfoUpliner
         },
         created() {
             this.$toast.success('Welcome back', 'Invite');

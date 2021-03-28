@@ -104,8 +104,8 @@
 </template>
 
 <script>
-    import basicMethodMixins from "../../utils/mixins/basicMethodMixins";
-    import {storageRef} from "../../firebase/firebase";
+    import basicMethodMixins from "../../../utils/mixins/basicMethodMixins";
+    import {storageRef} from "../../../firebase/firebase";
 
     export default {
         name: "paymentInfo",

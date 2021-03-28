@@ -25,6 +25,8 @@ class Payment{
                     reported: false,
                     updatedAt: firestore.FieldValue.serverTimestamp()
                 })
+            }else{
+                throw new Error("The Contribution for this payment does not exist")
             }
         }catch (e) {
             response.status = false;

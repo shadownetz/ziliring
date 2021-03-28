@@ -124,7 +124,7 @@
         methods: {
             async queryPayments(){
                 this.payment_loading = true;
-                this.payments = (await this.$store.dispatch('payment/queryAll')).data.result;
+                this.payments = (await this.$store.dispatch('payment/queryPaymentsAsDownliner')).data.result;
                 const contribPromises = this.payments.map(payment=>this.$store.dispatch('contribution/get', payment.data.contribId));
                 const contribs = await Promise.all(contribPromises);
                 if(contribs.length > 0){
