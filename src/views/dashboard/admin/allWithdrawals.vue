@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-header d-block d-sm-flex border-0">
                 <div>
-                    <h4 class="fs-20 text-black">All Withdrawals</h4>
+                    <h4 class="fs-20 text-black">All Profit Withdrawals</h4>
                     <p class="mb-0 fs-13">
                         Results are paginated
                     </p>

@@ -80,7 +80,7 @@
                                     Make your contribution and earn within the next 7 days.
                                 </p>
                                 <div class="col-12 text-center">
-                                    <img class="img-fluid"  :src="about_options_bg[1]" alt="" style="">
+                                    <img class="img-fluid"  :src="about_options_bg[0]" alt="" style="">
                                 </div>
                             </div>
                             <div>
@@ -100,7 +100,7 @@
                                     to your local bank within minutes
                                 </p>
                                 <div class="col-12 text-center">
-                                    <img class="img-fluid"  :src="about_options_bg[1]" alt="" style="">
+                                    <img class="img-fluid"  :src="about_options_bg[2]" alt="" style="">
                                 </div>
                             </div>
                             <div>
@@ -110,7 +110,7 @@
                                     We will get back to you within the seconds
                                 </p>
                                 <div class="col-12 text-center">
-                                    <img class="img-fluid" :src="about_options_bg[1]" alt="" style="">
+                                    <img class="img-fluid" :src="about_options_bg[3]" alt="" style="">
                                 </div>
                             </div>
                         </div>
@@ -273,7 +273,7 @@
                                 </h1>
                                 <a v-if="isSignedIn" href="/dashboard" class="btn btn-lg btn-pink mt-3">Go to Dashboard</a>
                                 <button v-else data-toggle="modal" data-target="#authModal" class="btn btn-lg btn-pink mt-3">Get Started</button>
-                                <img class="img-fluid" src="../assets/images/bg/home-bottom-mobile.png" alt="">
+                                <img class="img-fluid" src="../assets/images/bg/explorer-dashboard-mobile.png" alt="">
                             </div>
                         </div>
                     </div>
@@ -288,8 +288,11 @@
 <script>
     import topNav from "../components/navigation/home/topNav";
     import footNav from "../components/navigation/home/footNav";
-    import option1BG from "../assets/images/bg/explorer-explore.png"
-    import option2BG from "../assets/images/bg/explorer-api.png"
+    import option1BG from "../assets/images/bg/explorer-dashboard.png"
+    import option2BG from "../assets/images/bg/explorer-contributions.png"
+    import option3BG from "../assets/images/bg/explorer-payouts.png"
+    import option4BG from "../assets/images/bg/explorer-dashboard-mobile.png"
+
     import {mapGetters} from "vuex";
 
     export default {
@@ -300,8 +303,9 @@
                 about_options_bg: [
                     option1BG,
                     option2BG,
-                    option1BG,
-                    option2BG
+                    option3BG,
+                    option2BG, // replace with whatsapp web image
+                    option4BG
                 ],
                 active_option_bg: option1BG
             }

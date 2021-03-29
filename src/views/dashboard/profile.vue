@@ -40,13 +40,16 @@
                             <div class="text-center">
                                 <div class="row">
                                     <div class="col">
-                                        <h3 class="m-b-0">₦{{profile.data.balance||0}}</h3><span>Balance</span>
+                                        <h3 class="m-b-0">₦{{profile.data.balance||0}}</h3>
+                                        <span><small>All Time Gains</small></span>
                                     </div>
                                     <div class="col">
-                                        <h3 class="m-b-0">₦{{profile.data.profit||0}}</h3><span>Profit</span>
+                                        <h3 class="m-b-0">₦{{profile.data.profit||0}}</h3>
+                                        <span><small>Profit</small></span>
                                     </div>
                                     <div class="col">
-                                        <h3 class="m-b-0">{{profile.data.purgeCount||0}}</h3><span>Purged</span>
+                                        <h3 class="m-b-0">{{profile.data.purgeCount||0}}</h3>
+                                        <span><small>Purged</small></span>
                                     </div>
                                 </div>
                                 <div class="mt-4">
@@ -69,12 +72,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="javascript:void(0)"
-                                       class="btn btn-primary mb-1 mr-1"
-                                       @click="initWithdrawal('withdrawal')"
-                                    >
-                                        Withdraw Balance
-                                    </a>
+<!--                                    <a href="javascript:void(0)"-->
+<!--                                       class="btn btn-primary mb-1 mr-1"-->
+<!--                                       @click="initWithdrawal('withdrawal')"-->
+<!--                                    >-->
+<!--                                        Withdraw Balance-->
+<!--                                    </a>-->
                                     <a href="javascript:void(0)"
                                        class="btn btn-primary mb-1"
                                        @click="initWithdrawal('profit')"
