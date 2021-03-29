@@ -88,7 +88,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer" v-if="!payment.data.confirmed&&!payment.data.reported">
+                <div class="modal-footer" v-if="!payment.data.confirmed&&!payment.data.reported&&!payment.data.proof.length >=0">
                     <div class="container-fluid">
                         <div class="row align-content-center justify-content-center">
                             <button type="button" class="btn btn-primary btn-rounded" @click.prevent="confirmPay=true" :disabled="!uplinerProfileInfo.data">
@@ -160,6 +160,7 @@
                                 fileURL: downloadURL
                             })
                         }).then(()=>{
+                            this.payment.data.proof = ['']
                             this.$toast.success('Payment proof received', 'Successful');
                             this.resetUpload();
                             $('#paymentInfo').modal('hide');
@@ -182,7 +183,7 @@
                 type: Object,
                 default(){
                     return {
-                        id: '' , data: {}
+                        id: '' , data: {proof:[]}
                     }
                 }
             },

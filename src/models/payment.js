@@ -13,6 +13,7 @@ class Payment{
     async confirm(override=false){
         const response = new ResponseObject();
         try{
+            console.log(this.data.contribId)
             const contribDoc = await contributionRef.doc(this.data.contribId).get();
             if(contribDoc.exists){
                 const contribInstance = new Contribution({id: contribDoc.id, data: contribDoc.data()});

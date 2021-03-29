@@ -160,7 +160,7 @@
                                     </div>
                                 </div>
                                 <div class="row mt-3 text-left">
-                                    <div class="col-12 col-md-4 step">
+                                    <div class="col-12 col-md-6 step">
                                         <div class="item">
                                             <div class="text-pink"><i class="fa fa-2x fa-file"></i></div>
                                             <h3>Upload Proof of Payment</h3>
@@ -171,26 +171,27 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-4 step">
+                                    <div class="col-12 col-md-6 step">
                                         <div class="item">
-                                            <div class="text-pink"><i class="fa fa-2x fa-money"></i></div>
-                                            <h3>Begin Earning</h3>
+                                            <div class="text-pink"><i class="fa fa-2x fa-users"></i></div>
+                                            <h3>Receive Payments from Contributors</h3>
                                             <p>
                                                 At Ziliring, you get 50% plus your initial contribution within the next 7 days
+                                                from contributors that will be attached to you.
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-4 step">
-                                        <div class="item">
-                                            <div class="text-pink"><i class="ti fa-2x ti-export"></i></div>
-                                            <h3>Make Withdrawal</h3>
-                                            <p>
-                                                When you feel you have enough on your portfolio, send us a withdrawal request.
-                                                We will review your transaction history and transfer your funds to your local
-                                                bank
-                                            </p>
-                                        </div>
-                                    </div>
+<!--                                    <div class="col-12 col-md-4 step">-->
+<!--                                        <div class="item">-->
+<!--                                            <div class="text-pink"><i class="ti fa-2x ti-export"></i></div>-->
+<!--                                            <h3>Make Withdrawal</h3>-->
+<!--                                            <p>-->
+<!--                                                When you feel you have enough on your portfolio, send us a withdrawal request.-->
+<!--                                                We will review your transaction history and transfer your funds to your local-->
+<!--                                                bank-->
+<!--                                            </p>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
                                 </div>
                             </div>
                         </div>
