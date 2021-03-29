@@ -122,12 +122,12 @@
                                 </a>
                             </li>
                             <li class="nav-item header-profile">
-                                <a class="nav-link" href="javascript:void(0)" role="button">
-                                    <div class="header-info">
-                                        <span class="text-black">₦{{getProfile.data.balance||0}}</span>
-                                        <p class="fs-12 mb-0">Balance</p>
-                                    </div>
-                                </a>
+<!--                                <a class="nav-link" href="javascript:void(0)" role="button">-->
+<!--                                    <div class="header-info">-->
+<!--                                        <span class="text-black">₦{{getProfile.data.balance||0}}</span>-->
+<!--                                        <p class="fs-12 mb-0">Balance</p>-->
+<!--                                    </div>-->
+<!--                                </a>-->
                                 <a class="nav-link" href="javascript:void(0)" role="button">
                                     <div class="header-info">
                                         <span class="text-black">₦{{getProfile.data.profit||0}}</span>

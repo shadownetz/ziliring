@@ -48,7 +48,7 @@
                 <div class="card">
                     <div class="card-header d-block d-sm-flex border-0">
                         <div>
-                            <h4 class="fs-20 text-black">Payments you are attached to</h4>
+                            <h4 class="fs-20 text-black">Pay to</h4>
                             <p class="mb-0 fs-13">
                                 Showing all result
                             </p>
@@ -167,7 +167,7 @@
                 <div class="card">
                     <div class="card-header d-block d-sm-flex border-0">
                         <div>
-                            <h4 class="fs-20 text-black">Payments attached to you</h4>
+                            <h4 class="fs-20 text-black">Receive From</h4>
                             <p class="mb-0 fs-13">
                                 Showing all result
                             </p>
