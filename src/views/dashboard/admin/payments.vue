@@ -2,21 +2,27 @@
     <div class="col-xl-12 col-xxl-12 col-lg-12">
         <div class="card">
             <div class="card-header d-block d-sm-flex border-0">
-                <div>
-                    <h4 class="fs-20 text-black">All Time Payments</h4>
-                    <p class="mb-0 fs-13">
-                        Results are paginated
-                    </p>
+                <h4 class="fs-20 text-black">All Time Payments</h4>
+                <p class="mb-0 fs-13">
+                    Results are paginated
+                </p>
+                <div class="pull-right">
+                    <input type="search"
+                           placeholder="search by reference number"
+                           class="form-control"
+                           v-model="searchQuery"
+                           v-if="payments.length > 0"
+                    >
                 </div>
-                <div class="card-action card-tabs mt-3 mt-sm-0">
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="javascript:void(0)" role="tab">
-                                All
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <!--                <div class="card-action card-tabs mt-3 mt-sm-0">-->
+                <!--                    <ul class="nav nav-tabs" role="tablist">-->
+                <!--                        <li class="nav-item">-->
+                <!--                            <a class="nav-link active" data-toggle="tab" href="javascript:void(0)" role="tab">-->
+                <!--                                All-->
+                <!--                            </a>-->
+                <!--                        </li>-->
+                <!--                    </ul>-->
+                <!--                </div>-->
             </div>
             <div class="card-body tab-content p-0">
                 <div class="tab-pane active show fade" id="monthly" role="tabpanel">
@@ -42,7 +48,7 @@
                                                 <img src="../../../assets/images/svg/pay.svg" alt="pay to upliner" style="width: 30px;height:30px">
                                             </span>
                                 </td>
-                                <td>{{payment.id}}</td>
+                                <td>{{payment.id.substr(0,10)}}...</td>
                                 <td>
                                     <div class="font-w600 wspace-no">
                                                 <span class="mr-1">
@@ -149,15 +155,21 @@
                 payment_packages: [],
                 currentPage: 0,
                 paginate: ["payments"],
-                interval: 0
+                interval: 0,
+                searchQuery: ''
             }
         },
         mixins: [basicMethodMixins],
         computed: {
             ...mapGetters({
                 payment_loading: 'payment/isLoading',
-                payments: 'payment/getPayments'
-            })
+            }),
+            payments(){
+                return this.$store.getters['payment/getPayments']
+                    .filter(payment=>{
+                        return payment.id.match(this.searchQuery)
+                    })
+            }
         },
         methods: {
             onPageChange: function (toPage) {
