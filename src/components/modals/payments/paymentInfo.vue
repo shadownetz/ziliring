@@ -88,7 +88,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer" v-if="!payment.data.confirmed&&!payment.data.reported&&!payment.data.proof.length >=0">
+                <div class="modal-footer" v-if="!payment.data.confirmed&&!payment.data.reported&&payment.data.proof.length===0">
                     <div class="container-fluid">
                         <div class="row align-content-center justify-content-center">
                             <button type="button" class="btn btn-primary btn-rounded" @click.prevent="confirmPay=true" :disabled="!uplinerProfileInfo.data">
