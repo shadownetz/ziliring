@@ -147,7 +147,7 @@
                     .put(file, metadata);
                 uploadTask.on('state_changed',
                     (snapshot)=>{
-                        this.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        this.progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
                     },
                     (error)=>{
                         this.$toast.error('Upload Error', error.message);

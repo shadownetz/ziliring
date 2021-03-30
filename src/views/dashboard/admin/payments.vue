@@ -96,7 +96,7 @@
                                     </a>
                                 </td>
                                 <td v-if="payment.data.isValid&&!payment.data.confirmed&&getHourDiffFromNow(payment.data.createdAt)>=3">
-                                    <button class="btn btn-sm btn-outline-warning" @click="overrideConfirmPayment(payment.id)">
+                                    <button class="btn btn-sm btn-outline-warning" @click="overrideConfirmPayment(payment.id, payment.data)">
                                         <i class="ti-flag"></i> Confirm (Override)
                                     </button>
                                 </td>
@@ -205,9 +205,9 @@
                     package: package_z
                 })
             },
-            overrideConfirmPayment(id){
+            overrideConfirmPayment(id, data){
                 this.affirm(async ()=>{
-                    const paymentInstance = new Payment(id);
+                    const paymentInstance = new Payment(id, data);
                     let response = await paymentInstance.confirm(true);
                     if(response.status){
                         this.$toast.success("Confirmed", "Done");
