@@ -76,7 +76,7 @@
                                                         class="dropdown-item text-success"
                                                         href="javascript:void(0)"
                                                         v-if="!payment.data.confirmed"
-                                                        @click="confirmPayment(payment.id)"
+                                                        @click="confirmPayment(payment.id, payment.data)"
                                                 >
                                                     <i class="ti-check"></i> Confirm
                                                 </a>
@@ -154,8 +154,8 @@
                 }
                 this.loading = false;
             },
-            async confirmPayment(id){
-                const paymentInstance = new Payment(id);
+            async confirmPayment(id, data){
+                const paymentInstance = new Payment(id, data);
                 let response = await paymentInstance.confirm();
                 if(response.status){
                     this.$toast.success("Confirmed", "Done");

@@ -4,6 +4,14 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">All Contributions</h4>
+                    <div class="pull-right">
+                        <input type="search"
+                               placeholder="search by reference number"
+                               class="form-control"
+                               v-model="searchQuery"
+                               v-if="contributions.length > 0"
+                        >
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -18,7 +26,7 @@
                             <thead>
                             <tr>
                                 <th class="width80"><strong>#</strong></th>
-                                <th>Reference</th>
+                                <th><strong>Reference</strong></th>
                                 <th><strong>Package</strong></th>
                                 <th><strong>Amount</strong></th>
                                 <th><strong>Payment</strong></th>
@@ -35,7 +43,7 @@
                                     <span v-else> {{ 100 * currentPage + index + 1 }}</span>
                                     <!--                                    <strong>01</strong>-->
                                 </td>
-                                <td>{{contrib.id}}</td>
+                                <td>{{contrib.id.substr(0, 10)}}...</td>
                                 <td>
                                     <span v-if="packageInfo[index]!==undefined">{{packageInfo[index].data.name}}</span>
                                     <span v-else>{{contrib.data.packageId}}</span>
@@ -134,7 +142,6 @@
 
 <script>
     import basicMethodMixins from "../../../utils/mixins/basicMethodMixins";
-    import {mapGetters} from "vuex";
     import Payment from "../../../models/payment";
 
     export default {
@@ -144,14 +151,18 @@
                 currentPage: 0,
                 paginate: ["contributions"],
                 packageInfo: [],
-                checkInterval: 0
+                checkInterval: 0,
+                searchQuery: ''
             }
         },
         mixins: [basicMethodMixins],
         computed: {
-            ...mapGetters('contribution', {
-                contributions: 'getContributions'
-            })
+            contributions(){
+                return this.$store.getters['contribution/getContributions']
+                    .filter((contribution)=>{
+                        return contribution.id.match(this.searchQuery)
+                    })
+            }
         },
         methods: {
             onPageChange: function (toPage) {

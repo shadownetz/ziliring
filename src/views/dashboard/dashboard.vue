@@ -433,7 +433,40 @@
             </div>
             <!-- End of Admin Dashboard Statistics -->
         </div>
-
+        <div class="row">
+            <div class="col-12">
+                <h4 class="text-uppercase text-primary">
+                    Useful Information
+                    <small class="text-muted text-lowercase">
+                        (Making &amp; Receiving Payments)
+                    </small>
+                </h4>
+            </div>
+            <div class="col-12">
+                <img class="img-fluid" src="../../assets/images/siteNavigation/Ziliring_Navigation_1.png" alt="navigation">
+            </div>
+            <div class="col-12 mt-5">
+                <img class="img-fluid" src="../../assets/images/siteNavigation/Ziliring_Navigation_2.png" alt="navigation">
+            </div>
+            <div class="col-12 mt-5">
+                <img class="img-fluid" src="../../assets/images/siteNavigation/Ziliring_Navigation_3.png" alt="navigation">
+            </div>
+            <div class="col-12 mt-5">
+                <img class="img-fluid" src="../../assets/images/siteNavigation/Ziliring_Navigation_4.png" alt="navigation">
+            </div>
+            <div class="col-12 mt-5">
+                <img class="img-fluid" src="../../assets/images/siteNavigation/Ziliring_Navigation_5.png" alt="navigation">
+            </div>
+            <div class="col-12 mt-5">
+                <img class="img-fluid" src="../../assets/images/siteNavigation/Ziliring_Navigation_6.png" alt="navigation">
+            </div>
+            <div class="col-12 mt-5">
+                <img class="img-fluid" src="../../assets/images/siteNavigation/Ziliring_Navigation_7.png" alt="navigation">
+            </div>
+            <div class="col-12 mt-5">
+                <img class="img-fluid" src="../../assets/images/siteNavigation/Ziliring_Navigation_8.png" alt="navigation">
+            </div>
+        </div>
     </div>
 </template>
 

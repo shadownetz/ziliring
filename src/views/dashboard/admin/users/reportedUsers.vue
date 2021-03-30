@@ -27,6 +27,7 @@
                             <thead>
                             <tr>
                                 <th class="width80"><strong>#</strong></th>
+                                <th>Payment Ref</th>
                                 <th>Name</th>
                                 <th><strong>Email</strong></th>
                                 <th><strong>Phone</strong></th>
@@ -42,6 +43,9 @@
                                 <td>
                                     <span v-if="currentPage === 0"> {{ index + 1 }}</span>
                                     <span v-else> {{ 100 * currentPage + index + 1 }}</span>
+                                </td>
+                                <td>
+                                    <span v-if="payments[index]!==undefined">{{payments[index].id}}</span>
                                 </td>
                                 <td>{{user.data.lastName}} {{user.data.firstName}}</td>
                                 <td>{{user.data.email}}</td>
