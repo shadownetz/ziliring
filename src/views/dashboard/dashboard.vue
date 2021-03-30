@@ -258,6 +258,24 @@
                                                     </div>
                                                 </div>
                                             </td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button type="button" class="btn btn-success light sharp" data-toggle="dropdown">
+                                                        <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+                                                    </button>
+                                                    <div class="dropdown-menu text-muted text-center">
+                                                        <a
+                                                                class="dropdown-item text-success"
+                                                                href="javascript:void(0)"
+                                                                v-if="!payment.data.confirmed"
+                                                                @click="confirmPayment(payment.id, payment.data)"
+                                                        >
+                                                            <i class="ti-check"></i> Confirm
+                                                        </a>
+                                                        <small v-else>no further action is needed</small>
+                                                    </div>
+                                                </div>
+                                            </td>
 <!--                                            <td v-if="payment.data.isValid&&!payment.data.confirmed&&!payment.data.reported&&getHourDiffFromNow(payment.data.createdAt)>=3">-->
 <!--                                                <button class="btn btn-outline-danger" @click="reportPayment(payment.id)">-->
 <!--                                                    <i class="ti-flag"></i> Report-->
@@ -558,6 +576,18 @@
                         this.$toast.success("Confirmed", "Done");
                         this.queryPayments()
                     }).catch(err=>this.$toast.error(err.message, "Error"))
+            },
+            async confirmPayment(id, data){
+                const paymentInstance = new Payment(id, data);
+                let response = await paymentInstance.confirm();
+                if(response.status){
+                    this.$toast.success("Confirmed", "Done");
+                    setTimeout(()=>{
+                        this.$router.go()
+                    }, 1000)
+                }else{
+                    this.$toast.error(response.message, "Error")
+                }
             }
         },
         mounted(){
