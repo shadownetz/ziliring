@@ -99,7 +99,8 @@ class PaymentDecision{
     static getPaymentProgression(paidAmount){
         let progression;
         const fiveThousand = {
-            1: [5000, false]
+            1: [5000, false],
+            2: [2500, false]
         }
         const tenThousand = {
             1: [10000, false],

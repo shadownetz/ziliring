@@ -11,6 +11,7 @@ function Model() {
     this.confirmed = false;
     this.reported = false;
     this.confirmedByAdmin = false;
+    this.reassigned = false;
     this.userId = '';
     this.receiverId = '';
     this.payContext = 'plan';   // plan || profit

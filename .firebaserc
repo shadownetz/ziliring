@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "ziliring"
+    "default": "ziliring",
+    "prod": "ziliring-prod"
   }
 }
