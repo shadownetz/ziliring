@@ -19,7 +19,8 @@ export default {
         reset(state){
             if(state.listener !== null) state.listener();
             state.requests = [];
-            state.listener = null
+            state.listener = null;
+            state.loading = false;
         }
     },
     actions: {
