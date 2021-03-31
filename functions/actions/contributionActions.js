@@ -13,10 +13,15 @@ function getJsDate(timestamp){
 const attachUserToUpliner = functions.firestore
     .document('contributions/{contribId}')
     .onCreate(async (snapshot, context) => {
-        if(!snapshot.data().adminInitiated){
+        if(!snapshot.data().adminInitiated && snapshot.data().mode === 'default'){
             const downlinerContribInstance = new Contribution({id: context.params.contribId, data: snapshot.data()});
             try{
                 let uplinersContrib = [];
+                const prioritizedContribs = await firebaseRefModule.contributionRef
+                    .where('mode', '==', 'withdrawal')
+                    .where('type', '==', 'upliner')
+                    .where('isComplete', '==', false)
+                    .get();
                 const activeContributions = await firebaseRefModule.contributionRef
                     .where('hasPaid', '==', true)
                     .where('type', '==', 'upliner')
@@ -32,6 +37,11 @@ const attachUserToUpliner = functions.firestore
                     let date1 = getJsDate(a.data.createdAt);
                     let date2 = getJsDate(b.data.createdAt);
                     return (date1 - date2)
+                })
+                prioritizedContribs.forEach(doc=>{
+                    if(doc.exists){
+                        uplinersContrib.unshift({id: doc.id, data: doc.data()})
+                    }
                 })
                 let selected_upliner = await downlinerContribInstance.decide_upliner(uplinersContrib);
                 if(selected_upliner){

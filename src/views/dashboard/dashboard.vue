@@ -215,6 +215,17 @@
                                             </td>
                                             <td class="font-w500">{{getReadableDatetime(payment.data.createdAt)}}</td>
                                             <td class="font-w600 text-center">₦{{payment.data.amount}}</td>
+                                            <td class="text-center">
+                                                <a href="javascript:void(0)"
+                                                   data-toggle="modal"
+                                                   data-target="#paymentProofs"
+                                                   v-if="payment.data.proof.length > 0"
+                                                   @click="$emit('togglePaymentProof', payment.data.proof)"
+                                                >
+                                                    <i class="flaticon-381-view"></i>
+                                                </a>
+                                                <p v-else>none</p>
+                                            </td>
                                             <td>
                                                 <a
                                                         href="javascript:void(0)"
