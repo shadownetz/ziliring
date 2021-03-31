@@ -10,6 +10,13 @@ class Payment{
         this.firestore = paymentRef.doc(id)
     }
 
+    report(){
+        return paymentRef.doc(this.id).update({
+            reported: true,
+            updatedAt: firestore.FieldValue.serverTimestamp()
+        })
+    }
+
     async confirm(override=false){
         const response = new ResponseObject();
         try{
@@ -34,26 +41,6 @@ class Payment{
             response.message = e.message
         }
         return Promise.resolve(response)
-    }
-
-    report(){
-        return paymentRef.doc(this.id).update({
-            reported: true,
-            updatedAt: firestore.FieldValue.serverTimestamp()
-        })
-    }
-    static setPaymentProgression(paymentProgressions={}, amount=0, value=true){
-        const tmp_progressions = Object.entries(paymentProgressions);
-        if(tmp_progressions.length > 0){
-            for(let j=0; j < tmp_progressions.length; j++){
-                if(tmp_progressions[j][1][0] === amount){
-                    const key = tmp_progressions[j][0]
-                    paymentProgressions[key][1] = value;
-                    break;
-                }
-            }
-        }
-        return paymentProgressions
     }
 
     async reassignReceiver(){
@@ -116,6 +103,71 @@ class Payment{
         }
         return Promise.resolve(response)
     }
+
+    static getPaymentProgression(paidAmount){
+        let progression;
+        const fiveThousand = {
+            1: [5000, false]
+        }
+        const tenThousand = {
+            1: [10000, false],
+            2: [5000, false],
+        }
+        const twentyThousand = {
+            1: [20000, false],
+            2: [10000, false],
+        }
+        const fortyThousand = {
+            1: [40000, false],
+            2: [20000, false],
+        }
+        const hundredThousand = {
+            1: [100000, false],
+            2: [40000, false],
+            5: [10000, false]
+        }
+        const twoHundredThousand = {
+            1: [200000, false],
+            2: [100000, false],
+        }
+        const fiveHundredThousand = {
+            1: [500000, false],
+            2: [200000, false],
+            5: [40000, false],
+            6: [10000, false]
+        }
+        const oneMilli = {
+            1: [1000000, false],
+            2: [500000, false],
+        }
+        switch (paidAmount) {
+            case 5000: progression = fiveThousand; break;
+            case 10000: progression = tenThousand; break;
+            case 20000: progression = twentyThousand; break;
+            case 40000: progression = fortyThousand; break;
+            case 100000: progression = hundredThousand; break;
+            case 200000: progression = twoHundredThousand; break;
+            case 500000: progression = fiveHundredThousand; break;
+            case 1000000: progression = oneMilli; break;
+            default: progression = fiveThousand; break
+        }
+        return progression
+    }
+
+    static setPaymentProgression(paymentProgressions={}, amount=0, value=true){
+        const tmp_progressions = Object.entries(paymentProgressions);
+        if(tmp_progressions.length > 0){
+            for(let j=0; j < tmp_progressions.length; j++){
+                if(tmp_progressions[j][1][0] === amount){
+                    const key = tmp_progressions[j][0]
+                    paymentProgressions[key][1] = value;
+                    break;
+                }
+            }
+        }
+        return paymentProgressions
+    }
+
 }
 
 function Model() {

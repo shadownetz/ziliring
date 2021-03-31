@@ -50,6 +50,19 @@
                                     </option>
                                 </select>
                             </div>
+                            <div class="col-12" v-if="getUser.data.isAdmin&&modes.length > 0">
+                                <div class="col-12 text-left">
+                                    <label class="text-left pt-3" :for="index+'package_selector'">
+                                        Mode <small class="text-muted">(only you can see this)</small>
+                                    </label>
+                                </div>
+                                <div class="col-12">
+                                    <select :id="index+'package_mode'" class="form-control" v-model="modes[index]">
+                                        <option value="default">Default</option>
+                                        <option value="withdrawal">Withdrawal</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer mt-0">
@@ -72,6 +85,7 @@
 <script>
     import packageBG from "../../../assets/dashboard/images/big/img5.jpg"
     import {mapGetters} from 'vuex'
+    import Contribution from "../../../models/contribution";
 
     export default {
         name: "NewContribution",
@@ -79,16 +93,23 @@
             return {
                 packageBG,
                 selected_prices: [5000, 100000, 500000],
-                loading: false
+                loading: false,
+                modes: []
             }
         },
         computed: {
             ...mapGetters('package', {
                 packages: 'getPackages'
-            })
+            }),
+            ...mapGetters('user', [
+                'getUser'
+            ])
         },
         methods: {
             async addContribution(packageId, index){
+                if(this.modes.some((mode)=>mode==='withdrawal')){
+                    return this.addContributionPrioritized(packageId, index)
+                }
                 const loader = this.$loading.show({container: this.$refs.selectPackage})
                 const response = await this.$store.dispatch('contribution/add', {
                     amount: this.selected_prices[index],
@@ -100,15 +121,35 @@
                     setTimeout(()=>{
                         this.$router.push({name: 'Dashboard'})
                     }, 2000)
-                    // TODO: redirect to contributions to list payment details
                 }else{
                     this.$toast.error(response.message, 'Error', {position: 'topRight'})
                 }
             },
+            async addContributionPrioritized(packageId, index){
+                const loader = this.$loading.show({container: this.$refs.selectPackage})
+                const response = await Contribution.createPrioritizedAdminContrib(
+                    this.$store.getters['user/getUser'].id,
+                    {
+                        packageId: packageId,
+                        amount: this.selected_prices[index],
+                        mode: this.modes[index]
+                    }
+                )
+                loader.hide();
+                if(response.status){
+                    this.$toast.info('This Contribution has been initiated successfully and will be automatically matched as soon as a matching downliner becomes available', 'Admin Information')
+                    setTimeout(()=>{
+                        this.$router.push({name: 'Dashboard'})
+                    }, 2000)
+                }else{
+                    this.$toast.error(response.message, 'Error')
+                }
+            }
         },
         created() {
             this.loading = true
             this.$store.dispatch('package/fetch').then(()=>{
+                this.packages.forEach(()=>this.modes.push('default'))
                 this.loading = false;
             })
         }

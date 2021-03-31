@@ -154,11 +154,12 @@ function ContributionModel(){
     this.userId = '';
     this.payTo = '';
     this.type = 'downliner';     // upliner || downliner
+    this.mode = 'default';       // default || withdrawal
     this.adminInitiated = false;
     this.amountToBePaid = 0;
     this.profitReceived = 0;
     this.expectedProfit = 0;
-    this.paymentProgressions = []
+    this.paymentProgressions = {}
     this.isComplete = false;
     this.expireAt = new Date();
     this.beginAt = new Date();

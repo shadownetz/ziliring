@@ -46,11 +46,11 @@ class Contribution{
 
     profit_gain_is_reached(){
         let total = 0;
-        if(Array.isArray(this.data.paymentProgressions)){
-            for(let j=0; j < this.data.paymentProgressions.length; j++){
-                if(this.data.paymentProgressions[j][1]){
-                    total += this.data.paymentProgressions[j][0]
-                }
+        let tmp_progressions = Object.entries(this.data.paymentProgressions);
+        for(let j=0; j < tmp_progressions.length; j++){
+            const key = tmp_progressions[j][0];
+            if(this.data.paymentProgressions[key][1]){
+                total += this.data.paymentProgressions[key][0];
             }
         }
         return this.data.expectedProfit === total
@@ -58,11 +58,11 @@ class Contribution{
 
     get_profit_received(){
         let total = 0;
-        if(Array.isArray(this.data.paymentProgressions)){
-            for(let j=0; j < this.data.paymentProgressions.length; j++){
-                if(this.data.paymentProgressions[j][1]){
-                    total += this.data.paymentProgressions[j][0]
-                }
+        let tmp_progressions = Object.entries(this.data.paymentProgressions);
+        for(let j=0; j < tmp_progressions.length; j++){
+            const key = tmp_progressions[j][0];
+            if(this.data.paymentProgressions[key][1]){
+                total += this.data.paymentProgressions[key][0];
             }
         }
         return total
@@ -160,11 +160,11 @@ class Contribution{
                                             const selected_payment = paymentsDocs.filter(doc=>doc.id === payment)[0] || null;
                                             if(selected_payment){
                                                 promises.push(
-                                                firebaseRef.contributionRef.doc(uplinerContrib.id).update({
-                                                    paymentProgressions: PaymentDecision.setPaymentProgression(
-                                                        uplinerContrib.data.paymentProgressions, selected_payment.data.amount, false
-                                                    )
-                                                })
+                                                    firebaseRef.contributionRef.doc(uplinerContrib.id).update({
+                                                        paymentProgressions: PaymentDecision.setPaymentProgression(
+                                                            uplinerContrib.data.paymentProgressions, selected_payment.data.amount, false
+                                                        )
+                                                    })
                                                 )
                                             }
                                         })
@@ -322,11 +322,12 @@ function Model(){
     this.userId = '';
     this.payTo = '';
     this.type = 'downliner';     // upliner || downliner
+    this.mode = 'default';       // default || withdrawal
     this.adminInitiated = false;
     this.amountToBePaid = 0;
     this.profitReceived = 0;
     this.expectedProfit = 0;
-    this.paymentProgressions = []
+    this.paymentProgressions = {}
     this.isComplete = false;
     this.expireAt = new Date();
     this.beginAt = new Date();
