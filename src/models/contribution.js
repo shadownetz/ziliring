@@ -97,6 +97,37 @@ class Contribution{
         return date;
     }
 
+    static async getAdminContrib() {
+        const response = new ResponseObject();
+        try{
+            const admin = await userRef
+                .where('isAdmin', '==', true)
+                .orderBy('createdAt')
+                .limit(1)
+                .get();
+            if (!admin.empty) {
+                let admin_contrib = await contributionRef
+                    .where('userId', '==', admin.docs[0].id)
+                    .where('adminInitiated', '==', true)
+                    .limit(1)
+                    .get();
+                if (!admin_contrib.empty) {
+                    response.data = {id: admin_contrib.docs[0].id, data: admin_contrib.docs[0].data()}
+                }else{
+                    throw new Error("No Admin Contribution Exist")
+                }
+            }
+        }catch (e) {
+            response.status = false;
+            response.message = e.message
+        }
+        return Promise.resolve(response)
+    }
+
+    getPaymentProgressions(){
+        return this.data.paymentProgressions
+    }
+
 }
 
 function Model(){

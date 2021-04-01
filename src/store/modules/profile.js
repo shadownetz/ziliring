@@ -45,6 +45,7 @@ export default {
                 state.listener();
                 state.listener = null;
             }
+            state.profile = {id: '', data: {}};
         }
     },
     actions: {

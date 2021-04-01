@@ -116,7 +116,7 @@
                             </li>
                             <!-- Whatsapp Message -->
                             <li class="nav-item dropdown notification_dropdown">
-                                <a class="nav-link bell bell-link" href="javascript:void(0)">
+                                <a class="nav-link bell bell-link" :href="whatsapp_contact_link" target="_blank">
                                     <img src="../../../assets/images/svg/whatsapp.svg" alt="whatsapp logo" width="23" height="22"/>
                                     <!--                                    <span class="badge light text-white bg-primary">0</span>-->
                                 </a>
@@ -232,9 +232,11 @@
 
 <script>
     import {mapActions, mapGetters} from "vuex"
+    import basicDataMixins from "../../../utils/mixins/basicDataMixins";
 
     export default {
         name: "topNav",
+        mixins: [basicDataMixins],
         computed: {
             ...mapGetters('user', [
                 'getUser'

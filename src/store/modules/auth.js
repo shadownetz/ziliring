@@ -117,10 +117,20 @@ export default {
                 window.recaptchaWidgetId = widgetId;
             });
         },
-        async logout(context, reset=true){
+        async logout({commit}, reset=true){
             try{
                 if(reset){
-                    //
+                    try{
+                        commit('contribution/reset', null, {root: true})
+                        commit('counters/reset', null, {root: true})
+                        commit('package/reset', null, {root: true})
+                        commit('payment/reset', null, {root: true})
+                        commit('profile/reset', null, {root: true})
+                        commit('request/reset', null, {root: true})
+                        commit('user/reset', null, {root: true})
+                    }catch (e) {
+                        console.log('Error while resetting after logout:', e)
+                    }
                     const route = router.resolve({name: 'Home'}).resolved.fullPath.split('/')
                     route.pop();
                     window.location.href = route.join('/');

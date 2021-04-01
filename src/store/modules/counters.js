@@ -35,6 +35,9 @@ export default {
             if(state.counters.listener !== null) state.counters.listener();
             if(state.packages.listener !== null) state.packages.listener();
             state.counters.listener = state.packages.listener = null;
+            state.counters.users = state.counters.contributions = {};
+            state.user.contributions = state.user.pendingPayments = 0;
+            state.packages.data = []
         }
     },
     actions: {

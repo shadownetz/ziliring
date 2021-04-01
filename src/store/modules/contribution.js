@@ -26,6 +26,7 @@ export default {
             if(state.listener!==null)state.listener()
             state.activeContrib = state.personalContrib = state.contributions = []
             state.listener = null;
+            state.loading = false;
         }
     },
     actions: {

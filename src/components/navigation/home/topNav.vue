@@ -31,7 +31,7 @@
                         <a class="nav-link" href="#faq">FAQ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" :href="whatsapp_contact_link" target="_blank">
                             <i class="fa fa-whatsapp"></i> Support
                         </a>
                     </li>
@@ -65,9 +65,11 @@
     import "../../../assets/css/customStyle.css"
     import authModal from "../../auth/authModal";
     import {mapGetters} from 'vuex'
+    import basicDataMixins from "../../../utils/mixins/basicDataMixins";
 
     export default {
         name: "topNav",
+        mixins: [basicDataMixins],
         computed: {
             ...mapGetters('auth', [
                 'isSignedIn'

@@ -10,7 +10,10 @@ export default {
         getPackages: (state)=>state.packages
     },
     mutations: {
-        setPackages: (state, payload)=>state.packages = payload
+        setPackages: (state, payload)=>state.packages = payload,
+        reset(state){
+            state.packages = []
+        }
     },
     actions: {
         async fetch({commit}){

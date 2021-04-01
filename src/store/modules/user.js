@@ -29,7 +29,10 @@ export default {
             if(state.users_listener !== null){
                 state.users_listener();
             }
-            state.listener = state.users_listener = null
+            state.listener = state.users_listener = null;
+            state.user = {id: '', data: {}};
+            state.users = [];
+            state.loading = false
         }
     },
     actions: {

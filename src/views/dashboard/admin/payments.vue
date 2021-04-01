@@ -100,7 +100,7 @@
                                         <i class="ti-flag"></i> Confirm (Override)
                                     </button>
                                 </td>
-                                <td v-if="payment.data.confirmedByAdmin">
+                                <td v-if="payment.data.confirmedByAdmin&&!payment.data.reassigned&&payment.data.amount!==2500">
                                     <button class="btn btn-sm btn-outline-primary"
                                             @click="reassignPaymentReceiver(payment)"
                                             data-toggle="tooltip"

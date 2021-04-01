@@ -1,4 +1,4 @@
-import {contributionRef, firestore, paymentRef, profileRef} from "../firebase/firebase";
+import {contributionRef, firestore, paymentRef} from "../firebase/firebase";
 import {ResponseObject} from "../utils/globalObjects";
 import Profile from "./profile";
 import Contribution from "./contribution";
@@ -20,7 +20,7 @@ class Payment{
     async confirm(override=false){
         const response = new ResponseObject();
         try{
-            console.log(this.data.contribId)
+            // console.log(this.data.contribId)
             const contribDoc = await contributionRef.doc(this.data.contribId).get();
             if(contribDoc.exists){
                 const contribInstance = new Contribution({id: contribDoc.id, data: contribDoc.data()});
@@ -53,7 +53,6 @@ class Payment{
                 .limit(1)
                 .get();
             if(!uplinerContribSnapshots.empty){
-                console.log('Upliner contribs not empty')
                 let uplinerContrib = {
                     id: uplinerContribSnapshots.docs[0].id,
                     data: uplinerContribSnapshots.docs[0].data()
@@ -61,7 +60,8 @@ class Payment{
                 const adminProfile = await Profile.getAdminProfile()
                 if(adminProfile){
                     await paymentRef.doc(this.id).update({
-                        receiverId: adminProfile.id
+                        receiverId: adminProfile.id,
+                        reassigned: true
                     })
                 }
                 await contributionRef.doc(uplinerContrib.id).update({
@@ -80,23 +80,43 @@ class Payment{
         return Promise.resolve(response)
     }
 
-    async completePayment(amount=0){
+    async completePayment(amount){
         const response = new ResponseObject();
         try{
-            const contrib = await contributionRef
-                .doc(this.data.contribId)
-                .get();
-            const uplinerProfile = await profileRef
-                .doc(this.data.receiverId)
-                .get();
-            if(contrib.exists && uplinerProfile.exists){
-                await contributionRef.doc(contrib.id).update({
-                    profitReceived: firestore.FieldValue.increment(amount)
-                })
-                await profileRef.doc(uplinerProfile.id).update({
-                    balance: firestore.FieldValue.increment(this.data.amount)
-                })
+            const payment_record = new Model();
+            const uplinerDoc = await contributionRef.doc(this.data.contribId).get();
+            let downlinerDoc = await Contribution.getAdminContrib();
+            if(uplinerDoc.exists){
+                if(downlinerDoc.status){
+                    const downlinerContrib = downlinerDoc.data;
+                    const uplinerContribInstance = new Contribution({
+                        id: uplinerDoc.id, data: uplinerDoc.data()
+                    })
+                    uplinerContribInstance.data.paymentProgressions = Payment.setPaymentProgression(
+                        uplinerContribInstance.getPaymentProgressions(),
+                        amount
+                    )
+                    payment_record.userId = downlinerContrib.data.userId;
+                    payment_record.contribId = downlinerContrib.id;
+                    payment_record.amount = amount;
+                    payment_record.createdAt = payment_record.updatedAt = firestore.FieldValue.serverTimestamp();
+                    payment_record.receiverId = uplinerContribInstance.data.userId;
+
+                    const saved_payment = await paymentRef.add(Object.assign({}, payment_record));
+
+                    await contributionRef.doc(uplinerContribInstance.id).update({
+                        downliners: firestore.FieldValue.arrayUnion(downlinerContrib.data.userId),
+                        paymentIds: firestore.FieldValue.arrayUnion(saved_payment.id),
+                        isComplete: uplinerContribInstance.profit_gain_is_reached(),
+                        paymentProgressions: uplinerContribInstance.getPaymentProgressions()    // the progression should be updated
+                    })
+                }else{
+                    throw new Error('Unable to Complete Payment::'+downlinerDoc.message)
+                }
+            }else {
+                throw new Error("Contributor Contribution does not exist")
             }
+
         }catch (e) {
             response.status = false;
             response.message = e.message;
@@ -177,6 +197,7 @@ function Model() {
     this.confirmed = false;
     this.reported = false;
     this.confirmedByAdmin = false;
+    this.reassigned = false;
     this.userId = '';
     this.receiverId = '';
     this.payContext = 'plan';   // plan || profit

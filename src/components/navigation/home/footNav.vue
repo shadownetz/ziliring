@@ -20,7 +20,7 @@
                             </a>
                         </div>
                         <div class="col-12 col-md-4">
-                            <a href="javascript:void(0)">
+                            <a :href="whatsapp_contact_link" target="_blank">
                                 <i class="fa fa-whatsapp text-success"></i> Whatsapp
                             </a>
                         </div>
@@ -28,7 +28,7 @@
                 </div>
                 <div class="col-12 col-md-4">
                     <p class="pt-md-3">
-                        <a href="javascript:void(0)">Support</a>
+                        <a :href="whatsapp_contact_link" target="_blank">Support</a>
                     </p>
 <!--                    <p><a href="javascript:void(0)">Terms</a></p>-->
 <!--                    <p><a href="javascript:void(0)">Privacy</a></p>-->
@@ -42,8 +42,11 @@
 </template>
 
 <script>
+    import basicDataMixins from "../../../utils/mixins/basicDataMixins";
+
     export default {
         name: "footNav",
+        mixins: [basicDataMixins],
         mounted(){
             // require("../../../assets/js/particles.app.js");
             $('#preloader').delay(350).fadeOut('slow');

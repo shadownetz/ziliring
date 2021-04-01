@@ -98,7 +98,7 @@
                                                data-toggle="tooltip"
                                                data-placement="top"
                                                title="Manually complete a payment due to platform edge case (only applies to the 5k package)"
-                                               v-if="contrib.data.amountToBePaid===5000&contrib.data.hasPaid"
+                                               v-if="contrib.data.amountToBePaid===5000&contrib.data.hasPaid&&!contrib.data.isComplete"
                                                @click="completePackagePayment(contrib, 2500)">
                                                 <i class="ti-money"></i> Complete Payment
                                             </a>

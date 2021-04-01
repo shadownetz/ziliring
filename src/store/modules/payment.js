@@ -19,6 +19,8 @@ export default {
         reset(state){
             if(state.listener !== null) state.listener();
             state.listener = null;
+            state.payments = [];
+            state.loading = false
         }
     },
     actions: {
