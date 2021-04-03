@@ -65,6 +65,8 @@ export default {
                 const queriedSnapshots = await paymentRef
                     .where('userId', '==', rootGetters['user/getUser'].id)
                     .where('confirmed', '==', false)
+                    .where('reported', '==', false)
+                    .where('isValid', '==', true)
                     .orderBy('createdAt', 'desc')
                     .get();
                 queriedSnapshots.forEach(doc=>{
@@ -89,6 +91,8 @@ export default {
                 const queriedSnapshots = await paymentRef
                     .where('receiverId', '==', rootGetters['user/getUser'].id)
                     .where('confirmed', '==', false)
+                    .where('reported', '==', false)
+                    .where('isValid', '==', true)
                     .orderBy('createdAt', 'desc')
                     .get();
                 queriedSnapshots.forEach(doc=>{

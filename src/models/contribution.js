@@ -1,6 +1,7 @@
 import {contributionRef, firestore, paymentRef, userRef} from "../firebase/firebase";
 import {ResponseObject} from "../utils/globalObjects";
 import Payment, {PaymentModel} from "./payment";
+import {randomInt} from "../utils/globalFunctions";
 
 class Contribution{
 
@@ -103,18 +104,22 @@ class Contribution{
             const admin = await userRef
                 .where('isAdmin', '==', true)
                 .orderBy('createdAt')
-                .limit(1)
                 .get();
             if (!admin.empty) {
+                const chosenAdminIndex = randomInt(0, (admin.size-1))
                 let admin_contrib = await contributionRef
-                    .where('userId', '==', admin.docs[0].id)
+                    .where('userId', '==', admin.docs[chosenAdminIndex].id)
                     .where('adminInitiated', '==', true)
                     .limit(1)
                     .get();
                 if (!admin_contrib.empty) {
                     response.data = {id: admin_contrib.docs[0].id, data: admin_contrib.docs[0].data()}
                 }else{
-                    throw new Error("No Admin Contribution Exist")
+                    const adminContribDocRef = await Contribution.createAdminContrib(admin.docs[chosenAdminIndex].id);
+                    admin_contrib = await contributionRef.doc(adminContribDocRef.id).get();
+                    if(admin_contrib.exists){
+                        response.data = {id: admin_contrib.id, data: admin_contrib.data()}
+                    }
                 }
             }
         }catch (e) {
@@ -126,6 +131,16 @@ class Contribution{
 
     getPaymentProgressions(){
         return this.data.paymentProgressions
+    }
+
+    static async createAdminContrib(adminID){
+        const admin_contrib = new Model();
+        admin_contrib.userId = adminID;
+        admin_contrib.type = 'upliner';
+        admin_contrib.adminInitiated = true;
+        admin_contrib.amountToBePaid = 900000000000E10;
+        admin_contrib.createdAt = admin_contrib.updatedAt = firestore.FieldValue.serverTimestamp();
+        return contributionRef.add(Object.assign({}, admin_contrib))
     }
 
 }

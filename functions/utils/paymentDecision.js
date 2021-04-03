@@ -1,4 +1,5 @@
 const firebaseRef = require("../firebaseRef")
+const randomInt = require("../utils/globalFunctions").getRandomInt
 
 class Contribution{
 
@@ -50,17 +51,17 @@ class PaymentDecision{
                 const admin = await firebaseRef.userRef
                     .where('isAdmin', '==', true)
                     .orderBy('createdAt')
-                    .limit(1)
                     .get();
                 if(!admin.empty){
+                    let chosenAdminIndex = randomInt(0, (admin.size-1))
                     let admin_contrib = await firebaseRef.contributionRef
-                        .where('userId', '==', admin.docs[0].id)
+                        .where('userId', '==', admin.docs[chosenAdminIndex].id)
                         .where('adminInitiated', '==', true)
                         .limit(1)
                         .get();
                     if(admin_contrib.empty){
                         // const admin_contrib_m = new Contribution({});
-                        const adminContribDocRef = await Contribution.createAdminContrib(admin.docs[0].id);
+                        const adminContribDocRef = await Contribution.createAdminContrib(admin.docs[chosenAdminIndex].id);
                         admin_contrib = await firebaseRef.contributionRef.doc(adminContribDocRef.id).get();
                         if(admin_contrib.exists){
                             upliner_contrib = {id: admin_contrib.id, data: admin_contrib.data()}

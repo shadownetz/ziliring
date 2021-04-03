@@ -92,12 +92,13 @@ class Contribution{
         return Promise.resolve(count)
     }
 
+    /**
+     * As a Downliner, get all upliner's info and update accordingly
+     * before deleting every downliners contribution that has no payment made
+     * @param userId
+     * @returns {Promise<void>}
+     */
     static async resetUplinerContrib(userId){
-        /**
-         * As a Downliner, get all upliner's info and update accordingly
-         * before deleting every downliners contribution that has no payment made
-         * @type {*[]}
-         */
         let promises = [];
         try{
             // fetch all downliners contribution
@@ -198,13 +199,14 @@ class Contribution{
         return Promise.resolve()
     }
 
+    /**
+     * As an Upliner, get all downliners info and update accordingly
+     * deassociate the downliners from the upliner and reassign the
+     * downliners to matching upliners
+     * @param userId
+     * @returns {Promise<void>}
+     */
     static async resetDownlinerContrib(userId){
-        /**
-         * As an Upliner, get all downliners info and update accordingly
-         * deassociate the downliners from the upliner and reassign the
-         * downliners to matching upliners
-         * @type {*[]}
-         */
         let promises = [];
         const downlinersPaymentIds = [];
         try{

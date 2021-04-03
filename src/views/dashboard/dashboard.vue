@@ -239,7 +239,7 @@
                                                 <a v-else href="javascript:void(0)"
                                                    data-toggle="tooltip"
                                                    data-placement="top"
-                                                   title="This payment is no longer valid as you were purged while this payment was not completed"
+                                                   title="This payment is no longer valid as this contributor was purged while this payment was not completed"
                                                 >
                                                     <i class="ti ti-info-alt"></i>
                                                 </a>

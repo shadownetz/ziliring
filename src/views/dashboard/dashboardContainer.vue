@@ -45,6 +45,8 @@
     import editContribution from "../../components/modals/editContribution";
     import viewRequestInfo from "../../components/modals/viewRequestInfo";
     import {mapGetters} from "vuex";
+    // eslint-disable-next-line no-unused-vars
+    import Profile from "../../models/profile";
 
     export default {
         name: "dashboard",
@@ -77,6 +79,7 @@
         },
         created() {
             this.$toast.success('Welcome back', 'Invite');
+            Profile.initiateAutomatedPurge()
             setTimeout(()=>{
                 if(!this.profile.data.bankName){
                     const elem = $('#accountDetails');
