@@ -6,14 +6,13 @@
                 <p class="mb-0 fs-13">
                     Results are paginated
                 </p>
-                <div class="pull-right">
-                    <input type="search"
-                           placeholder="search by reference number"
-                           class="form-control"
-                           v-model="searchQuery"
-                           v-if="payments.length > 0"
-                    >
-                </div>
+<!--                <div class="pull-right">-->
+<!--                    <input type="search"-->
+<!--                           placeholder="search by contributor's name"-->
+<!--                           class="form-control"-->
+<!--                           v-model="searchQuery"-->
+<!--                    >-->
+<!--                </div>-->
                 <!--                <div class="card-action card-tabs mt-3 mt-sm-0">-->
                 <!--                    <ul class="nav nav-tabs" role="tablist">-->
                 <!--                        <li class="nav-item">-->
@@ -48,7 +47,14 @@
                                                 <img src="../../../assets/images/svg/pay.svg" alt="pay to upliner" style="width: 30px;height:30px">
                                             </span>
                                 </td>
-                                <td>{{payment.id.substr(0,10)}}...</td>
+                                <td>
+                                    <template v-if="payment_users[index] !== undefined">
+                                        {{payment_users[index].data.lastName}} {{payment_users[index].data.firstName}}
+                                    </template>
+                                    <template v-else>
+                                        {{payment.id.substr(0,10)}}...
+                                    </template>
+                                </td>
                                 <td>
                                     <div class="font-w600 wspace-no">
                                                 <span class="mr-1">
@@ -153,6 +159,7 @@
             return {
                 payments_contribs: [],
                 payment_packages: [],
+                payment_users: [],
                 currentPage: 0,
                 paginate: ["payments"],
                 interval: 0,
@@ -166,8 +173,11 @@
             }),
             payments(){
                 return this.$store.getters['payment/getPayments']
-                    .filter(payment=>{
-                        return payment.id.match(this.searchQuery)
+                    .filter((payment, index)=>{
+                        if(this.payment_users[index] !== undefined)
+                            return (`${this.payment_users[index].data.lastName} ${this.payment_users[index].data.firstName}`
+                                .toLowerCase().match(this.searchQuery.toLowerCase()))
+                        return true
                     })
             }
         },
@@ -188,7 +198,10 @@
                             return this.$store.dispatch('package/get', packageId)
                         });
                         const tmp_packages = await Promise.all(tmp_packages_promises);
-                        this.payment_packages = tmp_packages.map(package_z=>package_z.data)
+                        this.payment_packages = tmp_packages.map(package_z=>package_z.data);
+                        let paymentUsersPromises = this.payments.map(payment=>this.$store.dispatch('user/get', payment.data.userId));
+                        let results = await Promise.all(paymentUsersPromises);
+                        this.payment_users = results.map(result=>result.data)
                     }
                     setTimeout(()=>{
                         $('[data-toggle="tooltip"]').tooltip()

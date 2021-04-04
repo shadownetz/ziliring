@@ -4,14 +4,13 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">All Contributions</h4>
-                    <div class="pull-right">
-                        <input type="search"
-                               placeholder="search by reference number"
-                               class="form-control"
-                               v-model="searchQuery"
-                               v-if="contributions.length > 0"
-                        >
-                    </div>
+<!--                    <div class="pull-right">-->
+<!--                        <input type="search"-->
+<!--                               placeholder="search by contributors name"-->
+<!--                               class="form-control"-->
+<!--                               v-model="searchQuery"-->
+<!--                        >-->
+<!--                    </div>-->
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -27,6 +26,7 @@
                             <tr>
                                 <th class="width80"><strong>#</strong></th>
                                 <th><strong>Reference</strong></th>
+                                <th><strong>Name</strong></th>
                                 <th><strong>Package</strong></th>
                                 <th><strong>Amount</strong></th>
                                 <th><strong>Payment</strong></th>
@@ -44,6 +44,11 @@
                                     <!--                                    <strong>01</strong>-->
                                 </td>
                                 <td>{{contrib.id.substr(0, 10)}}...</td>
+                                <td>
+                                    <template v-if="contribUsers[index]!==undefined">
+                                        {{contribUsers[index].data.lastName}} {{contribUsers[index].data.firstName}}
+                                    </template>
+                                </td>
                                 <td>
                                     <span v-if="packageInfo[index]!==undefined">{{packageInfo[index].data.name}}</span>
                                     <span v-else>{{contrib.data.packageId}}</span>
@@ -151,6 +156,7 @@
                 currentPage: 0,
                 paginate: ["contributions"],
                 packageInfo: [],
+                contribUsers: [],
                 checkInterval: 0,
                 searchQuery: ''
             }
@@ -159,8 +165,12 @@
         computed: {
             contributions(){
                 return this.$store.getters['contribution/getContributions']
-                    .filter((contribution)=>{
-                        return contribution.id.match(this.searchQuery)
+                    .filter((contribution, index)=>{
+                        if(this.contribUsers[index] !== undefined)
+                            return (`${this.contribUsers[index].data.lastName} ${this.contribUsers[index].data.firstName}`
+                                .toLowerCase().match(this.searchQuery.toLowerCase()))
+                        return true
+                        // return contribution.id.match(this.searchQuery)
                     })
             }
         },
@@ -178,8 +188,11 @@
                 if(this.contributions.length > 0){
                     clearInterval(this.checkInterval);
                     const packagePromises = this.contributions.map(contrib=>this.$store.dispatch('package/get', contrib.data.packageId));
-                    const results = await Promise.all(packagePromises);
+                    let results = await Promise.all(packagePromises);
                     this.packageInfo = results.map(result=>result.status?result.data:undefined);
+                    let userPromises = this.contributions.map(contrib=>this.$store.dispatch('user/get', contrib.data.userId));
+                    results = await Promise.all(userPromises);
+                    this.contribUsers = results.map(result=>result.data)
                     setTimeout(()=>{
                         $('[data-toggle="tooltip"]').tooltip()
                     }, 2000)
