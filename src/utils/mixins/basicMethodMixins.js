@@ -144,6 +144,16 @@ export default {
             return Math.floor(
                 payment.data.confirmed?100:(this.getDaysDiffFromNow(payment.data.createdAt)/7)*100
             )
+        },
+        fetchMatchingName(id, dataArray){
+            let result = {id, data: {}};
+            for(let data of dataArray){
+                if(data.id === id){
+                    result = data;
+                    break
+                }
+            }
+            return result
         }
     }
 }

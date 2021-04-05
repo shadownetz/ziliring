@@ -4,13 +4,13 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">All Contributions</h4>
-<!--                    <div class="pull-right">-->
-<!--                        <input type="search"-->
-<!--                               placeholder="search by contributors name"-->
-<!--                               class="form-control"-->
-<!--                               v-model="searchQuery"-->
-<!--                        >-->
-<!--                    </div>-->
+                    <div class="pull-right">
+                        <input type="search"
+                               placeholder="search by contributors name"
+                               class="form-control"
+                               v-model="searchQuery"
+                        >
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -46,7 +46,7 @@
                                 <td>{{contrib.id.substr(0, 10)}}...</td>
                                 <td>
                                     <template v-if="contribUsers[index]!==undefined">
-                                        {{contribUsers[index].data.lastName}} {{contribUsers[index].data.firstName}}
+                                        {{fetchMatchingName(contrib.data.userId, contribUsers).data.lastName}} {{fetchMatchingName(contrib.data.userId, contribUsers).data.firstName}}
                                     </template>
                                 </td>
                                 <td>
@@ -166,10 +166,12 @@
             contributions(){
                 return this.$store.getters['contribution/getContributions']
                     .filter((contribution, index)=>{
-                        if(this.contribUsers[index] !== undefined)
+                        if(this.contribUsers[index] !== undefined){
                             return (`${this.contribUsers[index].data.lastName} ${this.contribUsers[index].data.firstName}`
                                 .toLowerCase().match(this.searchQuery.toLowerCase()))
-                        return true
+                        }else{
+                            return false
+                        }
                         // return contribution.id.match(this.searchQuery)
                     })
             }
@@ -185,12 +187,12 @@
                 })
             },
             async fetchMetaInfo(){
-                if(this.contributions.length > 0){
+                if(this.$store.getters['contribution/getContributions'].length > 0){
                     clearInterval(this.checkInterval);
-                    const packagePromises = this.contributions.map(contrib=>this.$store.dispatch('package/get', contrib.data.packageId));
+                    const packagePromises = this.$store.getters['contribution/getContributions'].map(contrib=>this.$store.dispatch('package/get', contrib.data.packageId));
                     let results = await Promise.all(packagePromises);
                     this.packageInfo = results.map(result=>result.status?result.data:undefined);
-                    let userPromises = this.contributions.map(contrib=>this.$store.dispatch('user/get', contrib.data.userId));
+                    let userPromises = this.$store.getters['contribution/getContributions'].map(contrib=>this.$store.dispatch('user/get', contrib.data.userId));
                     results = await Promise.all(userPromises);
                     this.contribUsers = results.map(result=>result.data)
                     setTimeout(()=>{

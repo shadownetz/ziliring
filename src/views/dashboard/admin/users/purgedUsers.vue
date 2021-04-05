@@ -9,6 +9,13 @@
                         </span>
                         Purged Users
                     </h4>
+                    <div class="pull-right">
+                        <input type="search"
+                               placeholder="search by contributors name"
+                               class="form-control"
+                               v-model="searchQuery"
+                        >
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -120,9 +127,17 @@
                 currentPage: 0,
                 paginate: ["users"],
                 profiles: [],
-                users: [],
-                loading: false
+                tmp_users: [],
+                loading: false,
+                searchQuery: ''
             }
+        },
+        computed: {
+          users(){
+              return this.tmp_users.filter(user=>{
+                  return (user.data.lastName+' '+user.data.firstName).toLowerCase().match(this.searchQuery.toLowerCase())
+              })
+          }
         },
         mixins: [basicMethodMixins],
         methods: {
@@ -138,7 +153,7 @@
                     })
                     users = await Promise.all(users);
                     if(users.length > 0){
-                        this.users = users.map(user=>user.data)
+                        this.tmp_users = users.map(user=>user.data)
                     }
                 }
                 this.loading = false;

@@ -13,11 +13,12 @@
         </div>
         <div class="row">
             <div class="col-xl-12 col-lg-12">
-                <!--                <div class="alert alert-primary solid alert-right-icon alert-dismissible fade show">-->
-                <!--                    <span><i class="mdi mdi-account-search"></i></span>-->
-                <!--                    <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>-->
-                <!--                    </button> Success! Message has been sent.-->
-                <!--                </div>-->
+                                <div class="alert alert-primary solid alert-right-icon alert-dismissible fade show">
+                                    <span><i class="mdi mdi-account-search"></i></span>
+                                    <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
+                                    </button>
+                                    Please Make sure you pledge contribution that you can fulfill as failure to fulfill any of your pledges will lead to deactivation of your account.
+                                </div>
                 <!--                <div class="alert alert-success solid alert-right-icon alert-dismissible fade show">-->
                 <!--                    <span><i class="mdi mdi-check"></i></span>-->
                 <!--                    <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>-->

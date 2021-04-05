@@ -9,6 +9,13 @@
                         </span>
                         Reported Users
                     </h4>
+                    <div class="pull-right">
+                        <input type="search"
+                               placeholder="search by contributors name"
+                               class="form-control"
+                               v-model="searchQuery"
+                        >
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -45,7 +52,9 @@
                                     <span v-else> {{ 100 * currentPage + index + 1 }}</span>
                                 </td>
                                 <td>
-                                    <span v-if="payments[index]!==undefined">{{payments[index].id}}</span>
+                                    <span v-if="payments[index]!==undefined">
+                                        {{payments[index].id}}
+                                    </span>
                                 </td>
                                 <td>{{user.data.lastName}} {{user.data.firstName}}</td>
                                 <td>{{user.data.email}}</td>
@@ -126,9 +135,17 @@
                 currentPage: 0,
                 paginate: ["users"],
                 payments: [],
-                users: [],
+                tmp_users: [],
                 reportee: [],
-                loading: false
+                loading: false,
+                searchQuery: ''
+            }
+        },
+        computed: {
+            users(){
+                return this.tmp_users.filter(user=>{
+                    return (user.data.lastName+' '+user.data.firstName).toLowerCase().match(this.searchQuery.toLowerCase())
+                })
             }
         },
         mixins: [basicMethodMixins],
@@ -145,7 +162,7 @@
                     })
                     users = await Promise.all(users);
                     if(users.length > 0){
-                        this.users = users.map(user=>user.data)
+                        this.tmp_users = users.map(user=>user.data)
                     }
                     // fetching reportee
                     users = this.payments.map(payment=>{

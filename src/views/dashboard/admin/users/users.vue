@@ -3,14 +3,27 @@
         <div class="col-lg-12 dataTables_wrapper">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Users</h4>
-                    <div class="float-md-right ml-sm-3">
-                        <button @click.prevent="$emit('switchComponent', {component: 'purgedUsers'})" class="btn btn-sm btn-outline-primary">
-                            <i class="ti-user"></i> Purged
-                        </button>
-                        <button @click.prevent="$emit('switchComponent', {component: 'reportedUsers'})" class="btn btn-sm btn-outline-danger ml-2">
-                            <i class="fa fa-users"></i> Reported
-                        </button>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <h4 class="card-title">Users</h4>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <input type="search"
+                                       placeholder="search by contributors name"
+                                       class="form-control"
+                                       v-model="searchQuery"
+                                >
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <button @click.prevent="$emit('switchComponent', {component: 'purgedUsers'})" class="btn btn-sm btn-outline-primary">
+                                    <i class="ti-user"></i> Purged
+                                </button>
+                                <button @click.prevent="$emit('switchComponent', {component: 'reportedUsers'})" class="btn btn-sm btn-outline-danger ml-2">
+                                    <i class="fa fa-users"></i> Reported
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="card-body">
@@ -114,15 +127,20 @@
             return {
                 currentPage: 0,
                 paginate: ["users"],
-                checkInterval: 0
+                checkInterval: 0,
+                searchQuery: ''
             }
         },
         mixins: [basicMethodMixins],
         computed: {
             ...mapGetters({
-                users: 'user/getUsers',
                 loading: 'user/getLoading'
-            })
+            }),
+            users(){
+                return this.$store.getters['user/getUsers'].filter(user=>{
+                    return (user.data.lastName+' '+user.data.firstName).toLowerCase().match(this.searchQuery.toLowerCase())
+                })
+            },
         },
         methods: {
             onPageChange: function (toPage) {

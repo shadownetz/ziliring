@@ -6,13 +6,13 @@
                 <p class="mb-0 fs-13">
                     Results are paginated
                 </p>
-<!--                <div class="pull-right">-->
-<!--                    <input type="search"-->
-<!--                           placeholder="search by contributor's name"-->
-<!--                           class="form-control"-->
-<!--                           v-model="searchQuery"-->
-<!--                    >-->
-<!--                </div>-->
+                <div class="pull-right">
+                    <input type="search"
+                           placeholder="search by contributor's name"
+                           class="form-control"
+                           v-model="searchQuery"
+                    >
+                </div>
                 <!--                <div class="card-action card-tabs mt-3 mt-sm-0">-->
                 <!--                    <ul class="nav nav-tabs" role="tablist">-->
                 <!--                        <li class="nav-item">-->
@@ -49,7 +49,7 @@
                                 </td>
                                 <td>
                                     <template v-if="payment_users[index] !== undefined">
-                                        {{payment_users[index].data.lastName}} {{payment_users[index].data.firstName}}
+                                      {{fetchMatchingName(payment.data.userId, payment_users).data.lastName}} {{fetchMatchingName(payment.data.userId, payment_users).data.firstName}}
                                     </template>
                                     <template v-else>
                                         {{payment.id.substr(0,10)}}...
@@ -174,10 +174,12 @@
             payments(){
                 return this.$store.getters['payment/getPayments']
                     .filter((payment, index)=>{
-                        if(this.payment_users[index] !== undefined)
-                            return (`${this.payment_users[index].data.lastName} ${this.payment_users[index].data.firstName}`
-                                .toLowerCase().match(this.searchQuery.toLowerCase()))
-                        return true
+                        if(this.payment_users[index] !== undefined){
+                            return (`${this.payment_users[index].data.lastName} ${this.payment_users[index].data.firstName}`)
+                                .toLowerCase().match(this.searchQuery.toLowerCase())
+                        }else{
+                            return false
+                        }
                     })
             }
         },
@@ -186,9 +188,9 @@
                 this.currentPage = toPage - 1;
             },
             async queryPayments(){
-                if(this.payments.length > 0){
+                if(this.$store.getters['payment/getPayments'].length > 0){
                     clearInterval(this.interval);
-                    const contribPromises = this.payments.map(payment=>this.$store.dispatch('contribution/get', payment.data.contribId));
+                    const contribPromises = this.$store.getters['payment/getPayments'].map(payment=>this.$store.dispatch('contribution/get', payment.data.contribId));
                     const contribs = await Promise.all(contribPromises);
                     if(contribs.length > 0){
                         this.payments_contribs = contribs.map(contrib=>contrib.data);
@@ -199,7 +201,7 @@
                         });
                         const tmp_packages = await Promise.all(tmp_packages_promises);
                         this.payment_packages = tmp_packages.map(package_z=>package_z.data);
-                        let paymentUsersPromises = this.payments.map(payment=>this.$store.dispatch('user/get', payment.data.userId));
+                        let paymentUsersPromises = this.$store.getters['payment/getPayments'].map(payment=>this.$store.dispatch('user/get', payment.data.userId));
                         let results = await Promise.all(paymentUsersPromises);
                         this.payment_users = results.map(result=>result.data)
                     }
